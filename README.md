@@ -18,6 +18,6 @@ npm run preview
 
 ## Current scope
 
-Part 1 foundation: shared header/navigation, responsive homepage layout, content-aware empty states, app promotion and footer.
+Part 1 foundation: shared header/navigation, responsive homepage, news listing with category filters and load-more behavior, article detail layout, content-aware empty states, app promotion and footer.
 
-The homepage intentionally contains no fabricated articles. Approved editorial content and licensed imagery will be connected in a later content workflow.
+The public pages intentionally contain no fabricated articles. The news listing and article detail templates are ready for approved editorial content and licensed imagery to be connected in a later content workflow. Direct-route hosting fallback and browser/device testing remain to be verified before launch.
