@@ -18,7 +18,6 @@ const articles = [];
 function Brand() {
   return (
     <a className="brand" href="/" aria-label="AURA Sport home">
-      <span className="brand-mark">A</span>
       <span className="brand-name">AURA Sport<span>.</span></span>
     </a>
   );
