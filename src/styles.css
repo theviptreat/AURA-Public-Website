@@ -236,3 +236,40 @@ button { font: inherit; }
   .article-body { font-size: 14px; }
   .article-share { gap: 12px; }
 }
+
+
+/* Supporting information, category and legal pages */
+.info-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, .8fr);
+  gap: clamp(34px, 7vw, 88px);
+  align-items: center;
+  padding-block: 72px 88px;
+}
+.info-copy { max-width: 650px; }
+.info-copy h2 { margin: 12px 0 18px; color: #17251f; font: 700 clamp(27px, 3.5vw, 38px)/1.2 var(--heading); letter-spacing: -.04em; }
+.info-copy p { color: #5f6d65; font-size: 14px; line-height: 1.85; }
+.info-highlight {
+  padding: 34px; color: #fff;
+  background: radial-gradient(ellipse at 90% 5%, #205441 0%, transparent 45%), var(--green);
+}
+.info-highlight h2 { margin: 13px 0; font: 700 28px/1.2 var(--heading); }
+.info-highlight p { margin: 0; color: rgba(255,255,255,.72); font-size: 13px; line-height: 1.8; }
+.info-note { padding: 26px; border-left: 3px solid var(--gold); background: #f1f1e9; }
+.info-note strong { color: var(--green); font: 700 17px var(--heading); }
+.info-note p { margin-bottom: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+.info-empty { width: 100%; min-height: 210px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border: 1px solid var(--line); background: #fffefa; text-align: center; }
+.info-empty p { color: var(--muted); font-size: 13px; }
+.info-empty .text-link { margin-top: 8px; }
+.legal-content { max-width: 850px; padding-block: 54px 90px; }
+.draft-notice { margin-bottom: 34px; padding: 14px 18px; border-left: 3px solid var(--gold); background: #f3efe3; color: #6e5728; font-size: 12px; font-weight: 700; }
+.legal-section { padding-block: 8px 25px; }
+.legal-section h2 { margin: 0 0 10px; color: #17251f; font: 700 21px var(--heading); }
+.legal-section p { margin: 0; color: #5f6d65; font-size: 14px; line-height: 1.9; }
+.download-content { grid-template-columns: minmax(0, 1fr); }
+.download-content .info-copy { max-width: 720px; }
+@media (max-width: 800px) {
+  .info-content { grid-template-columns: 1fr; gap: 28px; padding-block: 48px 64px; }
+  .info-highlight { max-width: 560px; }
+  .legal-content { padding-block: 40px 64px; }
+}
