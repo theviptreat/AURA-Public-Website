@@ -287,9 +287,6 @@ button { font: inherit; }
 .language-switch a { color: rgba(255,255,255,.72); }
 .language-switch a[aria-current="page"] { color: var(--gold); font-weight: 700; }
 :lang(hi) { font-family: "Noto Sans Devanagari", "Nirmala UI", Mangal, Arial, sans-serif; }
-.hindi-coming-soon { max-width: 850px; }
-.hindi-coming-soon h1 { line-height: 1.35; letter-spacing: 0; }
-.hindi-coming-soon p { line-height: 1.9; }
 @media (max-width: 800px) {
   .language-switch { margin: 12px 0 0; padding: 12px 0 0; border-left: 0; border-top: 1px solid rgba(255,255,255,.12); }
 }
