@@ -176,5 +176,5 @@ export function AdditionalPage({ path }) {
   if (path === '/contact') return <ContactPage />;
   if (legalPages[path]) return <LegalPage path={path} />;
   if (path === '/download') return <DownloadPage />;
-  return null;
+  return <main className="page-main"><section className="container article-missing"><span className="eyebrow">AURA</span><h1>Page not found</h1><p>The page you're looking for isn't available.</p><a className="button button-gold" href="/">Back to Home</a></section></main>;
 }
