@@ -343,9 +343,9 @@ function Footer({ locale = 'en' }) {
           <p>Cricket, with context.</p>
         </div>
         <div className="footer-links">
-          <div><span className="footer-label">Explore</span><a href="/news">News</a><a href="/match-preview">Match Preview</a><a href="/analysis">Analysis</a><a href="/knowledge">Knowledge</a></div>
-          <div><span className="footer-label">AURA Sport</span><a href="/about">About</a><a href="/contact">Contact & Help</a><a href="/download">Download App</a></div>
-          <div><span className="footer-label">Information</span><a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms & Conditions</a><a href="/disclaimer">Disclaimer</a></div>
+          <div><span className="footer-label">Explore</span><a href={localizePath("/news", locale)}>News</a><a href={localizePath("/match-preview", locale)}>Match Preview</a><a href={localizePath("/analysis", locale)}>Analysis</a><a href={localizePath("/knowledge", locale)}>Knowledge</a></div>
+          <div><span className="footer-label">AURA Sport</span><a href={localizePath("/about", locale)}>About</a><a href={localizePath("/contact", locale)}>Contact & Help</a><a href={localizePath("/download", locale)}>Download App</a></div>
+          <div><span className="footer-label">Information</span><a href={localizePath("/privacy-policy", locale)}>Privacy Policy</a><a href={localizePath("/terms", locale)}>Terms & Conditions</a><a href={localizePath("/disclaimer", locale)}>Disclaimer</a></div>
         </div>
       </div>
       <div className="container footer-bottom">
@@ -374,7 +374,9 @@ export default function App() {
     '/disclaimer': ['Disclaimer | AURA Sport', 'Important information about AURA Sport editorial content and predictions.'],
     '/download': ['Get the AURA Sport App', 'Find official information about downloading the AURA Sport app.']
   };
-  const pageMetadata = articleMatch ? ['Cricket Story | AURA Sport', 'Read cricket news and perspectives from AURA Sport.'] : (metadataByPath[path] || ['Page Not Found | AURA Sport', 'The requested page could not be found on AURA Sport.']);
+  const pageMetadata = locale === 'hi'
+    ? ['AURA Sport — हिंदी क्रिकेट', 'AURA Sport की क्रिकेट खबरें, विश्लेषण और जानकारी हिंदी में।']
+    : (articleMatch ? ['Cricket Story | AURA Sport', 'Read cricket news and perspectives from AURA Sport.'] : (metadataByPath[path] || ['Page Not Found | AURA Sport', 'The requested page could not be found on AURA Sport.']));
   useEffect(() => {
     document.documentElement.lang = locale === 'hi' ? 'hi-IN' : 'en';
     document.title = pageMetadata[0];
