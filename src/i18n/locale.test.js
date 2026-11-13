@@ -48,3 +48,19 @@ test('language switching preserves the current page path', () => {
   assert.equal(getLocaleSwitchPath('/hi/analysis', 'en'), '/en/analysis');
   assert.equal(getLocaleSwitchPath('/news/article-one', 'hi'), '/hi/news/article-one');
 });
+
+test('language switching preserves query strings and hash fragments', () => {
+  assert.equal(
+    getLocaleSwitchPath('/hi/news', 'en', '?category=international&page=2', '#latest'),
+    '/en/news?category=international&page=2#latest',
+  );
+  assert.equal(
+    getLocaleSwitchPath('/en/analysis', 'hi', 'view=deep', 'methodology'),
+    '/hi/analysis?view=deep#methodology',
+  );
+});
+
+test('language switching works when only a query string or hash is present', () => {
+  assert.equal(getLocaleSwitchPath('/news', 'hi', '?q=world'), '/hi/news?q=world');
+  assert.equal(getLocaleSwitchPath('/news', 'hi', '', '#latest'), '/hi/news#latest');
+});
