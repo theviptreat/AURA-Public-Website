@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AdditionalPage } from './InfoPages';
+import { localizePath, resolveLocalizedPath } from './i18n/locale';
 
 const navigation = [
   ['News', '/news'],
@@ -15,26 +16,35 @@ const newsCategories = ['All News', 'International', 'Domestic', 'Tournaments', 
 // Keeping this empty prevents sample or unverified stories appearing publicly.
 const articles = [];
 
-function Brand() {
+function Brand({ locale = 'en' }) {
   return (
-    <a className="brand" href="/" aria-label="AURA Sport home">
+    <a className="brand" href={localizePath("/", locale)} aria-label="AURA Sport home">
       <span className="brand-name">AURA Sport<span>.</span></span>
     </a>
   );
 }
 
-function Header() {
+function Header({ locale = 'en', currentPath = '/' }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const labels = locale === 'hi'
+    ? ['समाचार', 'मैच पूर्वावलोकन', 'विश्लेषण', 'क्रिकेट ज्ञान', 'AURA Sport के बारे में', 'ऐप डाउनलोड']
+    : ['News', 'Match Preview', 'Analysis', 'Knowledge', 'About AURA Sport', 'Get the App'];
+  const localizedNavigation = navigation.map(([, href], index) => [labels[index], localizePath(href, locale)]);
 
   return (
     <header className="site-header">
       <div className="header-inner">
-        <Brand />
+        <Brand locale={locale} />
         <nav className={menuOpen ? 'main-nav is-open' : 'main-nav'} id="primary-navigation" aria-label="Main navigation">
-          {navigation.map(([label, href]) => (
+          {localizedNavigation.map(([label, href]) => (
             <a key={label} href={href} onClick={() => setMenuOpen(false)}>{label}</a>
           ))}
-          <a className="nav-download" href="/download">Get the App <span aria-hidden="true">↗</span></a>
+          <a className="nav-download" href={localizePath("/download", locale)}>{labels[5]} <span aria-hidden="true">↗</span></a>
+          <div className="language-switch" aria-label="Language selection">
+            <a href={localizePath(currentPath, 'en')} aria-current={locale === 'en' ? 'page' : undefined}>EN</a>
+            <span aria-hidden="true">|</span>
+            <a href={localizePath(currentPath, 'hi')} aria-current={locale === 'hi' ? 'page' : undefined}>हिंदी</a>
+          </div>
         </nav>
         <button
           className="menu-toggle"
@@ -324,12 +334,12 @@ function ArticleDetailPage({ slug }) {
   );
 }
 
-function Footer() {
+function Footer({ locale = 'en' }) {
   return (
     <footer className="site-footer">
       <div className="container footer-main">
         <div className="footer-brand">
-          <Brand />
+          <Brand locale={locale} />
           <p>Cricket, with context.</p>
         </div>
         <div className="footer-links">
@@ -347,7 +357,9 @@ function Footer() {
 }
 
 export default function App() {
-  const path = window.location.pathname.replace(/\/$/, '') || '/';
+  const resolvedRoute = resolveLocalizedPath(window.location.pathname);
+  const locale = resolvedRoute.locale;
+  const path = resolvedRoute.pathname;
   const articleMatch = path.match(/^\/news\/([^/]+)$/);
   const metadataByPath = {
     '/': ['AURA Sport — Cricket, with context', 'AURA Sport brings you considered cricket news, match previews, analysis and knowledge.'],
@@ -364,6 +376,7 @@ export default function App() {
   };
   const pageMetadata = articleMatch ? ['Cricket Story | AURA Sport', 'Read cricket news and perspectives from AURA Sport.'] : (metadataByPath[path] || ['Page Not Found | AURA Sport', 'The requested page could not be found on AURA Sport.']);
   useEffect(() => {
+    document.documentElement.lang = locale === 'hi' ? 'hi-IN' : 'en';
     document.title = pageMetadata[0];
     let description = document.querySelector('meta[name="description"]');
     if (!description) {
@@ -372,22 +385,31 @@ export default function App() {
       document.head.appendChild(description);
     }
     description.setAttribute('content', pageMetadata[1]);
-  }, [pageMetadata[0], pageMetadata[1]]);
+  }, [pageMetadata[0], pageMetadata[1], locale]);
 
-  let page = <HomePage />;
-  if (path === '/news') page = <NewsListingPage />;
-  else if (articleMatch) {
+  let page = locale === 'hi' ? (
+    <main className="page-main" lang="hi">
+      <section className="container article-missing hindi-coming-soon">
+        <span className="eyebrow">AURA Sport</span>
+        <h1>हिंदी संस्करण जल्द आ रहा है</h1>
+        <p>हम AURA Sport की क्रिकेट खबरें, विश्लेषण और जानकारी हिंदी में तैयार कर रहे हैं। हिंदी संस्करण प्रकाशित होने तक आप अंग्रेज़ी वेबसाइट देख सकते हैं।</p>
+        <a className="button button-gold" href={localizePath('/', 'en')}>अंग्रेज़ी में पढ़ें</a>
+      </section>
+    </main>
+  ) : <HomePage />;
+  if (locale === 'en' && path === '/news') page = <NewsListingPage />;
+  else if (locale === 'en' && articleMatch) {
     let safeSlug = '__invalid_url__';
     try { safeSlug = decodeURIComponent(articleMatch[1]); } catch { /* Show not-found for malformed URLs. */ }
     page = <ArticleDetailPage slug={safeSlug} />;
   }
-  else if (path !== '/') page = <AdditionalPage path={path} /> || <ArticleDetailPage slug="not-found" />;
+  else if (locale === 'en' && path !== '/') page = <AdditionalPage path={path} /> || <ArticleDetailPage slug="not-found" />;
 
   return (
     <>
-      <Header />
+      <Header locale={locale} currentPath={path} />
       {page}
-      <Footer />
+      <Footer locale={locale} />
     </>
   );
 }
