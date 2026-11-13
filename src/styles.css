@@ -273,3 +273,7 @@ button { font: inherit; }
   .info-highlight { max-width: 560px; }
   .legal-content { padding-block: 40px 64px; }
 }
+
+
+/* Keep image areas visually stable if a remote image fails to load. */
+.story-image, .listing-featured-image, .article-cover { background: linear-gradient(135deg, #e6e8df, #f0f0e9); }
