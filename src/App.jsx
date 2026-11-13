@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { AdditionalPage } from './InfoPages';
 
 const navigation = [
   ['News', '/news'],
@@ -347,6 +348,7 @@ export default function App() {
   let page = <HomePage />;
   if (path === '/news') page = <NewsListingPage />;
   else if (articleMatch) page = <ArticleDetailPage slug={decodeURIComponent(articleMatch[1])} />;
+  else if (path !== '/') page = <AdditionalPage path={path} /> || <ArticleDetailPage slug="not-found" />;
 
   return (
     <>
