@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AdditionalPage } from './InfoPages';
 
 const navigation = [
@@ -31,7 +31,7 @@ function Header() {
     <header className="site-header">
       <div className="header-inner">
         <Brand />
-        <nav className={menuOpen ? 'main-nav is-open' : 'main-nav'} aria-label="Main navigation">
+        <nav className={menuOpen ? 'main-nav is-open' : 'main-nav'} id="primary-navigation" aria-label="Main navigation">
           {navigation.map(([label, href]) => (
             <a key={label} href={href} onClick={() => setMenuOpen(false)}>{label}</a>
           ))}
@@ -42,6 +42,7 @@ function Header() {
           type="button"
           aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
           aria-expanded={menuOpen}
+          aria-controls="primary-navigation"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           <span /><span />
@@ -77,7 +78,7 @@ function StoryCard({ story }) {
     <article className="story-card">
       <a href={`/news/${story.slug}`} className="story-card-link">
         {story.coverImage ? (
-          <img className="story-image" src={story.coverImage} alt={story.coverAlt || ''} loading="lazy" />
+          <img className="story-image" src={story.coverImage} alt={story.coverAlt || story.title} loading="lazy" />
         ) : (
           <div className="story-image story-image-empty" aria-hidden="true" />
         )}
@@ -197,7 +198,7 @@ function NewsListingPage() {
         {featured && (
           <a className="listing-featured" href={`/news/${featured.slug}`}>
             <div className="listing-featured-image">
-              {featured.coverImage && <img src={featured.coverImage} alt={featured.coverAlt || ''} />}
+              {featured.coverImage && <img src={featured.coverImage} alt={featured.coverAlt || featured.title} />}
             </div>
             <div className="listing-featured-copy">
               <span className="story-category">Featured story · {featured.category}</span>
@@ -284,7 +285,7 @@ function ArticleDetailPage({ slug }) {
           </div>
           {article.coverImage && (
             <figure className="article-cover">
-              <img src={article.coverImage} alt={article.coverAlt || ''} />
+              <img src={article.coverImage} alt={article.coverAlt || article.title} />
               {article.imageCredit && <figcaption>{article.imageCredit}</figcaption>}
             </figure>
           )}
@@ -293,9 +294,13 @@ function ArticleDetailPage({ slug }) {
           </div>
           <div className="article-share">
             <span>Share this story</span>
-            <button type="button" onClick={() => {
-              if (navigator.share) navigator.share({ title: article.title, url: window.location.href });
-              else if (navigator.clipboard) navigator.clipboard.writeText(window.location.href);
+            <button type="button" onClick={async () => {
+              const url = window.location.href;
+              try {
+                if (navigator.share) { await navigator.share({ title: article.title, url }); return; }
+                if (navigator.clipboard && navigator.clipboard.writeText) { await navigator.clipboard.writeText(url); window.alert('Story link copied.'); return; }
+              } catch (error) { if (error && error.name === 'AbortError') return; }
+              window.prompt('Copy this story link:', url);
             }}>Share ↗</button>
           </div>
         </article>
@@ -345,9 +350,38 @@ function Footer() {
 export default function App() {
   const path = window.location.pathname.replace(/\/$/, '') || '/';
   const articleMatch = path.match(/^\/news\/([^/]+)$/);
+  const metadataByPath = {
+    '/': ['AURA — Cricket, with context', 'AURA brings you considered cricket news, match previews, analysis and knowledge.'],
+    '/news': ['Cricket News | AURA', 'Read the latest cricket news and updates from AURA.'],
+    '/match-preview': ['Cricket Match Previews | AURA', 'Explore cricket match previews from AURA.'],
+    '/analysis': ['Cricket Analysis | AURA', 'Read thoughtful cricket analysis and perspectives from AURA.'],
+    '/knowledge': ['Cricket Knowledge | AURA', 'Understand cricket rules, formats and tactics with AURA.'],
+    '/about': ['About AURA', 'Learn about AURA and its cricket editorial approach.'],
+    '/contact': ['Contact & Help | AURA', 'Find information about contacting AURA and getting support.'],
+    '/privacy-policy': ['Privacy Policy | AURA', 'Read the AURA website privacy policy.'],
+    '/terms': ['Terms & Conditions | AURA', 'Read the terms and conditions for using AURA.'],
+    '/disclaimer': ['Disclaimer | AURA', 'Important information about AURA editorial content and predictions.'],
+    '/download': ['Get the AURA App', 'Find official information about downloading the AURA app.']
+  };
+  const pageMetadata = articleMatch ? ['Cricket Story | AURA', 'Read cricket news and perspectives from AURA.'] : (metadataByPath[path] || ['Page Not Found | AURA', 'The requested page could not be found on AURA.']);
+  useEffect(() => {
+    document.title = pageMetadata[0];
+    let description = document.querySelector('meta[name="description"]');
+    if (!description) {
+      description = document.createElement('meta');
+      description.name = 'description';
+      document.head.appendChild(description);
+    }
+    description.setAttribute('content', pageMetadata[1]);
+  }, [pageMetadata[0], pageMetadata[1]]);
+
   let page = <HomePage />;
   if (path === '/news') page = <NewsListingPage />;
-  else if (articleMatch) page = <ArticleDetailPage slug={decodeURIComponent(articleMatch[1])} />;
+  else if (articleMatch) {
+    let safeSlug = '__invalid_url__';
+    try { safeSlug = decodeURIComponent(articleMatch[1]); } catch { /* Show not-found for malformed URLs. */ }
+    page = <ArticleDetailPage slug={safeSlug} />;
+  }
   else if (path !== '/') page = <AdditionalPage path={path} /> || <ArticleDetailPage slug="not-found" />;
 
   return (
