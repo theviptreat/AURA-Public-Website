@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 
 const navigation = [
-  ['News', '#news'],
-  ['Match Preview', '#previews'],
-  ['Analysis', '#analysis'],
-  ['Knowledge', '#knowledge'],
-  ['About AURA', '#about'],
+  ['News', '/news'],
+  ['Match Preview', '/match-preview'],
+  ['Analysis', '/analysis'],
+  ['Knowledge', '/knowledge'],
+  ['About AURA', '/about'],
 ];
+
+const newsCategories = ['All News', 'International', 'Domestic', 'Tournaments', 'Cricket Updates'];
+
+// Approved editorial content will be supplied by the publishing workflow.
+// Keeping this empty prevents sample or unverified stories appearing publicly.
+const articles = [];
 
 function Brand() {
   return (
-    <a className="brand" href="#" aria-label="AURA home">
+    <a className="brand" href="/" aria-label="AURA home">
       <span className="brand-mark">A</span>
       <span className="brand-name">AURA<span>.</span></span>
     </a>
@@ -56,23 +62,42 @@ function SectionHeading({ eyebrow, title, href, linkLabel = 'View all' }) {
   );
 }
 
-function EmptyStories({ compact = false }) {
+function EmptyStories({ message = 'Fresh cricket stories are on the way.', compact = false }) {
   return (
     <div className={compact ? 'empty-stories compact' : 'empty-stories'}>
       <span className="empty-symbol" aria-hidden="true">✳</span>
-      <p>Fresh cricket stories are on the way.</p>
+      <p>{message}</p>
     </div>
   );
 }
 
+function StoryCard({ story }) {
+  return (
+    <article className="story-card">
+      <a href={`/news/${story.slug}`} className="story-card-link">
+        {story.coverImage ? (
+          <img className="story-image" src={story.coverImage} alt={story.coverAlt || ''} loading="lazy" />
+        ) : (
+          <div className="story-image story-image-empty" aria-hidden="true" />
+        )}
+        <span className="story-category">{story.category}</span>
+        <h3>{story.title}</h3>
+        {story.excerpt && <p>{story.excerpt}</p>}
+        <time dateTime={story.publishedAt}>{story.dateLabel}</time>
+      </a>
+    </article>
+  );
+}
+
 function HomePage() {
-  // Content is intentionally empty until approved articles are supplied.
-  // The layout adapts without displaying fabricated stories or empty ad slots.
-  const featuredStory = null;
-  const latestStories = [];
+  const featuredStory = articles.find((article) => article.featured) || null;
+  const latestStories = [...articles]
+    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+    .filter((article) => article.slug !== featuredStory?.slug)
+    .slice(0, 4);
   const previews = [];
-  const analysis = [];
-  const knowledge = [];
+  const analysis = articles.filter((article) => article.section === 'analysis').slice(0, 3);
+  const knowledge = articles.filter((article) => article.section === 'knowledge').slice(0, 3);
 
   return (
     <>
@@ -87,28 +112,18 @@ function HomePage() {
       </section>
 
       <main>
-        {featuredStory ? (
+        {featuredStory && (
           <section className="container featured-section">
             <SectionHeading eyebrow="The big story" title="Featured" />
-            {/* Approved featured story component will be rendered here. */}
+            <StoryCard story={featuredStory} />
           </section>
-        ) : null}
+        )}
 
         <section className="container content-section" id="news">
           <SectionHeading eyebrow="From the cricket world" title="Latest News" href="/news" />
           {latestStories.length ? (
             <div className="story-grid">
-              {latestStories.slice(0, 4).map((story) => (
-                <article className="story-card" key={story.slug}>
-                  <a href={`/news/${story.slug}`} className="story-card-link">
-                    <div className="story-image" />
-                    <span className="story-category">{story.category}</span>
-                    <h3>{story.title}</h3>
-                    <p>{story.excerpt}</p>
-                    <time>{story.date}</time>
-                  </a>
-                </article>
-              ))}
+              {latestStories.map((story) => <StoryCard key={story.slug} story={story} />)}
             </div>
           ) : (
             <EmptyStories />
@@ -118,6 +133,7 @@ function HomePage() {
         {previews.length > 0 && (
           <section className="container content-section" id="previews">
             <SectionHeading eyebrow="Before the first ball" title="Match Previews" href="/match-preview" />
+            <div className="story-grid">{previews.map((story) => <StoryCard key={story.slug} story={story} />)}</div>
           </section>
         )}
 
@@ -125,6 +141,7 @@ function HomePage() {
           <section className="analysis-band content-section" id="analysis">
             <div className="container">
               <SectionHeading eyebrow="Look beyond the score" title="AURA Analysis" href="/analysis" />
+              <div className="story-grid">{analysis.map((story) => <StoryCard key={story.slug} story={story} />)}</div>
             </div>
           </section>
         )}
@@ -132,6 +149,7 @@ function HomePage() {
         {knowledge.length > 0 && (
           <section className="container content-section" id="knowledge">
             <SectionHeading eyebrow="Understand the game" title="Cricket Knowledge" href="/knowledge" />
+            <div className="story-grid">{knowledge.map((story) => <StoryCard key={story.slug} story={story} />)}</div>
           </section>
         )}
 
@@ -150,6 +168,153 @@ function HomePage() {
         </section>
       </main>
     </>
+  );
+}
+
+function NewsListingPage() {
+  const [activeCategory, setActiveCategory] = useState('All News');
+  const [visibleCount, setVisibleCount] = useState(8);
+  const [featured, ...rest] = [...articles]
+    .filter((article) => article.section === 'news' || !article.section)
+    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+  const filtered = rest.filter((article) =>
+    activeCategory === 'All News' || article.category === activeCategory
+  );
+  const visibleArticles = filtered.slice(0, visibleCount);
+
+  return (
+    <main className="page-main">
+      <section className="page-hero">
+        <div className="container">
+          <span className="eyebrow eyebrow-light">Stories that matter</span>
+          <h1>Cricket News</h1>
+          <p>Updates and stories from across the cricket world.</p>
+        </div>
+      </section>
+      <section className="container listing-section">
+        {featured && (
+          <a className="listing-featured" href={`/news/${featured.slug}`}>
+            <div className="listing-featured-image">
+              {featured.coverImage && <img src={featured.coverImage} alt={featured.coverAlt || ''} />}
+            </div>
+            <div className="listing-featured-copy">
+              <span className="story-category">Featured story · {featured.category}</span>
+              <h2>{featured.title}</h2>
+              {featured.excerpt && <p>{featured.excerpt}</p>}
+              <time dateTime={featured.publishedAt}>{featured.dateLabel}</time>
+              <span className="text-link">Read story ↗</span>
+            </div>
+          </a>
+        )}
+        <div className="listing-heading">
+          <div>
+            <span className="eyebrow">The latest</span>
+            <h2>All News</h2>
+          </div>
+          <span className="result-count">{filtered.length} {filtered.length === 1 ? 'story' : 'stories'}</span>
+        </div>
+        <div className="category-filters" aria-label="Filter news by category">
+          {newsCategories.map((category) => (
+            <button
+              type="button"
+              key={category}
+              className={activeCategory === category ? 'category-filter active' : 'category-filter'}
+              aria-pressed={activeCategory === category}
+              onClick={() => { setActiveCategory(category); setVisibleCount(8); }}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+        {visibleArticles.length ? (
+          <>
+            <div className="news-list-grid">
+              {visibleArticles.map((story) => <StoryCard key={story.slug} story={story} />)}
+            </div>
+            {visibleCount < filtered.length && (
+              <div className="load-more-wrap">
+                <button className="button button-outline" type="button" onClick={() => setVisibleCount((count) => count + 8)}>
+                  Load More Stories
+                </button>
+              </div>
+            )}
+          </>
+        ) : (
+          <EmptyStories message="There are no published stories in this category yet." />
+        )}
+      </section>
+    </main>
+  );
+}
+
+function ArticleDetailPage({ slug }) {
+  const article = articles.find((item) => item.slug === slug);
+  const related = article
+    ? articles.filter((item) => item.slug !== slug && item.category === article.category).slice(0, 3)
+    : [];
+
+  if (!article) {
+    return (
+      <main className="page-main">
+        <section className="container article-missing">
+          <span className="eyebrow">AURA stories</span>
+          <h1>Story not available</h1>
+          <p>This story may not have been published yet, or the link may have changed.</p>
+          <a className="button button-gold" href="/news">Back to News</a>
+        </section>
+      </main>
+    );
+  }
+
+  return (
+    <main className="page-main">
+      <div className="container article-shell">
+        <article className="article-content">
+          <nav className="breadcrumbs" aria-label="Breadcrumb">
+            <a href="/">Home</a><span>/</span><a href="/news">News</a><span>/</span><span>{article.category}</span>
+          </nav>
+          <span className="story-category">{article.category}</span>
+          <h1>{article.title}</h1>
+          {article.excerpt && <p className="article-deck">{article.excerpt}</p>}
+          <div className="article-meta">
+            {article.author && <span>By {article.author}</span>}
+            <time dateTime={article.publishedAt}>{article.dateLabel}</time>
+          </div>
+          {article.coverImage && (
+            <figure className="article-cover">
+              <img src={article.coverImage} alt={article.coverAlt || ''} />
+              {article.imageCredit && <figcaption>{article.imageCredit}</figcaption>}
+            </figure>
+          )}
+          <div className="article-body">
+            {article.body}
+          </div>
+          <div className="article-share">
+            <span>Share this story</span>
+            <button type="button" onClick={() => {
+              if (navigator.share) navigator.share({ title: article.title, url: window.location.href });
+              else if (navigator.clipboard) navigator.clipboard.writeText(window.location.href);
+            }}>Share ↗</button>
+          </div>
+        </article>
+        <aside className="article-sidebar">
+          {related.length > 0 && (
+            <div className="related-panel">
+              <span className="eyebrow">Keep reading</span>
+              <h2>Related Stories</h2>
+              {related.map((story) => (
+                <a className="related-story" key={story.slug} href={`/news/${story.slug}`}>
+                  <span className="story-category">{story.category}</span>
+                  <strong>{story.title}</strong>
+                  <time dateTime={story.publishedAt}>{story.dateLabel}</time>
+                </a>
+              ))}
+            </div>
+          )}
+          {/* Optional ad placements will be added with the ad system; inactive slots stay hidden. */}
+        </aside>
+      </div>
+    </main>
   );
 }
 
@@ -176,10 +341,16 @@ function Footer() {
 }
 
 export default function App() {
+  const path = window.location.pathname.replace(/\/$/, '') || '/';
+  const articleMatch = path.match(/^\/news\/([^/]+)$/);
+  let page = <HomePage />;
+  if (path === '/news') page = <NewsListingPage />;
+  else if (articleMatch) page = <ArticleDetailPage slug={decodeURIComponent(articleMatch[1])} />;
+
   return (
     <>
       <Header />
-      <HomePage />
+      {page}
       <Footer />
     </>
   );
