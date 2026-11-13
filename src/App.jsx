@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AdditionalPage } from './InfoPages';
-import { localizePath, resolveLocalizedPath } from './i18n/locale';
+import { getLocaleSwitchPath, localizePath, resolveLocalizedPath } from './i18n/locale';
 import { localizeStory } from './i18n/localized-content';
 import { getLocalizedSeoUrls, getOpenGraphLocale } from './i18n/seo';
 
@@ -20,7 +20,7 @@ function Brand({ locale = 'en' }) {
   return <a className="brand" href={localizePath('/', locale)} aria-label={tr(locale, "AURA Sport home", "AURA Sport होमपेज")}><span className="brand-name">AURA Sport<span>.</span></span></a>;
 }
 
-function Header({ locale = 'en', currentPath = '/' }) {
+function Header({ locale = 'en', currentPath = '/', currentSearch = '', currentHash = '' }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const labels = locale === 'hi'
     ? ['समाचार', 'मैच पूर्वावलोकन', 'विश्लेषण', 'क्रिकेट ज्ञान', 'AURA Sport के बारे में', 'ऐप डाउनलोड']
@@ -34,9 +34,9 @@ function Header({ locale = 'en', currentPath = '/' }) {
           {localizedNavigation.map(([label, href]) => <a key={label} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}
           <a className="nav-download" href={localizePath('/download', locale)}>{labels[5]} <span aria-hidden="true">↗</span></a>
           <div className="language-switch" aria-label={tr(locale, 'Language selection', 'भाषा चुनें')}>
-            <a href={localizePath(currentPath, 'en')} aria-current={locale === 'en' ? 'page' : undefined}>EN</a>
+            <a href={getLocaleSwitchPath(currentPath, 'en', currentSearch, currentHash)} aria-current={locale === 'en' ? 'page' : undefined}>EN</a>
             <span aria-hidden="true">|</span>
-            <a href={localizePath(currentPath, 'hi')} aria-current={locale === 'hi' ? 'page' : undefined}>हिंदी</a>
+            <a href={getLocaleSwitchPath(currentPath, 'hi', currentSearch, currentHash)} aria-current={locale === 'hi' ? 'page' : undefined}>हिंदी</a>
           </div>
         </nav>
         <button className="menu-toggle" type="button" aria-label={menuOpen ? tr(locale, 'Close navigation menu', 'नेविगेशन मेनू बंद करें') : tr(locale, 'Open navigation menu', 'नेविगेशन मेनू खोलें')} aria-expanded={menuOpen} aria-controls="primary-navigation" onClick={() => setMenuOpen(!menuOpen)}>
@@ -227,5 +227,5 @@ export default function App() {
     page = <ArticleDetailPage slug={safeSlug} locale={locale} />;
   } else page = <AdditionalPage path={path} locale={locale} />;
 
-  return <><Header locale={locale} currentPath={path} />{page}<Footer locale={locale} /></>;
+  return <><Header locale={locale} currentPath={path} currentSearch={window.location.search} currentHash={window.location.hash} />{page}<Footer locale={locale} /></>;
 }
