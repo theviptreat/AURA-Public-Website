@@ -174,12 +174,13 @@ function HomePage() {
 function NewsListingPage() {
   const [activeCategory, setActiveCategory] = useState('All News');
   const [visibleCount, setVisibleCount] = useState(8);
-  const [featured, ...rest] = [...articles]
+  const newsStories = [...articles]
     .filter((article) => article.section === 'news' || !article.section)
     .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-  const filtered = rest.filter((article) =>
-    activeCategory === 'All News' || article.category === activeCategory
-  );
+  const featured = newsStories.find((article) => article.featured) || null;
+  const filtered = newsStories
+    .filter((article) => article.slug !== featured?.slug)
+    .filter((article) => activeCategory === 'All News' || article.category === activeCategory);
   const visibleArticles = filtered.slice(0, visibleCount);
 
   return (
