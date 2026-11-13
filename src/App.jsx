@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AdditionalPage } from './InfoPages';
 import { localizePath, resolveLocalizedPath } from './i18n/locale';
+import { localizeStory } from './i18n/localized-content';
 
 const navigation = [
   ['News', '/news'],
@@ -54,12 +55,13 @@ function EmptyStories({ message, compact = false }) {
 }
 
 function StoryCard({ story, locale }) {
+  const displayStory = localizeStory(story, locale);
   return (
     <article className="story-card">
-      <a href={localizePath('/news/' + story.slug, locale)} className="story-card-link">
-        {story.coverImage ? <img className="story-image" src={story.coverImage} alt={story.coverAlt || story.title} loading="lazy" onError={(event) => { event.currentTarget.style.display = 'none'; }} /> : <div className="story-image story-image-empty" aria-hidden="true" />}
-        <span className="story-category">{story.category}</span><h3>{story.title}</h3>
-        {story.excerpt && <p>{story.excerpt}</p>}<time dateTime={story.publishedAt}>{story.dateLabel}</time>
+      <a href={localizePath('/news/' + displayStory.slug, locale)} className="story-card-link">
+        {displayStory.coverImage ? <img className="story-image" src={displayStory.coverImage} alt={displayStory.coverAlt || displayStory.title} loading="lazy" onError={(event) => { event.currentTarget.style.display = 'none'; }} /> : <div className="story-image story-image-empty" aria-hidden="true" />}
+        <span className="story-category">{displayStory.category}</span><h3>{displayStory.title}</h3>
+        {displayStory.excerpt && <p>{displayStory.excerpt}</p>}<time dateTime={displayStory.publishedAt}>{displayStory.dateLabel}</time>
       </a>
     </article>
   );
@@ -122,8 +124,9 @@ function NewsListingPage({ locale }) {
 }
 
 function ArticleDetailPage({ slug, locale }) {
-  const article = articles.find((item) => item.slug === slug);
-  const related = article ? articles.filter((item) => item.slug !== slug && item.category === article.category).slice(0, 3) : [];
+  const sourceArticle = articles.find((item) => item.slug === slug);
+  const article = localizeStory(sourceArticle, locale);
+  const related = sourceArticle ? articles.filter((item) => item.slug !== slug && item.category === sourceArticle.category).slice(0, 3).map((item) => localizeStory(item, locale)) : [];
   if (!article) return <main className="page-main"><section className="container article-missing"><span className="eyebrow">AURA Sport</span><h1>{tr(locale, 'Story not available', 'खबर उपलब्ध नहीं है')}</h1><p>{tr(locale, 'This story may not have been published yet, or the link may have changed.', 'यह खबर अभी प्रकाशित नहीं हुई है या इसका लिंक बदल गया है।')}</p><a className="button button-gold" href={localizePath('/news', locale)}>{tr(locale, 'Back to News', 'खबरों पर वापस जाएँ')}</a></section></main>;
   return (
     <main className="page-main"><div className="container article-shell"><article className="article-content">
