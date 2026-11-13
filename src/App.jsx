@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AdditionalPage } from './InfoPages';
 import { localizePath, resolveLocalizedPath } from './i18n/locale';
 import { localizeStory } from './i18n/localized-content';
+import { getLocalizedSeoUrls, getOpenGraphLocale } from './i18n/seo';
 
 const navigation = [
   ['News', '/news'],
@@ -175,10 +176,47 @@ export default function App() {
   useEffect(() => {
     document.documentElement.lang = locale === 'hi' ? 'hi-IN' : 'en';
     document.title = pageMetadata[0];
-    let description = document.querySelector('meta[name="description"]');
-    if (!description) { description = document.createElement('meta'); description.name = 'description'; document.head.appendChild(description); }
-    description.setAttribute('content', pageMetadata[1]);
-  }, [pageMetadata[0], pageMetadata[1], locale]);
+
+    const setMeta = (selector, attribute, key, value) => {
+      let element = document.head.querySelector(selector);
+      if (!element) {
+        element = document.createElement('meta');
+        element.setAttribute(attribute, key);
+        document.head.appendChild(element);
+      }
+      element.setAttribute('content', value);
+    };
+    const setLink = (selector, attributes) => {
+      let element = document.head.querySelector(selector);
+      if (!element) {
+        element = document.createElement('link');
+        document.head.appendChild(element);
+      }
+      Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
+    };
+
+    const seoUrls = getLocalizedSeoUrls(window.location.origin, window.location.pathname);
+    setMeta('meta[name="description"]', 'name', 'description', pageMetadata[1]);
+    setLink('link[rel="canonical"]', { rel: 'canonical', href: seoUrls.canonical });
+    Object.entries(seoUrls.languages).forEach(([language, href]) => {
+      setLink(`link[rel="alternate"][hreflang="${language}"]`, {
+        rel: 'alternate',
+        hreflang: language,
+        href,
+      });
+    });
+
+    setMeta('meta[property="og:title"]', 'property', 'og:title', pageMetadata[0]);
+    setMeta('meta[property="og:description"]', 'property', 'og:description', pageMetadata[1]);
+    setMeta('meta[property="og:type"]', 'property', 'og:type', articleMatch ? 'article' : 'website');
+    setMeta('meta[property="og:url"]', 'property', 'og:url', seoUrls.canonical);
+    setMeta('meta[property="og:locale"]', 'property', 'og:locale', getOpenGraphLocale(locale));
+    setMeta('meta[property="og:locale:alternate"]', 'property', 'og:locale:alternate', getOpenGraphLocale(locale === 'hi' ? 'en' : 'hi'));
+    setMeta('meta[property="og:site_name"]', 'property', 'og:site_name', 'AURA Sport');
+    setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary');
+    setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', pageMetadata[0]);
+    setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', pageMetadata[1]);
+  }, [pageMetadata[0], pageMetadata[1], locale, path, articleMatch]);
 
   let page;
   if (path === '/') page = <HomePage locale={locale} />;
