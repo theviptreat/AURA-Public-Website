@@ -45,8 +45,6 @@ export function resolveLocalizedPath(pathname) {
 
 /**
  * Build a locale-prefixed URL path while avoiding duplicate locale segments.
- * This function accepts a pathname only; query strings and hashes are kept
- * separate by callers so they can be handled without accidental rewriting.
  */
 export function localizePath(pathname, locale) {
   const safeLocale = normalizeLocale(locale) || DEFAULT_LOCALE;
@@ -58,10 +56,15 @@ export function localizePath(pathname, locale) {
 }
 
 /**
- * Return the equivalent page path in another supported language.
- * Article slugs are preserved; translated slugs can be introduced later
- * through an explicit content-level locale mapping.
+ * Return the equivalent page URL in another language, retaining its query
+ * string and hash fragment exactly as supplied by the browser.
  */
-export function getLocaleSwitchPath(pathname, targetLocale) {
-  return localizePath(pathname, targetLocale);
+export function getLocaleSwitchPath(pathname, targetLocale, search = '', hash = '') {
+  const query = typeof search === 'string' && search
+    ? (search.startsWith('?') ? search : `?${search}`)
+    : '';
+  const fragment = typeof hash === 'string' && hash
+    ? (hash.startsWith('#') ? hash : `#${hash}`)
+    : '';
+  return `${localizePath(pathname, targetLocale)}${query}${fragment}`;
 }
