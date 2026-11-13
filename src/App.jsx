@@ -15,7 +15,7 @@ const articles = [];
 const tr = (locale, en, hi) => locale === 'hi' ? hi : en;
 
 function Brand({ locale = 'en' }) {
-  return <a className="brand" href={localizePath('/', locale)} aria-label="AURA Sport home"><span className="brand-name">AURA Sport<span>.</span></span></a>;
+  return <a className="brand" href={localizePath('/', locale)} aria-label={tr(locale, "AURA Sport home", "AURA Sport होमपेज")}><span className="brand-name">AURA Sport<span>.</span></span></a>;
 }
 
 function Header({ locale = 'en', currentPath = '/' }) {
