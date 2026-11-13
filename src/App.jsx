@@ -6,7 +6,7 @@ const navigation = [
   ['Match Preview', '/match-preview'],
   ['Analysis', '/analysis'],
   ['Knowledge', '/knowledge'],
-  ['About AURA', '/about'],
+  ['About AURA Sport', '/about'],
 ];
 
 const newsCategories = ['All News', 'International', 'Domestic', 'Tournaments', 'Cricket Updates'];
@@ -17,9 +17,9 @@ const articles = [];
 
 function Brand() {
   return (
-    <a className="brand" href="/" aria-label="AURA home">
+    <a className="brand" href="/" aria-label="AURA Sport home">
       <span className="brand-mark">A</span>
-      <span className="brand-name">AURA<span>.</span></span>
+      <span className="brand-name">AURA Sport<span>.</span></span>
     </a>
   );
 }
@@ -142,7 +142,7 @@ function HomePage() {
         {analysis.length > 0 && (
           <section className="analysis-band content-section" id="analysis">
             <div className="container">
-              <SectionHeading eyebrow="Look beyond the score" title="AURA Analysis" href="/analysis" />
+              <SectionHeading eyebrow="Look beyond the score" title="AURA Sport Analysis" href="/analysis" />
               <div className="story-grid">{analysis.map((story) => <StoryCard key={story.slug} story={story} />)}</div>
             </div>
           </section>
@@ -159,8 +159,8 @@ function HomePage() {
           <div className="app-promo-copy">
             <span className="eyebrow eyebrow-light">The game goes with you</span>
             <h2>Stay closer to the cricket that matters.</h2>
-            <p>Explore the AURA app for match coverage and team-researched predictions.</p>
-            <a className="button button-gold" href="/download">Explore the AURA App <span aria-hidden="true">↗</span></a>
+            <p>Explore the AURA Sport app for match coverage and team-researched predictions.</p>
+            <a className="button button-gold" href="/download">Explore the AURA Sport App <span aria-hidden="true">↗</span></a>
           </div>
           <div className="app-promo-art" aria-hidden="true">
             <div className="art-ring ring-a" />
@@ -260,7 +260,7 @@ function ArticleDetailPage({ slug }) {
     return (
       <main className="page-main">
         <section className="container article-missing">
-          <span className="eyebrow">AURA stories</span>
+          <span className="eyebrow">AURA Sport stories</span>
           <h1>Story not available</h1>
           <p>This story may not have been published yet, or the link may have changed.</p>
           <a className="button button-gold" href="/news">Back to News</a>
@@ -335,12 +335,12 @@ function Footer() {
         </div>
         <div className="footer-links">
           <div><span className="footer-label">Explore</span><a href="/news">News</a><a href="/match-preview">Match Preview</a><a href="/analysis">Analysis</a><a href="/knowledge">Knowledge</a></div>
-          <div><span className="footer-label">AURA</span><a href="/about">About</a><a href="/contact">Contact & Help</a><a href="/download">Download App</a></div>
+          <div><span className="footer-label">AURA Sport</span><a href="/about">About</a><a href="/contact">Contact & Help</a><a href="/download">Download App</a></div>
           <div><span className="footer-label">Information</span><a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms & Conditions</a><a href="/disclaimer">Disclaimer</a></div>
         </div>
       </div>
       <div className="container footer-bottom">
-        <span>© {new Date().getFullYear()} AURA. All rights reserved.</span>
+        <span>© {new Date().getFullYear()} AURA Sport. All rights reserved.</span>
         <span>Made for the love of cricket.</span>
       </div>
     </footer>
@@ -351,19 +351,19 @@ export default function App() {
   const path = window.location.pathname.replace(/\/$/, '') || '/';
   const articleMatch = path.match(/^\/news\/([^/]+)$/);
   const metadataByPath = {
-    '/': ['AURA — Cricket, with context', 'AURA brings you considered cricket news, match previews, analysis and knowledge.'],
-    '/news': ['Cricket News | AURA', 'Read the latest cricket news and updates from AURA.'],
-    '/match-preview': ['Cricket Match Previews | AURA', 'Explore cricket match previews from AURA.'],
-    '/analysis': ['Cricket Analysis | AURA', 'Read thoughtful cricket analysis and perspectives from AURA.'],
-    '/knowledge': ['Cricket Knowledge | AURA', 'Understand cricket rules, formats and tactics with AURA.'],
-    '/about': ['About AURA', 'Learn about AURA and its cricket editorial approach.'],
-    '/contact': ['Contact & Help | AURA', 'Find information about contacting AURA and getting support.'],
-    '/privacy-policy': ['Privacy Policy | AURA', 'Read the AURA website privacy policy.'],
-    '/terms': ['Terms & Conditions | AURA', 'Read the terms and conditions for using AURA.'],
-    '/disclaimer': ['Disclaimer | AURA', 'Important information about AURA editorial content and predictions.'],
-    '/download': ['Get the AURA App', 'Find official information about downloading the AURA app.']
+    '/': ['AURA Sport — Cricket, with context', 'AURA Sport brings you considered cricket news, match previews, analysis and knowledge.'],
+    '/news': ['Cricket News | AURA Sport', 'Read the latest cricket news and updates from AURA Sport.'],
+    '/match-preview': ['Cricket Match Previews | AURA Sport', 'Explore cricket match previews from AURA Sport.'],
+    '/analysis': ['Cricket Analysis | AURA Sport', 'Read thoughtful cricket analysis and perspectives from AURA Sport.'],
+    '/knowledge': ['Cricket Knowledge | AURA Sport', 'Understand cricket rules, formats and tactics with AURA Sport.'],
+    '/about': ['About AURA Sport', 'Learn about AURA Sport and its cricket editorial approach.'],
+    '/contact': ['Contact & Help | AURA Sport', 'Find information about contacting AURA Sport and getting support.'],
+    '/privacy-policy': ['Privacy Policy | AURA Sport', 'Read the AURA Sport website privacy policy.'],
+    '/terms': ['Terms & Conditions | AURA Sport', 'Read the terms and conditions for using AURA Sport.'],
+    '/disclaimer': ['Disclaimer | AURA Sport', 'Important information about AURA Sport editorial content and predictions.'],
+    '/download': ['Get the AURA Sport App', 'Find official information about downloading the AURA Sport app.']
   };
-  const pageMetadata = articleMatch ? ['Cricket Story | AURA', 'Read cricket news and perspectives from AURA.'] : (metadataByPath[path] || ['Page Not Found | AURA', 'The requested page could not be found on AURA.']);
+  const pageMetadata = articleMatch ? ['Cricket Story | AURA Sport', 'Read cricket news and perspectives from AURA Sport.'] : (metadataByPath[path] || ['Page Not Found | AURA Sport', 'The requested page could not be found on AURA Sport.']);
   useEffect(() => {
     document.title = pageMetadata[0];
     let description = document.querySelector('meta[name="description"]');
