@@ -271,3 +271,25 @@ button { font: inherit; }
 
 /* Keep image areas visually stable if a remote image fails to load. */
 .story-image, .listing-featured-image, .article-cover { background: linear-gradient(135deg, #e6e8df, #f0f0e9); }
+
+
+/* Language selector and Devanagari typography */
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-left: 2px;
+  padding-left: 18px;
+  border-left: 1px solid rgba(255,255,255,.2);
+  color: rgba(255,255,255,.55);
+  font-size: 12px;
+}
+.language-switch a { color: rgba(255,255,255,.72); }
+.language-switch a[aria-current="page"] { color: var(--gold); font-weight: 700; }
+:lang(hi) { font-family: "Noto Sans Devanagari", "Nirmala UI", Mangal, Arial, sans-serif; }
+.hindi-coming-soon { max-width: 850px; }
+.hindi-coming-soon h1 { line-height: 1.35; letter-spacing: 0; }
+.hindi-coming-soon p { line-height: 1.9; }
+@media (max-width: 800px) {
+  .language-switch { margin: 12px 0 0; padding: 12px 0 0; border-left: 0; border-top: 1px solid rgba(255,255,255,.12); }
+}
