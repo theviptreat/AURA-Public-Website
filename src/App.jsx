@@ -78,7 +78,7 @@ function StoryCard({ story }) {
     <article className="story-card">
       <a href={`/news/${story.slug}`} className="story-card-link">
         {story.coverImage ? (
-          <img className="story-image" src={story.coverImage} alt={story.coverAlt || story.title} loading="lazy" />
+          <img className="story-image" src={story.coverImage} alt={story.coverAlt || story.title} loading="lazy" onError={(event) => { event.currentTarget.style.display = "none"; }} />
         ) : (
           <div className="story-image story-image-empty" aria-hidden="true" />
         )}
@@ -198,7 +198,7 @@ function NewsListingPage() {
         {featured && (
           <a className="listing-featured" href={`/news/${featured.slug}`}>
             <div className="listing-featured-image">
-              {featured.coverImage && <img src={featured.coverImage} alt={featured.coverAlt || featured.title} />}
+              {featured.coverImage && <img src={featured.coverImage} alt={featured.coverAlt || featured.title} onError={(event) => { event.currentTarget.style.display = "none"; }} />}
             </div>
             <div className="listing-featured-copy">
               <span className="story-category">Featured story · {featured.category}</span>
@@ -285,7 +285,7 @@ function ArticleDetailPage({ slug }) {
           </div>
           {article.coverImage && (
             <figure className="article-cover">
-              <img src={article.coverImage} alt={article.coverAlt || article.title} />
+              <img src={article.coverImage} alt={article.coverAlt || article.title} onError={(event) => { event.currentTarget.style.display = "none"; }} />
               {article.imageCredit && <figcaption>{article.imageCredit}</figcaption>}
             </figure>
           )}
