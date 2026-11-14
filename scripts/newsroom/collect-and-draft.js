@@ -197,7 +197,7 @@ export function validateDraft(draft) {
     if (typeof draft[field] !== 'string' || !draft[field].trim()) {
       throw new Error(`Gemini draft is missing ${field}`);
     }
-    if (draft[field].length > maxLengths[field] || /<\\/?[a-z][^>]*>/i.test(draft[field])) {
+    if (draft[field].length > maxLengths[field] || /<\/?[a-z][^>]*>/i.test(draft[field])) {
       throw new Error(`Gemini draft field ${field} exceeds limits or contains HTML.`);
     }
   }
@@ -207,7 +207,7 @@ export function validateDraft(draft) {
   if (!Array.isArray(draft.sourceClaims) || draft.sourceClaims.length === 0) {
     throw new Error('Gemini did not provide source claims for human verification.');
   }
-  if (draft.sourceClaims.length > 12 || draft.sourceClaims.some((claim) => typeof claim !== 'string' || !claim.trim() || claim.length > 500 || /<\\/?[a-z][^>]*>/i.test(claim))) {
+  if (draft.sourceClaims.length > 12 || draft.sourceClaims.some((claim) => typeof claim !== 'string' || !claim.trim() || claim.length > 500 || /<\/?[a-z][^>]*>/i.test(claim))) {
     throw new Error('Gemini returned invalid source claims.');
   }
 }
