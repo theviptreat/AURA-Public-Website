@@ -1,6 +1,7 @@
 name: Verify bilingual website
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - feature/i18n-en-hi
