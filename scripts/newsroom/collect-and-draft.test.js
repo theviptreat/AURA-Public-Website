@@ -32,6 +32,10 @@ test('canonicalUrl removes tracking parameters but keeps story parameters', () =
   );
 });
 
+test('BBC RSS host is explicitly approved', () => {
+  assert.equal(isAllowedHost('https://feeds.bbci.co.uk/sport/cricket/rss.xml', ['bbc.co.uk', 'bbc.com', 'bbci.co.uk']), true);
+});
+
 test('isAllowedHost accepts real publisher subdomains and rejects lookalike domains', () => {
   assert.equal(isAllowedHost('https://www.bbc.co.uk/sport/cricket', ['bbc.co.uk']), true);
   assert.equal(isAllowedHost('https://bbc.co.uk.attacker.example/story', ['bbc.co.uk']), false);
