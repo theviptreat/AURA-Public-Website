@@ -18,6 +18,16 @@ content:
     operations:
       rename: false
       delete: false
+    actions:
+      - name: scan-cricket-news
+        label: Find new cricket news and prepare drafts
+        workflow: cricket-newsroom.yml
+        ref: current
+        scope: collection
+        confirm:
+          title: Run AURA Cricket Newsroom?
+          message: This checks configured cricket news feeds and may create one bilingual draft in Review status. It will not publish anything.
+          button: Start newsroom scan
     view:
       primary: title
       fields: [title, section, status, publishedAt, featured]
