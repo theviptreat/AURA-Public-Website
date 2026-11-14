@@ -26,7 +26,7 @@ function tag(xml, name) {
   const contentStart = xml.indexOf('>', start) + 1;
   const end = lower.indexOf('</' + name.toLowerCase() + '>', contentStart);
   if (contentStart === 0 || end < 0) return '';
-  return decode(xml.slice(contentStart, end).replace(/<[^>]+>/g, ' '))
+  return decode(xml.slice(contentStart, end)).replace(/<[^>]+>/g, ' ')
     .replace(/\s+/g, ' ').trim();
 }
 export function parseFeed(xml, publisher) {
