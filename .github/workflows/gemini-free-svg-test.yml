@@ -1,0 +1,138 @@
+name: Gemini Free SVG Illustration Test
+
+on:
+  push:
+    branches:
+      - feature/i18n-en-hi
+    paths:
+      - .github/workflows/gemini-free-svg-test.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  generate-svg:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment: newsroom
+    steps:
+      - name: Generate one cricket illustration with the existing text model
+        env:
+          GEMINI_API_KEY: ${{ secrets.NEWSROOM_GEMINI_API_KEY }}
+          GEMINI_MODEL: gemini-3.1-flash-lite
+        shell: bash
+        run: |
+          set +x
+          if [ -z "${GEMINI_API_KEY:-}" ]; then
+            echo "::error::NEWSROOM_GEMINI_API_KEY is unavailable in the newsroom environment."
+            exit 1
+          fi
+
+          cat > "$RUNNER_TEMP/request.json" <<'JSON'
+          {
+            "contents": [{
+              "parts": [{
+                "text": "Create an original, polished editorial cricket illustration as pure SVG markup only. Canvas exactly 1200 by 630 with viewBox 0 0 1200 630. Visual concept: a dramatic but clean cricket stadium at dusk, a batter in a generic non-branded silhouette playing a cover drive, ball travelling toward the boundary, subtle stadium floodlights and crowd shapes. Premium sports-news editorial style, navy and warm gold palette, balanced composition, strong readable silhouettes, suitable as a website news cover. Do not include any text, letters, numbers, logos, trademarks, flags, player likenesses, or external assets. Use only these SVG elements: svg, g, rect, circle, ellipse, path, line, polyline, polygon. Use only basic geometry and solid fills/strokes; no CSS, style attributes, filters, masks, gradients, scripts, links, images, or animation. Return one complete <svg>...</svg> element and nothing else."
+              }]
+            }],
+            "generationConfig": {
+              "temperature": 0.35,
+              "maxOutputTokens": 3000
+            }
+          }
+          JSON
+
+          http_code="$(curl --silent --show-error \
+            --output "$RUNNER_TEMP/gemini-response.json" \
+            --write-out "%{http_code}" \
+            --header "content-type: application/json" \
+            --header "x-goog-api-key: ${GEMINI_API_KEY}" \
+            --data-binary @"$RUNNER_TEMP/request.json" \
+            "https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent")"
+
+          echo "Gemini text-generation API HTTP status: $http_code"
+          if [ "$http_code" != "200" ]; then
+            node --input-type=module -e '
+              import { readFileSync } from "node:fs";
+              const data = JSON.parse(readFileSync(process.env.RUNNER_TEMP + "/gemini-response.json", "utf8"));
+              console.log(JSON.stringify(data.error ? {
+                code: data.error.code,
+                status: data.error.status,
+                message: data.error.message
+              } : { message: "Gemini returned a non-200 response." }, null, 2));
+            '
+            exit 1
+          fi
+
+          node --input-type=module <<'NODE'
+          import { readFileSync, writeFileSync } from "node:fs";
+
+          const response = JSON.parse(readFileSync(process.env.RUNNER_TEMP + "/gemini-response.json", "utf8"));
+          let svg = (response.candidates?.[0]?.content?.parts || [])
+            .map((part) => part.text || "")
+            .join("")
+            .trim();
+
+          svg = svg.replace(/^```(?:svg|xml)?\s*/i, "").replace(/\s*```$/, "").trim();
+          if (!svg.startsWith("<svg") || !svg.endsWith("</svg>")) {
+            throw new Error("Gemini did not return one complete SVG document.");
+          }
+          if (/<!DOCTYPE|<!ENTITY|<\?|<!--|<\s*(script|foreignObject|image|use|style|iframe|animate|filter|mask|pattern)\b|\bon[a-z]+\s*=|\bhref\s*=|url\s*\(|https?:\/\//i.test(svg)) {
+            throw new Error("Generated SVG contains a prohibited or external construct.");
+          }
+          const allowedTags = new Set(["svg", "g", "rect", "circle", "ellipse", "path", "line", "polyline", "polygon"]);
+          const allowedAttrs = new Set([
+            "xmlns", "width", "height", "viewBox", "fill", "stroke", "stroke-width", "opacity",
+            "cx", "cy", "r", "rx", "ry", "x", "y", "x1", "y1", "x2", "y2", "d", "points",
+            "transform", "fill-opacity", "stroke-linecap", "stroke-linejoin"
+          ]);
+          const tokens = svg.match(/<[^>]+>|[^<]+/g) || [];
+          const stack = [];
+          for (const token of tokens) {
+            if (!token.startsWith("<")) {
+              if (/[&<>]/.test(token)) throw new Error("SVG contains unsafe or malformed text content.");
+              continue;
+            }
+            const close = token.match(/^<\/([a-zA-Z][\w-]*)\s*>$/);
+            if (close) {
+              if (stack.pop() !== close[1]) throw new Error("SVG element nesting is invalid.");
+              continue;
+            }
+            const open = token.match(/^<([a-zA-Z][\w-]*)([\s\S]*?)\s*(\/?)>$/);
+            if (!open || !allowedTags.has(open[1])) throw new Error("SVG contains an unsupported element.");
+            const [, tag, attrText, selfClose] = open;
+            const attrPattern = /([A-Za-z][\w-]*)\s*=\s*"([^"]*)"/g;
+            let consumed = "";
+            for (const match of attrText.matchAll(attrPattern)) {
+              const [full, name, value] = match;
+              if (!allowedAttrs.has(name) || /[&<>]/.test(value)) {
+                throw new Error("SVG contains an unsupported or unsafe attribute.");
+              }
+              consumed += full;
+            }
+            if (attrText.replace(attrPattern, "").replace(/\s+/g, "").length) {
+              throw new Error("SVG attributes are malformed or not safely quoted.");
+            }
+            if (tag === "svg" && !/\bviewBox="0 0 1200 630"/.test(token)) {
+              throw new Error("SVG must use the required 1200x630 viewBox.");
+            }
+            if (!selfClose) stack.push(tag);
+          }
+          if (stack.length) throw new Error("SVG elements are not properly closed.");
+          if (!/<svg\b[^>]*xmlns="http:\/\/www\.w3\.org\/2000\/svg"/.test(svg)) {
+            throw new Error("SVG namespace is missing.");
+          }
+          writeFileSync(process.env.RUNNER_TEMP + "/aura-cricket-illustration.svg", svg + "\n", "utf8");
+          console.log("Validated one self-contained SVG illustration.");
+          console.log("SVG bytes: " + Buffer.byteLength(svg, "utf8"));
+          console.log("No native image-generation model was called.");
+          NODE
+
+      - name: Upload the sample illustration
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: aura-free-svg-illustration-test
+          path: ${{ runner.temp }}/aura-cricket-illustration.svg
+          if-no-files-found: error
+          retention-days: 3
