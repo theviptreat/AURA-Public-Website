@@ -1,5 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { getPublishedArticles } from '../src/content/articles.js';
+import { localizeStory } from '../src/i18n/localized-content.js';
 
 const routes = {
   '/': {
@@ -49,7 +51,51 @@ const routes = {
 };
 
 function escapeHtml(value) {
-  return value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+  return String(value).replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+}
+
+function setMeta(html, selector, attribute, key, value) {
+  const tag = `<meta ${attribute}="${key}" content="${escapeHtml(value)}" />`;
+  const pattern = new RegExp(`<meta ${attribute}=["']${key}["'][^>]*>`);
+  if (pattern.test(html)) return html.replace(pattern, tag);
+  return html.replace('</head>', `  ${tag}\\n  </head>`);
+}
+
+export function buildArticleDocument(template, sourceArticle, locale) {
+  if (!sourceArticle || sourceArticle.status !== 'published') {
+    throw new Error('Only published articles can be prerendered.');
+  }
+  const article = localizeStory(sourceArticle, locale);
+  if (!['en', 'hi'].includes(locale)) throw new Error(`Unsupported article locale: ${locale}`);
+  const title = article.seoTitle?.trim() || article.title;
+  const description = article.seoDescription?.trim() || article.excerpt;
+  const lang = locale === 'hi' ? 'hi-IN' : 'en';
+  const localeTag = locale === 'hi' ? 'hi_IN' : 'en_US';
+  let html = template
+    .replace('<html lang="en">', `<html lang="${lang}">`)
+    .replace(/<title>[^<]*<\\/title>/, `<title>${escapeHtml(title.includes('AURA Sport') ? title : `${title} | AURA Sport`)}</title>`);
+  html = setMeta(html, 'name', 'description', 'description', description);
+  html = setMeta(html, 'property', 'og:title', 'og:title', title.includes('AURA Sport') ? title : `${title} | AURA Sport`);
+  html = setMeta(html, 'property', 'og:description', 'og:description', description);
+  html = setMeta(html, 'property', 'og:type', 'og:type', 'article');
+  html = setMeta(html, 'property', 'og:locale', 'og:locale', localeTag);
+  if (article.coverImage) {
+    html = setMeta(html, 'property', 'og:image', 'og:image', article.coverImage);
+    html = setMeta(html, 'name', 'twitter:image', 'twitter:image', article.coverImage);
+    html = setMeta(html, 'name', 'twitter:card', 'twitter:card', 'summary_large_image');
+  }
+  return html;
+}
+
+export async function prerenderPublishedArticles(template, outputRoot = 'dist', articles = getPublishedArticles()) {
+  for (const article of articles) {
+    if (article.status !== 'published') continue;
+    for (const locale of ['en', 'hi']) {
+      const outputDir = path.join(outputRoot, locale, 'news', article.slug);
+      await mkdir(outputDir, { recursive: true });
+      await writeFile(path.join(outputDir, 'index.html'), buildArticleDocument(template, article, locale));
+    }
+  }
 }
 
 export function buildLocalizedDocument(template, route, locale) {
@@ -75,6 +121,7 @@ export async function prerenderLocalizedRoutes() {
       await writeFile(path.join(outputDir, 'index.html'), buildLocalizedDocument(template, route, locale));
     }
   }
+  await prerenderPublishedArticles(template);
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve('scripts/prerender-locales.js')) {

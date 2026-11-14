@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { AdditionalPage } from './InfoPages';
 import { getLocaleSwitchPath, localizePath, resolveLocalizedPath } from './i18n/locale';
+import { getPublishedArticles } from './content/articles.js';
 import { localizeStory } from './i18n/localized-content';
-import { getLocalizedSeoUrls, getOpenGraphLocale } from './i18n/seo';
+import { getArticleSeoMetadata, getLocalizedSeoUrls, getOpenGraphLocale } from './i18n/seo';
 
 const navigation = [
   ['News', '/news'],
@@ -12,7 +13,7 @@ const navigation = [
   ['About AURA Sport', '/about'],
 ];
 const newsCategories = ['All News', 'International', 'Domestic', 'Tournaments', 'Cricket Updates'];
-const articles = [];
+const articles = getPublishedArticles();
 
 const tr = (locale, en, hi) => locale === 'hi' ? hi : en;
 
@@ -158,6 +159,12 @@ export default function App() {
   const locale = resolvedRoute.locale;
   const path = resolvedRoute.pathname;
   const articleMatch = path.match(/^\/news\/([^/]+)$/);
+  let articleSlug = null;
+  if (articleMatch) {
+    try { articleSlug = decodeURIComponent(articleMatch[1]); } catch { articleSlug = '__invalid_url__'; }
+  }
+  const sourceArticle = articles.find((article) => article.slug === articleSlug) || null;
+  const localizedArticle = localizeStory(sourceArticle, locale);
   const metadata = {
     '/': [['AURA Sport — Cricket, with context', 'AURA Sport brings you considered cricket news, match previews, analysis and knowledge.'], ['AURA Sport — क्रिकेट, सही संदर्भ के साथ', 'AURA Sport पर पढ़ें क्रिकेट की खबरें, मैच पूर्वावलोकन, विश्लेषण और उपयोगी जानकारी।']],
     '/news': [['Cricket News | AURA Sport', 'Read the latest cricket news and updates from AURA Sport.'], ['क्रिकेट समाचार | AURA Sport', 'AURA Sport पर पढ़ें क्रिकेट जगत की ताज़ा खबरें और अपडेट।']],
@@ -172,10 +179,14 @@ export default function App() {
     '/download': [['Get the AURA Sport App', 'Find official information about downloading the AURA Sport app.'], ['AURA Sport ऐप डाउनलोड करें', 'AURA Sport ऐप डाउनलोड करने की आधिकारिक जानकारी।']]
   };
   const pageMeta = (metadata[path] || [['Page Not Found | AURA Sport', 'The requested page could not be found on AURA Sport.'], ['पेज नहीं मिला | AURA Sport', 'आपका खोजा गया पेज AURA Sport पर उपलब्ध नहीं है।']])[locale === 'hi' ? 1 : 0];
-  const pageMetadata = articleMatch ? [tr(locale, 'Cricket Story | AURA Sport', 'क्रिकेट खबर | AURA Sport'), tr(locale, 'Read cricket news and perspectives from AURA Sport.', 'AURA Sport पर पढ़ें क्रिकेट की खबरें और विचार।')] : pageMeta;
+  const fallbackArticleMeta = [tr(locale, 'Cricket Story | AURA Sport', 'क्रिकेट खबर | AURA Sport'), tr(locale, 'Read cricket news and perspectives from AURA Sport.', 'AURA Sport पर पढ़ें क्रिकेट की खबरें और विचार।')];
+  const articleSeo = localizedArticle ? getArticleSeoMetadata(localizedArticle, locale) : null;
+  const pageMetadata = articleSeo
+    ? { title: articleSeo.title, description: articleSeo.description, image: articleSeo.image }
+    : { title: articleMatch ? fallbackArticleMeta[0] : pageMeta[0], description: articleMatch ? fallbackArticleMeta[1] : pageMeta[1], image: '' };
   useEffect(() => {
     document.documentElement.lang = locale === 'hi' ? 'hi-IN' : 'en';
-    document.title = pageMetadata[0];
+    document.title = pageMetadata.title;
 
     const setMeta = (selector, attribute, key, value) => {
       let element = document.head.querySelector(selector);
@@ -196,7 +207,7 @@ export default function App() {
     };
 
     const seoUrls = getLocalizedSeoUrls(window.location.origin, window.location.pathname);
-    setMeta('meta[name="description"]', 'name', 'description', pageMetadata[1]);
+    setMeta('meta[name="description"]', 'name', 'description', pageMetadata.description);
     setLink('link[rel="canonical"]', { rel: 'canonical', href: seoUrls.canonical });
     Object.entries(seoUrls.languages).forEach(([language, href]) => {
       setLink(`link[rel="alternate"][hreflang="${language}"]`, {
@@ -206,25 +217,25 @@ export default function App() {
       });
     });
 
-    setMeta('meta[property="og:title"]', 'property', 'og:title', pageMetadata[0]);
-    setMeta('meta[property="og:description"]', 'property', 'og:description', pageMetadata[1]);
+    setMeta('meta[property="og:title"]', 'property', 'og:title', pageMetadata.title);
+    setMeta('meta[property="og:description"]', 'property', 'og:description', pageMetadata.description);
     setMeta('meta[property="og:type"]', 'property', 'og:type', articleMatch ? 'article' : 'website');
+    setMeta('meta[property="og:image"]', 'property', 'og:image', pageMetadata.image);
+    setMeta('meta[name="twitter:image"]', 'name', 'twitter:image', pageMetadata.image);
     setMeta('meta[property="og:url"]', 'property', 'og:url', seoUrls.canonical);
     setMeta('meta[property="og:locale"]', 'property', 'og:locale', getOpenGraphLocale(locale));
     setMeta('meta[property="og:locale:alternate"]', 'property', 'og:locale:alternate', getOpenGraphLocale(locale === 'hi' ? 'en' : 'hi'));
     setMeta('meta[property="og:site_name"]', 'property', 'og:site_name', 'AURA Sport');
-    setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary');
-    setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', pageMetadata[0]);
-    setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', pageMetadata[1]);
-  }, [pageMetadata[0], pageMetadata[1], locale, path, articleMatch]);
+    setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', pageMetadata.image ? 'summary_large_image' : 'summary');
+    setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', pageMetadata.title);
+    setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', pageMetadata.description);
+  }, [pageMetadata.title, pageMetadata.description, pageMetadata.image, locale, path, articleSlug]);
 
   let page;
   if (path === '/') page = <HomePage locale={locale} />;
   else if (path === '/news') page = <NewsListingPage locale={locale} />;
   else if (articleMatch) {
-    let safeSlug = '__invalid_url__';
-    try { safeSlug = decodeURIComponent(articleMatch[1]); } catch { /* Show not-found for malformed URLs. */ }
-    page = <ArticleDetailPage slug={safeSlug} locale={locale} />;
+    page = <ArticleDetailPage slug={articleSlug || '__invalid_url__'} locale={locale} />;
   } else page = <AdditionalPage path={path} locale={locale} />;
 
   return <><Header locale={locale} currentPath={path} currentSearch={window.location.search} currentHash={window.location.hash} />{page}<Footer locale={locale} /></>;

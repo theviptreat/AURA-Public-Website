@@ -23,3 +23,18 @@ export function getLocalizedSeoUrls(origin, pathname) {
 export function getOpenGraphLocale(locale) {
   return locale === 'hi' ? 'hi_IN' : 'en_US';
 }
+
+
+/**
+ * Resolve per-story metadata after applying the requested language.
+ * Explicit SEO fields take precedence; editorial title/excerpt are safe fallbacks.
+ */
+export function getArticleSeoMetadata(article, locale = 'en') {
+  const title = article?.seoTitle?.trim() || article?.title?.trim() || 'Cricket Story';
+  const description = article?.seoDescription?.trim() || article?.excerpt?.trim() || '';
+  return Object.freeze({
+    title: title.includes('AURA Sport') ? title : `${title} | AURA Sport`,
+    description,
+    image: typeof article?.coverImage === 'string' ? article.coverImage : '',
+  });
+}

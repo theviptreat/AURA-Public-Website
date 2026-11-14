@@ -7,6 +7,8 @@ const LOCALIZED_STORY_FIELDS = Object.freeze({
   imageCredit: 'imageCreditHi',
   author: 'authorHi',
   dateLabel: 'dateLabelHi',
+  seoTitle: 'seoTitleHi',
+  seoDescription: 'seoDescriptionHi',
 });
 
 /**
