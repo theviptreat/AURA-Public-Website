@@ -1,14 +1,10 @@
+import publishedArticles from './generated-articles.json';
 import { validateArticles } from './article-schema.js';
 
-// JSON article files are managed through Pages CMS and committed to GitHub.
-// Draft and review records remain in the repository but are never exposed publicly.
-const articleModules = import.meta.glob('../../content/articles/*.json', {
-  eager: true,
-  import: 'default',
-});
-
-export const ARTICLES = Object.freeze(validateArticles(Object.values(articleModules)));
+// This generated module contains published, public-safe fields only.
+// Run the generation script before Vite dev/build; draft data is never bundled.
+export const ARTICLES = Object.freeze(validateArticles(publishedArticles));
 
 export function getPublishedArticles() {
-  return ARTICLES.filter((article) => article.status === 'published');
+  return ARTICLES;
 }

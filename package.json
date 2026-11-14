@@ -4,8 +4,8 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build && node scripts/prerender-locales.js",
+    "dev": "node scripts/generate-public-articles.js && vite",
+    "build": "node scripts/generate-public-articles.js && vite build && node scripts/prerender-locales.js",
     "test": "node --test",
     "preview": "vite preview"
   },
