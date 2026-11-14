@@ -126,6 +126,26 @@ function NewsListingPage({ locale }) {
   );
 }
 
+function renderArticleBody(body) {
+  return body.split(/\n\s*\n/).map((block, index) => {
+    const content = block.trim();
+    if (!content) return null;
+
+    const heading = content.match(/^\*\*(.+)\*\*$/);
+    if (heading) return <h2 key={index}>{heading[1]}</h2>;
+
+    const parts = content.split(/(\*\*[^*]+\*\*)/g);
+    return (
+      <p key={index}>
+        {parts.map((part, partIndex) => {
+          const bold = part.match(/^\*\*(.+)\*\*$/);
+          return bold ? <strong key={partIndex}>{bold[1]}</strong> : part;
+        })}
+      </p>
+    );
+  });
+}
+
 function ArticleDetailPage({ slug, locale }) {
   const sourceArticle = articles.find((item) => item.slug === slug);
   const article = localizeStory(sourceArticle, locale);
@@ -137,7 +157,7 @@ function ArticleDetailPage({ slug, locale }) {
       <span className="story-category">{article.category}</span><h1>{article.title}</h1>{article.excerpt && <p className="article-deck">{article.excerpt}</p>}
       <div className="article-meta">{article.author && <span>{tr(locale, 'By', 'लेखक')} {article.author}</span>}<time dateTime={article.publishedAt}>{article.dateLabel || article.publishedAt?.slice(0, 10)}</time></div>
       {article.coverImage && <figure className="article-cover"><img src={article.coverImage} alt={article.coverAlt || article.title} onError={(event) => { event.currentTarget.style.display = 'none'; }} />{article.imageCredit && <figcaption>{article.imageCredit}</figcaption>}</figure>}
-      <div className="article-body">{article.body.split(/\n\s*\n/).map((paragraph, index) => paragraph.trim() ? <p key={index}>{paragraph.trim()}</p> : null)}</div>
+      <div className="article-body">{renderArticleBody(article.body)}</div>
       <div className="article-share"><span>{tr(locale, 'Share this story', 'यह खबर साझा करें')}</span><button type="button" onClick={async () => { const url = window.location.href; try { if (navigator.share) { await navigator.share({ title: article.title, url }); return; } if (navigator.clipboard && navigator.clipboard.writeText) { await navigator.clipboard.writeText(url); window.alert(tr(locale, 'Story link copied.', 'खबर का लिंक कॉपी हो गया।')); return; } } catch (error) { if (error && error.name === 'AbortError') return; } window.prompt(tr(locale, 'Copy this story link:', 'खबर का लिंक कॉपी करें:'), url); }}>{tr(locale, 'Share', 'साझा करें')} ↗</button></div>
     </article><aside className="article-sidebar">{related.length > 0 && <div className="related-panel"><span className="eyebrow">{tr(locale, 'Keep reading', 'आगे पढ़ें')}</span><h2>{tr(locale, 'Related Stories', 'संबंधित खबरें')}</h2>{related.map((story) => <a className="related-story" key={story.slug} href={localizePath('/news/' + story.slug, locale)}><span className="story-category">{story.category}</span><strong>{story.title}</strong><time dateTime={story.publishedAt}>{story.dateLabel}</time></a>)}</div>}</aside></div></main>
   );
