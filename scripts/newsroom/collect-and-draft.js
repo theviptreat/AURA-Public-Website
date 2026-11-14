@@ -1,5 +1,6 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 const FEEDS = [
   { publisher: 'BBC Sport', url: 'https://feeds.bbci.co.uk/sport/cricket/rss.xml', allowedHosts: ['bbc.co.uk', 'bbc.com'] },
@@ -28,7 +29,7 @@ function tag(xml, name) {
   return decode(xml.slice(contentStart, end).replace(/<[^>]+>/g, ' '))
     .replace(/\s+/g, ' ').trim();
 }
-function parseFeed(xml, publisher) {
+export function parseFeed(xml, publisher) {
   return [...xml.matchAll(/<item\b[^>]*>([\s\S]*?)<\/item>/gi)].map((m) => {
     const item = m[1];
     return {
@@ -50,7 +51,7 @@ function plainText(html) {
     .replace(/[ \t]+/g, ' ').replace(/\n\s+/g, '\n').replace(/\n{3,}/g, '\n\n')
     .trim().slice(0, 12000);
 }
-function canonicalUrl(value) {
+export function canonicalUrl(value) {
   const url = new URL(value);
   url.hash = '';
   for (const key of [...url.searchParams.keys()]) {
@@ -58,7 +59,7 @@ function canonicalUrl(value) {
   }
   return url.toString();
 }
-function isAllowedHost(value, allowedHosts) {
+export function isAllowedHost(value, allowedHosts) {
   try {
     const host = new URL(value).hostname.toLowerCase();
     return allowedHosts.some((allowed) => host === allowed || host.endsWith('.' + allowed));
@@ -96,7 +97,7 @@ async function existingArticles() {
   }
   return articles;
 }
-function slugify(value) {
+export function slugify(value) {
   return value.toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 72);
 }
@@ -133,7 +134,7 @@ ${articleText}`;
   if (!raw) throw new Error('Gemini returned no draft content.');
   return JSON.parse(raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, ''));
 }
-function validateDraft(draft) {
+export function validateDraft(draft) {
   const required = ['title', 'titleHi', 'excerpt', 'excerptHi', 'body', 'bodyHi', 'category', 'categoryHi'];
   for (const field of required) if (typeof draft[field] !== 'string' || !draft[field].trim()) {
     throw new Error(`Gemini draft is missing ${field}`);
@@ -227,4 +228,6 @@ async function main() {
   }
   console.log('No sufficiently supported new cricket story was found. No draft created.');
 }
-main().catch((error) => { console.error(error); process.exitCode = 1; });
+if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+  main().catch((error) => { console.error(error); process.exitCode = 1; });
+}
