@@ -66,3 +66,21 @@ export function validateArticles(articles) {
   }
   return articles;
 }
+
+
+// Public build records intentionally omit editorial status and internal fields.
+// Validate them as published records so required publication metadata is still enforced.
+export function validatePublicArticle(article) {
+  return validateArticle({ ...article, status: 'published' });
+}
+
+export function validatePublicArticles(articles) {
+  if (!Array.isArray(articles)) throw new TypeError('Articles must be an array.');
+  const seenSlugs = new Set();
+  for (const article of articles) {
+    validatePublicArticle(article);
+    if (seenSlugs.has(article.slug)) throw new TypeError(`Duplicate article slug: ${article.slug}`);
+    seenSlugs.add(article.slug);
+  }
+  return articles;
+}
