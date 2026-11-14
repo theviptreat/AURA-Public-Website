@@ -3,7 +3,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const FEEDS = [
-  { publisher: 'BBC Sport', url: 'https://feeds.bbci.co.uk/sport/cricket/rss.xml', allowedHosts: ['bbc.co.uk', 'bbc.com'] },
+  { publisher: 'BBC Sport', url: 'https://feeds.bbci.co.uk/sport/cricket/rss.xml', allowedHosts: ['bbc.co.uk', 'bbc.com', 'bbci.co.uk'] },
   { publisher: 'ESPNcricinfo', url: 'https://www.espncricinfo.com/rss/content/story/feeds/0.xml', allowedHosts: ['espncricinfo.com', 'cricinfo.com'] },
 ];
 const CONTENT_DIR = path.resolve('content/articles');
