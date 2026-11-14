@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { validateArticle, validateArticles } from './article-schema.js';
+import { validateArticle, validateArticles, validatePublicArticle, validatePublicArticles } from './article-schema.js';
 
 const validArticle = {
   slug: 'sample-story',
@@ -52,4 +52,17 @@ test('source references require a title and a valid http URL', () => {
 
 test('match reports are a supported editorial section', () => {
   assert.equal(validateArticle({ ...validArticle, section: 'match-report' }).section, 'match-report');
+});
+
+
+test('public published records may omit editorial status after sanitization', () => {
+  const { status, ...publicRecord } = { ...validArticle, status: 'published' };
+  assert.equal(validatePublicArticle(publicRecord), publicRecord);
+  assert.deepEqual(validatePublicArticles([publicRecord]), [publicRecord]);
+});
+
+test('public records still require valid publication dates and sections', () => {
+  const { publishedAt, ...withoutDate } = { ...validArticle, status: 'published' };
+  assert.throws(() => validatePublicArticle(withoutDate), /Published articles must have a valid publishedAt/);
+  assert.throws(() => validatePublicArticle({ ...validArticle, status: undefined, section: 'unknown' }), /section must be one of/);
 });
