@@ -58,7 +58,7 @@ function setMeta(html, selector, attribute, key, value) {
   const tag = `<meta ${attribute}="${key}" content="${escapeHtml(value)}" />`;
   const pattern = new RegExp(`<meta ${attribute}=["']${key}["'][^>]*>`);
   if (pattern.test(html)) return html.replace(pattern, tag);
-  return html.replace('</head>', `  ${tag}\\n  </head>`);
+  return html.replace('</head>', `  ${tag}\n  </head>`);
 }
 
 export function buildArticleDocument(template, sourceArticle, locale) {
@@ -73,7 +73,7 @@ export function buildArticleDocument(template, sourceArticle, locale) {
   const localeTag = locale === 'hi' ? 'hi_IN' : 'en_US';
   let html = template
     .replace('<html lang="en">', `<html lang="${lang}">`)
-    .replace(/<title>[^<]*<\\/title>/, `<title>${escapeHtml(title.includes('AURA Sport') ? title : `${title} | AURA Sport`)}</title>`);
+    .replace(/<title>[^<]*<\/title>/, `<title>${escapeHtml(title.includes('AURA Sport') ? title : `${title} | AURA Sport`)}</title>`);
   html = setMeta(html, 'name', 'description', 'description', description);
   html = setMeta(html, 'property', 'og:title', 'og:title', title.includes('AURA Sport') ? title : `${title} | AURA Sport`);
   html = setMeta(html, 'property', 'og:description', 'og:description', description);
