@@ -1,6 +1,6 @@
 {
   "slug": "new-zealand-beat-india-by-244-runs-fourth-odi-2026",
-  "status": "review",
+  "status": "published",
   "section": "match-report",
   "title": "New Zealand Beat India by 244 Runs as Will Young Hits 125 and Matt Henry Takes Six",
   "titleHi": "चौथे वनडे में न्यूज़ीलैंड ने भारत को 244 रन से हराया, विल यंग का शतक और मैट हेनरी के छह विकेट",
@@ -44,5 +44,6 @@
       "notes": "Cross-checks full innings totals, key batting contributions and bowling figures."
     }
   ],
-  "editorialNotes": "AI-prepared first real newsroom Match Report draft. Fact-check completed on 14 November 2026 against the official New Zealand Cricket archive scorecard and corroborating PTI/Outlook, Cricbuzz and BCCI match-centre records. Confirmed: 4th ODI at Bay Oval, Mount Maunganui on 13 November 2026; New Zealand 333 all out in 50 overs; India 89 all out in 26.4 overs; New Zealand won by 244 runs; Will Young 125 (108), Tim Seifert 58 (48), Finn Allen 41; Matt Henry 6/27 in 9.4 overs; Matthew Fisher 3/31; Ishan Kishan 27, Axar Patel 21, Naman Dhir 21; Matt Henry Player of the Match. English and Hindi copy checked for consistency. No cover image added because image rights/permission have not been verified. Status moved to review for human editorial review; do not publish without explicit editor approval."
+  "editorialNotes": "AI-prepared first real newsroom Match Report draft. Fact-check completed on 14 November 2026 against the official New Zealand Cricket archive scorecard and corroborating PTI/Outlook, Cricbuzz and BCCI match-centre records. Confirmed: 4th ODI at Bay Oval, Mount Maunganui on 13 November 2026; New Zealand 333 all out in 50 overs; India 89 all out in 26.4 overs; New Zealand won by 244 runs; Will Young 125 (108), Tim Seifert 58 (48), Finn Allen 41; Matt Henry 6/27 in 9.4 overs; Matthew Fisher 3/31; Ishan Kishan 27, Axar Patel 21, Naman Dhir 21; Matt Henry Player of the Match. English and Hindi copy checked for consistency. No cover image added because image rights/permission have not been verified. Status moved to review for human editorial review; Publication explicitly approved by the user on 14 November 2026. Status changed to published; public website build/deployment remains a separate step.",
+  "publishedAt": "2026-11-14"
 }
