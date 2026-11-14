@@ -11,5 +11,6 @@
   "category": "CMS Test",
   "categoryHi": "CMS परीक्षण",
   "featured": false,
-  "editorialNotes": "TEST RECORD ONLY. Not a real cricket article. Do not publish. Remove after the draft pipeline verification is complete."
+  "editorialNotes": "TEST RECORD ONLY. Not a real cricket article. Do not publish. Remove after the draft pipeline verification is complete.CMS UI Save verification test — 14 Nov 2026.",
+  "publishedAt": "2026-11-14"
 }
