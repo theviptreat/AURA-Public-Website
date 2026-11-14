@@ -151,7 +151,10 @@ function validateDraft(draft) {
 async function main() {
   if (!process.env.GEMINI_API_KEY) throw new Error('Missing GEMINI_API_KEY secret.');
   const existing = await existingArticles();
-  const knownUrls = new Set(existing.flatMap((article) => (article.sources || []).map((source) => source.url)));
+  const knownUrls = new Set(existing.flatMap((article) => (article.sources || [])
+    .map((source) => source.url)
+    .filter((url) => typeof url === 'string' && /^https?:\\/\\//i.test(url))
+    .map(canonicalUrl)));
   const knownSlugs = new Set(existing.map((article) => article.slug));
   const cutoff = Date.now() - MAX_AGE_HOURS * 60 * 60 * 1000;
   const items = [];
