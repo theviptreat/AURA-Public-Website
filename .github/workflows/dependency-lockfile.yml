@@ -1,0 +1,66 @@
+name: Generate and verify dependency lockfile
+
+on:
+  push:
+    branches:
+      - feature/i18n-en-hi
+    paths:
+      - package.json
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dependency-lock-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  lock-and-verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - name: Check out feature branch
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: feature/i18n-en-hi
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.1.0
+        with:
+          node-version: 22
+          package-manager-cache: false
+
+      - name: Resolve and generate npm lockfile without lifecycle scripts
+        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+
+      - name: Verify clean reproducible installation
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build production website
+        run: npm run build
+
+      - name: Commit generated lockfile
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          if git diff --quiet -- package-lock.json && [ -f package-lock.json ]; then
+            echo "package-lock.json is already current."
+            exit 0
+          fi
+          git add -- package-lock.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "build: add reproducible npm lockfile"
+          auth="$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)"
+          git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:feature/i18n-en-hi
+
+      - name: Audit resolved dependency tree
+        run: npm audit --audit-level=high
