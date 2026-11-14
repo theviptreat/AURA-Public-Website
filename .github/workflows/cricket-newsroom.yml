@@ -1,0 +1,44 @@
+name: AURA Cricket Newsroom
+
+on:
+  workflow_dispatch:
+  schedule:
+    # GitHub scheduled workflows run from the default branch only.
+    - cron: '17 */6 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: aura-cricket-newsroom
+  cancel-in-progress: false
+
+jobs:
+  collect-and-draft:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out selected branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Collect cricket news and prepare bilingual review draft
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: gemini-3.1-flash-lite
+        run: node scripts/newsroom/collect-and-draft.js
+      - name: Commit review draft to the current branch
+        run: |
+          if git diff --quiet -- content/articles; then
+            echo "No new review draft to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/articles
+          git commit -m "content(newsroom): add AI-assisted cricket draft"
+          git push
