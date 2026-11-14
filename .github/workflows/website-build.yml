@@ -3,6 +3,8 @@ name: Website build and security check
 on:
   push:
     branches:
+      - main
+      - feature/website-foundation
       - security/dependency-hardening
   pull_request:
     branches:
