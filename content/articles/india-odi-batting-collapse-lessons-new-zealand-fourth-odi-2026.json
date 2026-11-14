@@ -1,6 +1,6 @@
 {
   "slug": "india-odi-batting-collapse-lessons-new-zealand-fourth-odi-2026",
-  "status": "review",
+  "status": "published",
   "section": "analysis",
   "title": "India’s 89 All Out: Three Batting Lessons from the Fourth ODI Against New Zealand",
   "titleHi": "भारत की 89 रन पर सिमटी पारी: न्यूज़ीलैंड के खिलाफ चौथे वनडे से तीन बल्लेबाज़ी सबक",
@@ -44,5 +44,6 @@
       "notes": "Additional scorecard reporting for batting and bowling figures; use as a cross-check against the official archive."
     }
   ],
-  "editorialNotes": "AI-prepared Cricket Analysis draft. Fact-check completed on 14 November 2026 against the official New Zealand Cricket archive scorecard, Reuters, Cricbuzz and PTI/Outlook. Confirmed match facts: 4th ODI at Bay Oval, Mount Maunganui on 13 November 2026; New Zealand 333 all out in 50 overs; India 89 all out in 26.4 overs; New Zealand won by 244 runs; India lost Rohit Sharma, Virat Kohli and Shreyas Iyer for 0 in the opening over (0.1, 0.5 and 0.6); Ishan Kishan 27, Axar Patel 21, Naman Dhir 21; Matt Henry 6/27. The three lessons are editorial/tactical interpretation, not claims about private team discussions or player intent. English and Hindi versions checked for consistency. No cover image added because image rights/permission have not been verified. Status moved to review for human editorial review; do not publish without explicit editor approval."
+  "editorialNotes": "AI-prepared Cricket Analysis draft. Fact-check completed on 14 November 2026 against the official New Zealand Cricket archive scorecard, Reuters, Cricbuzz and PTI/Outlook. Confirmed match facts: 4th ODI at Bay Oval, Mount Maunganui on 13 November 2026; New Zealand 333 all out in 50 overs; India 89 all out in 26.4 overs; New Zealand won by 244 runs; India lost Rohit Sharma, Virat Kohli and Shreyas Iyer for 0 in the opening over (0.1, 0.5 and 0.6); Ishan Kishan 27, Axar Patel 21, Naman Dhir 21; Matt Henry 6/27. The three lessons are editorial/tactical interpretation, not claims about private team discussions or player intent. English and Hindi versions checked for consistency. No cover image added because image rights/permission have not been verified. Status moved to review for human editorial review; Publication explicitly approved by the user on 14 November 2026. Status changed to published; public website build/deployment remains a separate step.",
+  "publishedAt": "2026-11-14"
 }
