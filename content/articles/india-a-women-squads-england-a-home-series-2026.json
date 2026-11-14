@@ -1,6 +1,6 @@
 {
   "slug": "india-a-women-squads-england-a-home-series-2026",
-  "status": "review",
+  "status": "published",
   "section": "news",
   "title": "BCCI Names India A Women’s Squads for All-Format Home Series Against England A",
   "titleHi": "इंग्लैंड A के खिलाफ घरेलू सीरीज़ के लिए भारत A महिला टीमों की घोषणा",
@@ -44,5 +44,6 @@
       "notes": "Additional cross-check of captains, squads and venues."
     }
   ],
-  "editorialNotes": "AI-prepared second newsroom draft for the Latest Cricket News section. Facts are based primarily on the official BCCI announcement dated 11 November 2026 and cross-checked against PTI and another publisher. No cover image added because image rights/permission have not been verified. Status moved to review for human editorial review. Check names, Hindi transliteration, schedule and all copy before publication. Do not publish without explicit editor approval."
+  "editorialNotes": "AI-prepared second newsroom draft for the Latest Cricket News section. Facts are based primarily on the official BCCI announcement dated 11 November 2026 and cross-checked against PTI and another publisher. No cover image added because image rights/permission have not been verified. Status moved to review for human editorial review. Check names, Hindi transliteration, schedule and all copy before publication. Publication explicitly approved by the user on 14 November 2026. Status changed to published; public website build/deployment remains a separate step.",
+  "publishedAt": "2026-11-14"
 }
