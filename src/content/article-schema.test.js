@@ -25,10 +25,31 @@ test('invalid slugs and missing editorial fields are rejected', () => {
 
 test('unsupported sections, statuses and invalid dates are rejected', () => {
   assert.throws(() => validateArticle({ ...validArticle, section: 'opinion' }), /section must be one of/);
-  assert.throws(() => validateArticle({ ...validArticle, status: 'scheduled' }), /status must be draft or published/);
+  assert.throws(() => validateArticle({ ...validArticle, status: 'scheduled' }), /status must be draft, review or published/);
   assert.throws(() => validateArticle({ ...validArticle, publishedAt: 'not-a-date' }), /valid date string/);
 });
 
 test('duplicate article slugs are rejected', () => {
   assert.throws(() => validateArticles([validArticle, validArticle]), /Duplicate article slug/);
+});
+
+test('draft and review articles may omit a publication date', () => {
+  const { publishedAt, ...withoutDate } = validArticle;
+  assert.equal(validateArticle(withoutDate).status, 'draft');
+  assert.equal(validateArticle({ ...withoutDate, status: 'review' }).status, 'review');
+});
+
+test('published articles require a valid publication date', () => {
+  const { publishedAt, ...withoutDate } = validArticle;
+  assert.throws(() => validateArticle({ ...withoutDate, status: 'published' }), /Published articles must have a valid publishedAt/);
+});
+
+test('source references require a title and a valid http URL', () => {
+  assert.equal(validateArticle({ ...validArticle, sources: [{ title: 'Official source', url: 'https://example.com/news' }] }).slug, validArticle.slug);
+  assert.throws(() => validateArticle({ ...validArticle, sources: [{ title: 'Missing URL' }] }), /valid http\(s\) URL/);
+  assert.throws(() => validateArticle({ ...validArticle, sources: [{ title: '', url: 'https://example.com' }] }), /non-empty title/);
+});
+
+test('match reports are a supported editorial section', () => {
+  assert.equal(validateArticle({ ...validArticle, section: 'match-report' }).section, 'match-report');
 });

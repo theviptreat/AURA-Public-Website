@@ -105,7 +105,7 @@ function HomePage({ locale }) {
 function NewsListingPage({ locale }) {
   const [activeCategory, setActiveCategory] = useState('All News');
   const [visibleCount, setVisibleCount] = useState(8);
-  const newsStories = [...articles].filter((article) => article.section === 'news' || !article.section).sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+  const newsStories = [...articles].filter((article) => article.section === 'news' || article.section === 'match-report' || !article.section).sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
   const featured = newsStories.find((article) => article.featured) || null;
   const featuredDisplay = localizeStory(featured, locale);
   const filtered = newsStories.filter((article) => article.slug !== featured?.slug).filter((article) => activeCategory === 'All News' || article.category === activeCategory);
@@ -135,9 +135,9 @@ function ArticleDetailPage({ slug, locale }) {
     <main className="page-main"><div className="container article-shell"><article className="article-content">
       <nav className="breadcrumbs" aria-label={tr(locale, 'Breadcrumb', 'पेज का रास्ता')}><a href={localizePath('/', locale)}>{tr(locale, 'Home', 'होम')}</a><span>/</span><a href={localizePath('/news', locale)}>{tr(locale, 'News', 'समाचार')}</a><span>/</span><span>{article.category}</span></nav>
       <span className="story-category">{article.category}</span><h1>{article.title}</h1>{article.excerpt && <p className="article-deck">{article.excerpt}</p>}
-      <div className="article-meta">{article.author && <span>{tr(locale, 'By', 'लेखक')} {article.author}</span>}<time dateTime={article.publishedAt}>{article.dateLabel}</time></div>
+      <div className="article-meta">{article.author && <span>{tr(locale, 'By', 'लेखक')} {article.author}</span>}<time dateTime={article.publishedAt}>{article.dateLabel || article.publishedAt?.slice(0, 10)}</time></div>
       {article.coverImage && <figure className="article-cover"><img src={article.coverImage} alt={article.coverAlt || article.title} onError={(event) => { event.currentTarget.style.display = 'none'; }} />{article.imageCredit && <figcaption>{article.imageCredit}</figcaption>}</figure>}
-      <div className="article-body">{article.body}</div>
+      <div className="article-body">{article.body.split(/\n\s*\n/).map((paragraph, index) => paragraph.trim() ? <p key={index}>{paragraph.trim()}</p> : null)}</div>
       <div className="article-share"><span>{tr(locale, 'Share this story', 'यह खबर साझा करें')}</span><button type="button" onClick={async () => { const url = window.location.href; try { if (navigator.share) { await navigator.share({ title: article.title, url }); return; } if (navigator.clipboard && navigator.clipboard.writeText) { await navigator.clipboard.writeText(url); window.alert(tr(locale, 'Story link copied.', 'खबर का लिंक कॉपी हो गया।')); return; } } catch (error) { if (error && error.name === 'AbortError') return; } window.prompt(tr(locale, 'Copy this story link:', 'खबर का लिंक कॉपी करें:'), url); }}>{tr(locale, 'Share', 'साझा करें')} ↗</button></div>
     </article><aside className="article-sidebar">{related.length > 0 && <div className="related-panel"><span className="eyebrow">{tr(locale, 'Keep reading', 'आगे पढ़ें')}</span><h2>{tr(locale, 'Related Stories', 'संबंधित खबरें')}</h2>{related.map((story) => <a className="related-story" key={story.slug} href={localizePath('/news/' + story.slug, locale)}><span className="story-category">{story.category}</span><strong>{story.title}</strong><time dateTime={story.publishedAt}>{story.dateLabel}</time></a>)}</div>}</aside></div></main>
   );

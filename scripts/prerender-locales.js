@@ -1,6 +1,6 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { getPublishedArticles } from '../src/content/articles.js';
+import { loadArticles } from './load-articles.js';
 import { localizeStory } from '../src/i18n/localized-content.js';
 
 const routes = {
@@ -97,14 +97,14 @@ export function buildArticleDocument(template, sourceArticle, locale) {
     article.coverImage
       ? '<figure class="article-cover"><img src="' + escapeHtml(article.coverImage) + '" alt="' + escapeHtml(article.coverAlt || article.title) + '" />' + (article.imageCredit ? '<figcaption>' + escapeHtml(article.imageCredit) + '</figcaption>' : '') + '</figure>'
       : '',
-    '<div class="article-body">', escapeHtml(article.body), '</div>',
+    '<div class="article-body">', article.body.split(/\n\s*\n/).map((paragraph) => paragraph.trim() ? '<p>' + escapeHtml(paragraph.trim()) + '</p>' : '').join(''), '</div>',
     '</article></div></main>',
   ].join('');
   html = html.replace('<div id="root"></div>', '<div id="root">' + articleMarkup + '</div>');
   return html;
 }
 
-export async function prerenderPublishedArticles(template, outputRoot = 'dist', articles = getPublishedArticles()) {
+export async function prerenderPublishedArticles(template, outputRoot = 'dist', articles = []) {
   for (const article of articles) {
     if (article.status !== 'published') continue;
     for (const locale of ['en', 'hi']) {
@@ -138,7 +138,8 @@ export async function prerenderLocalizedRoutes() {
       await writeFile(path.join(outputDir, 'index.html'), buildLocalizedDocument(template, route, locale));
     }
   }
-  await prerenderPublishedArticles(template);
+  const contentArticles = await loadArticles();
+  await prerenderPublishedArticles(template, 'dist', contentArticles);
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve('scripts/prerender-locales.js')) {
