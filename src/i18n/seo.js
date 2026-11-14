@@ -1,4 +1,5 @@
 import { localizePath, resolveLocalizedPath } from './locale.js';
+import { localizeStory } from './localized-content.js';
 
 /**
  * Build canonical and language-alternate URLs for the current page.
@@ -30,11 +31,12 @@ export function getOpenGraphLocale(locale) {
  * Explicit SEO fields take precedence; editorial title/excerpt are safe fallbacks.
  */
 export function getArticleSeoMetadata(article, locale = 'en') {
-  const title = article?.seoTitle?.trim() || article?.title?.trim() || 'Cricket Story';
-  const description = article?.seoDescription?.trim() || article?.excerpt?.trim() || '';
+  const localizedArticle = localizeStory(article, locale);
+  const title = localizedArticle?.seoTitle?.trim() || localizedArticle?.title?.trim() || 'Cricket Story';
+  const description = localizedArticle?.seoDescription?.trim() || localizedArticle?.excerpt?.trim() || '';
   return Object.freeze({
     title: title.includes('AURA Sport') ? title : `${title} | AURA Sport`,
     description,
-    image: typeof article?.coverImage === 'string' ? article.coverImage : '',
+    image: typeof localizedArticle?.coverImage === 'string' ? localizedArticle.coverImage : '',
   });
 }
