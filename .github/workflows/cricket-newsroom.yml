@@ -2,6 +2,12 @@ name: AURA Cricket Newsroom
 
 on:
   workflow_dispatch:
+    inputs:
+      payload:
+        description: Pages CMS action context (optional)
+        required: false
+        type: string
+        default: '{}'
   schedule:
     # GitHub scheduled workflows run from the default branch only.
     - cron: '17 */6 * * *'
