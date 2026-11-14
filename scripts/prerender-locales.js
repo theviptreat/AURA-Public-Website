@@ -84,6 +84,23 @@ export function buildArticleDocument(template, sourceArticle, locale) {
     html = setMeta(html, 'name', 'twitter:image', article.coverImage);
     html = setMeta(html, 'name', 'twitter:card', 'summary_large_image');
   }
+
+  const articleMarkup = [
+    '<main class="page-main"><div class="container article-shell"><article class="article-content">',
+    '<span class="story-category">', escapeHtml(article.category), '</span>',
+    '<h1>', escapeHtml(article.title), '</h1>',
+    article.excerpt ? '<p class="article-deck">' + escapeHtml(article.excerpt) + '</p>' : '',
+    '<div class="article-meta">',
+    article.author ? '<span>' + escapeHtml(article.author) + '</span>' : '',
+    '<time datetime="' + escapeHtml(article.publishedAt) + '">' + escapeHtml(article.dateLabel || article.publishedAt.slice(0, 10)) + '</time>',
+    '</div>',
+    article.coverImage
+      ? '<figure class="article-cover"><img src="' + escapeHtml(article.coverImage) + '" alt="' + escapeHtml(article.coverAlt || article.title) + '" />' + (article.imageCredit ? '<figcaption>' + escapeHtml(article.imageCredit) + '</figcaption>' : '') + '</figure>'
+      : '',
+    '<div class="article-body">', escapeHtml(article.body), '</div>',
+    '</article></div></main>',
+  ].join('');
+  html = html.replace('<div id="root"></div>', '<div id="root">' + articleMarkup + '</div>');
   return html;
 }
 
