@@ -85,7 +85,7 @@ export async function fetchAllowedText(initialUrl, allowedHosts, {
   let current = new URL(initialUrl);
   for (let redirects = 0; redirects <= MAX_REDIRECTS; redirects++) {
     if (current.protocol !== 'https:' || !isAllowedHost(current.href, allowedHosts)) {
-      throw new Error('Blocked URL: destination is not an approved HTTPS publisher host.');
+      throw new Error(`Blocked URL: unapproved HTTPS publisher host (${current.hostname}).`);
     }
     const response = await fetchImpl(current.href, {
       redirect: 'manual',
