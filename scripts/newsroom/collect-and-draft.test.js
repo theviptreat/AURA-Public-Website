@@ -82,7 +82,7 @@ test('fetchAllowedText validates every redirect hop before following it', async 
   };
   await assert.rejects(
     fetchAllowedText('https://www.bbc.co.uk/story', ['bbc.co.uk'], { fetchImpl }),
-    /not an approved HTTPS publisher host/,
+    /unapproved HTTPS publisher host/,
   );
   assert.deepEqual(visited, ['https://www.bbc.co.uk/story']);
 });
