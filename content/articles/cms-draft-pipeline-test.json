@@ -1,0 +1,15 @@
+{
+  "slug": "cms-draft-pipeline-test",
+  "status": "draft",
+  "section": "knowledge",
+  "title": "AURA CMS Draft Pipeline Test",
+  "titleHi": "AURA CMS ड्राफ्ट पाइपलाइन परीक्षण",
+  "excerpt": "This is a temporary draft used to verify the AURA Sport article workflow.",
+  "excerptHi": "यह AURA Sport के आर्टिकल वर्कफ़्लो की जाँच के लिए बनाया गया अस्थायी ड्राफ्ट है।",
+  "body": "This temporary record checks that the article content loader accepts a valid draft.\n\nIt also checks that draft content is excluded from the public website build.",
+  "bodyHi": "यह अस्थायी रिकॉर्ड जाँचता है कि article loader एक सही draft को स्वीकार करता है।\n\nयह भी जाँचा जाएगा कि draft content public website build में शामिल न हो।",
+  "category": "CMS Test",
+  "categoryHi": "CMS परीक्षण",
+  "featured": false,
+  "editorialNotes": "TEST RECORD ONLY. Not a real cricket article. Do not publish. Remove after the draft pipeline verification is complete."
+}
