@@ -12,9 +12,6 @@ on:
     # GitHub scheduled workflows run from the default branch only.
     - cron: '17 */6 * * *'
 
-permissions:
-  contents: write
-
 concurrency:
   group: aura-cricket-newsroom
   cancel-in-progress: false
@@ -23,18 +20,22 @@ jobs:
   collect-and-draft:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    environment: newsroom
+    permissions:
+      contents: write
     steps:
       - name: Check out the active website content branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: feature/i18n-en-hi
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48 # v4.1.0
         with:
           node-version: 22
+          package-manager-cache: false
       - name: Collect cricket news and prepare bilingual review draft
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.NEWSROOM_GEMINI_API_KEY }}
           GEMINI_MODEL: gemini-3.1-flash-lite
         run: node scripts/newsroom/collect-and-draft.js
       - name: Commit review draft to the current branch
