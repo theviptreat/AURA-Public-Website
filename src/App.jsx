@@ -3,6 +3,7 @@ import { AdditionalPage } from './InfoPages';
 import { getLocaleSwitchPath, localizePath, resolveLocalizedPath } from './i18n/locale';
 import { getPublishedArticles } from './content/articles.js';
 import { localizeStory } from './i18n/localized-content';
+import { getNewsCategories } from './content/news-categories.js';
 import { getArticleSeoMetadata, getLocalizedSeoUrls, getOpenGraphLocale } from './i18n/seo';
 
 const navigation = [
@@ -12,7 +13,6 @@ const navigation = [
   ['Knowledge', '/knowledge'],
   ['About AURA Sport', '/about'],
 ];
-const newsCategories = ['All News', 'International', 'Domestic', 'Tournaments', 'Cricket Updates'];
 const articles = getPublishedArticles();
 
 const tr = (locale, en, hi) => locale === 'hi' ? hi : en;
@@ -103,14 +103,14 @@ function HomePage({ locale }) {
 }
 
 function NewsListingPage({ locale }) {
-  const [activeCategory, setActiveCategory] = useState('All News');
+  const [activeCategory, setActiveCategory] = useState('all');
   const [visibleCount, setVisibleCount] = useState(8);
   const newsStories = [...articles].filter((article) => article.section === 'news' || article.section === 'match-report' || !article.section).sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
   const featured = newsStories.find((article) => article.featured) || null;
   const featuredDisplay = localizeStory(featured, locale);
-  const filtered = newsStories.filter((article) => article.slug !== featured?.slug).filter((article) => activeCategory === 'All News' || article.category === activeCategory);
+  const categories = getNewsCategories(newsStories, locale);
+  const filtered = newsStories.filter((article) => article.slug !== featured?.slug).filter((article) => activeCategory === 'all' || article.category === activeCategory);
   const visibleArticles = filtered.slice(0, visibleCount);
-  const categoriesHi = ['सभी खबरें', 'अंतरराष्ट्रीय', 'घरेलू', 'टूर्नामेंट', 'क्रिकेट अपडेट'];
   return (
     <main className="page-main">
       <section className="page-hero"><div className="container"><span className="eyebrow eyebrow-light">{tr(locale, 'Stories that matter', 'काम की और अहम खबरें')}</span><h1>{tr(locale, 'Cricket News', 'क्रिकेट समाचार')}</h1><p>{tr(locale, 'Updates and stories from across the cricket world.', 'क्रिकेट जगत की ताज़ा खबरें और खास कहानियाँ।')}</p></div></section>
@@ -118,7 +118,7 @@ function NewsListingPage({ locale }) {
         {featuredDisplay && <a className="listing-featured" href={localizePath('/news/' + featuredDisplay.slug, locale)}><div className="listing-featured-image">{featuredDisplay.coverImage && <img src={featuredDisplay.coverImage} alt={featuredDisplay.coverAlt || featuredDisplay.title} onError={(event) => { event.currentTarget.style.display = 'none'; }} />}</div><div className="listing-featured-copy"><span className="story-category">{tr(locale, 'Featured story', 'प्रमुख खबर')} · {featuredDisplay.category}</span><h2>{featuredDisplay.title}</h2>{featuredDisplay.excerpt && <p>{featuredDisplay.excerpt}</p>}<time dateTime={featuredDisplay.publishedAt}>{featuredDisplay.dateLabel}</time><span className="text-link">{tr(locale, 'Read story', 'खबर पढ़ें')} ↗</span></div></a>}
         <div className="listing-heading"><div><span className="eyebrow">{tr(locale, 'The latest', 'ताज़ा')}</span><h2>{tr(locale, 'All News', 'सभी खबरें')}</h2></div><span className="result-count">{filtered.length} {tr(locale, filtered.length === 1 ? 'story' : 'stories', 'खबरें')}</span></div>
         <div className="category-filters" aria-label={tr(locale, 'Filter news by category', 'श्रेणी के अनुसार खबरें चुनें')}>
-          {newsCategories.map((category, index) => <button type="button" key={category} className={activeCategory === category ? 'category-filter active' : 'category-filter'} aria-pressed={activeCategory === category} onClick={() => { setActiveCategory(category); setVisibleCount(8); }}>{locale === 'hi' ? categoriesHi[index] : category}</button>)}
+          {categories.map((category) => <button type="button" key={category.value} className={activeCategory === category.value ? 'category-filter active' : 'category-filter'} aria-pressed={activeCategory === category.value} onClick={() => { setActiveCategory(category.value); setVisibleCount(8); }}>{category.label}</button>)}
         </div>
         {visibleArticles.length ? <>{<div className="news-list-grid">{visibleArticles.map((story) => <StoryCard key={story.slug} story={story} locale={locale} />)}</div>}{visibleCount < filtered.length && <div className="load-more-wrap"><button className="button button-outline" type="button" onClick={() => setVisibleCount((count) => count + 8)}>{tr(locale, 'Load More Stories', 'और खबरें देखें')}</button></div>}</> : <EmptyStories message={tr(locale, 'There are no published stories in this category yet.', 'इस श्रेणी में अभी कोई खबर प्रकाशित नहीं हुई है।')} />}
       </section>
