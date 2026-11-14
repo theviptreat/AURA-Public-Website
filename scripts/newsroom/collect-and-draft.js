@@ -2,8 +2,8 @@ import { readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const FEEDS = [
-  { publisher: 'BBC Sport', url: 'https://feeds.bbci.co.uk/sport/cricket/rss.xml' },
-  { publisher: 'ESPNcricinfo', url: 'https://www.espncricinfo.com/rss/content/story/feeds/0.xml' },
+  { publisher: 'BBC Sport', url: 'https://feeds.bbci.co.uk/sport/cricket/rss.xml', allowedHosts: ['bbc.co.uk', 'bbc.com'] },
+  { publisher: 'ESPNcricinfo', url: 'https://www.espncricinfo.com/rss/content/story/feeds/0.xml', allowedHosts: ['espncricinfo.com', 'cricinfo.com'] },
 ];
 const CONTENT_DIR = path.resolve('content/articles');
 const MODEL = process.env.GEMINI_MODEL || 'gemini-3.1-flash-lite';
@@ -50,13 +50,36 @@ function plainText(html) {
     .replace(/[ \t]+/g, ' ').replace(/\n\s+/g, '\n').replace(/\n{3,}/g, '\n\n')
     .trim().slice(0, 12000);
 }
+function canonicalUrl(value) {
+  const url = new URL(value);
+  url.hash = '';
+  for (const key of [...url.searchParams.keys()]) {
+    if (/^(utm_|fbclid$|gclid$|mc_cid$|mc_eid$)/i.test(key)) url.searchParams.delete(key);
+  }
+  return url.toString();
+}
+function isAllowedHost(value, allowedHosts) {
+  try {
+    const host = new URL(value).hostname.toLowerCase();
+    return allowedHosts.some((allowed) => host === allowed || host.endsWith('.' + allowed));
+  } catch {
+    return false;
+  }
+}
+function istDate() {
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit',
+  }).formatToParts(new Date());
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return `${values.year}-${values.month}-${values.day}`;
+}
 async function fetchStory(item) {
   try {
     const response = await fetch(item.url, {
       headers: { 'user-agent': 'AURA-Sport-Newsroom/1.0 (+https://aura-sport-website-i18n-preview.onrender.com)' },
       signal: AbortSignal.timeout(12000),
     });
-    if (response.ok) {
+    if (response.ok && isAllowedHost(response.url, item.allowedHosts)) {
       const text = plainText(await response.text());
       if (text.length >= 500) return text;
     }
@@ -79,14 +102,15 @@ function slugify(value) {
 }
 async function generateDraft(item, articleText) {
   const prompt = `You are the AURA Sport newsroom assistant. Create an original bilingual cricket-news draft using ONLY the supplied source material. Do not invent scores, dates, quotes, player details, causes, or context. If the source does not support a useful factual article, return {"skip":true,"reason":"..."}.
-Return JSON only with these keys: skip, reason, title, titleHi, excerpt, excerptHi, body, bodyHi, category, categoryHi, section, verifiedFacts.
+Return JSON only with these keys: skip, reason, title, titleHi, excerpt, excerptHi, body, bodyHi, category, categoryHi, section, sourceClaims.
 Rules:
 - Write clear professional English and natural Hindi, not literal machine translation.
 - Article body: 3-5 concise paragraphs in each language, plain text with blank lines between paragraphs.
 - Keep the story factual and neutral. No betting, fantasy tips, predictions, or claims of guaranteed outcomes.
 - section must be one of news, match-report, match-preview, analysis, knowledge. Prefer news unless this is clearly a completed match report.
-- verifiedFacts must be an array of short facts directly supported by the source.
+- sourceClaims must be an array of short claims explicitly stated in the supplied source material. These are NOT independently verified; a human editor must check them.
 - Never include unsupported information. If the available source is insufficient, skip.
+- Do not reproduce source sentences verbatim; write original, concise reporting.
 SOURCE PUBLISHER: ${item.publisher}
 SOURCE TITLE: ${item.title}
 SOURCE URL: ${item.url}
@@ -117,8 +141,11 @@ function validateDraft(draft) {
   if (!['news', 'match-report', 'match-preview', 'analysis', 'knowledge'].includes(draft.section)) {
     draft.section = 'news';
   }
-  if (!Array.isArray(draft.verifiedFacts) || draft.verifiedFacts.length === 0) {
-    throw new Error('Gemini did not provide source-supported verifiedFacts.');
+  if (!Array.isArray(draft.sourceClaims) || draft.sourceClaims.length === 0) {
+    throw new Error('Gemini did not provide source claims for human verification.');
+  }
+  if (draft.sourceClaims.length > 12 || draft.sourceClaims.some((claim) => typeof claim !== 'string' || !claim.trim())) {
+    throw new Error('Gemini returned invalid source claims.');
   }
 }
 async function main() {
@@ -135,8 +162,17 @@ async function main() {
   }
   const candidates = items.filter((item) => {
     const date = Date.parse(item.publishedAt);
-    return item.url && !knownUrls.has(item.url) && (!Number.isFinite(date) || date >= cutoff);
-  }).sort((a, b) => (Date.parse(b.publishedAt) || 0) - (Date.parse(a.publishedAt) || 0));
+    return Number.isFinite(date) && date >= cutoff &&
+      isAllowedHost(item.url, FEEDS.find((feed) => feed.publisher === item.publisher)?.allowedHosts || []) &&
+      !knownUrls.has(canonicalUrl(item.url));
+
+  }).filter((item, index, all) =>
+    all.findIndex((candidate) => canonicalUrl(candidate.url) === canonicalUrl(item.url)) === index
+  ).map((item) => ({
+    ...item,
+    url: canonicalUrl(item.url),
+    allowedHosts: FEEDS.find((feed) => feed.publisher === item.publisher)?.allowedHosts || [],
+  })).sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
   console.log(`Collected ${items.length} feed items; ${candidates.length} are new and recent.`);
   for (const item of candidates.slice(0, 6)) {
     const articleText = await fetchStory(item);
@@ -150,7 +186,7 @@ async function main() {
       continue;
     }
     validateDraft(draft);
-    const date = new Date().toISOString().slice(0, 10);
+    const date = istDate();
     const base = slugify(draft.title);
     let slug = `${base}-${date}`;
     let suffix = 2;
@@ -175,7 +211,10 @@ async function main() {
         publisher: item.publisher,
         url: item.url,
         accessedAt: date,
-        notes: draft.verifiedFacts.map((fact) => `• ${fact}`).join('\n'),
+        notes: [
+          'AI-extracted claims from this single source; NOT independently verified.',
+          ...draft.sourceClaims.map((claim) => `• ${claim}`),
+        ].join('\n'),
       }],
       editorialNotes: 'AI-assisted draft. Human editor must verify every fact, headline, translation and source before publication. No cover image has been assigned.',
     };
