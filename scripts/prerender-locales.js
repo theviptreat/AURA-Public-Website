@@ -54,7 +54,7 @@ function escapeHtml(value) {
   return String(value).replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 }
 
-function setMeta(html, selector, attribute, key, value) {
+function setMeta(html, attribute, key, value) {
   const tag = `<meta ${attribute}="${key}" content="${escapeHtml(value)}" />`;
   const pattern = new RegExp(`<meta ${attribute}=["']${key}["'][^>]*>`);
   if (pattern.test(html)) return html.replace(pattern, tag);
@@ -74,15 +74,15 @@ export function buildArticleDocument(template, sourceArticle, locale) {
   let html = template
     .replace('<html lang="en">', `<html lang="${lang}">`)
     .replace(/<title>[^<]*<\/title>/, `<title>${escapeHtml(title.includes('AURA Sport') ? title : `${title} | AURA Sport`)}</title>`);
-  html = setMeta(html, 'name', 'description', 'description', description);
-  html = setMeta(html, 'property', 'og:title', 'og:title', title.includes('AURA Sport') ? title : `${title} | AURA Sport`);
-  html = setMeta(html, 'property', 'og:description', 'og:description', description);
-  html = setMeta(html, 'property', 'og:type', 'og:type', 'article');
-  html = setMeta(html, 'property', 'og:locale', 'og:locale', localeTag);
+  html = setMeta(html, 'name', 'description', description);
+  html = setMeta(html, 'property', 'og:title', title.includes('AURA Sport') ? title : `${title} | AURA Sport`);
+  html = setMeta(html, 'property', 'og:description', description);
+  html = setMeta(html, 'property', 'og:type', 'article');
+  html = setMeta(html, 'property', 'og:locale', localeTag);
   if (article.coverImage) {
-    html = setMeta(html, 'property', 'og:image', 'og:image', article.coverImage);
-    html = setMeta(html, 'name', 'twitter:image', 'twitter:image', article.coverImage);
-    html = setMeta(html, 'name', 'twitter:card', 'twitter:card', 'summary_large_image');
+    html = setMeta(html, 'property', 'og:image', article.coverImage);
+    html = setMeta(html, 'name', 'twitter:image', article.coverImage);
+    html = setMeta(html, 'name', 'twitter:card', 'summary_large_image');
   }
   return html;
 }
