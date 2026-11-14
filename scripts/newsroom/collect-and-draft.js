@@ -191,7 +191,7 @@ async function main() {
     }
     validateDraft(draft);
     const date = istDate();
-    const base = slugify(draft.title);
+    const base = slugify(draft.title) || slugify(item.title) || 'cricket-news';
     let slug = `${base}-${date}`;
     let suffix = 2;
     while (knownSlugs.has(slug)) slug = `${base}-${date}-${suffix++}`;
