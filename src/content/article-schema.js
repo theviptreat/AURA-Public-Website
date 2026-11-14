@@ -71,7 +71,8 @@ export function validateArticles(articles) {
 // Public build records intentionally omit editorial status and internal fields.
 // Validate them as published records so required publication metadata is still enforced.
 export function validatePublicArticle(article) {
-  return validateArticle({ ...article, status: 'published' });
+  validateArticle({ ...article, status: 'published' });
+  return article;
 }
 
 export function validatePublicArticles(articles) {
