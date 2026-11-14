@@ -32,7 +32,7 @@ jobs:
           ref: feature/i18n-en-hi
           persist-credentials: false
       - name: Set up Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.1.0
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v4.1.0
         with:
           node-version: 22
       - name: Collect cricket news and prepare bilingual review draft
