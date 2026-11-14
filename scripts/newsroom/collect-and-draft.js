@@ -19,11 +19,11 @@ function decode(value = '') {
     .trim();
 }
 function tag(xml, name) {
-  const match = xml.match(new RegExp('<' + name + '(?:\\s[^>]*)?>([\\s\\S]*?)<\\/' + name + '>', 'i'));
-  return match ? decode(match[1].replace(/<[^>]+>/g, ' ')).replace(/\\s+/g, ' ').trim() : '';
+  const match = xml.match(new RegExp('<' + name + '(?:\s[^>]*)?>([\s\S]*?)<\/' + name + '>', 'i'));
+  return match ? decode(match[1].replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim() : '';
 }
 function parseFeed(xml, publisher) {
-  return [...xml.matchAll(/<item\\b[^>]*>([\\s\\S]*?)<\\/item>/gi)].map((m) => {
+  return [...xml.matchAll(/<item\b[^>]*>([\s\S]*?)<\/item>/gi)].map((m) => {
     const item = m[1];
     return {
       publisher,
@@ -32,16 +32,16 @@ function parseFeed(xml, publisher) {
       summary: tag(item, 'description'),
       publishedAt: tag(item, 'pubDate'),
     };
-  }).filter((item) => item.title && /^https?:\\/\\//i.test(item.url));
+  }).filter((item) => item.title && /^https?:\/\//i.test(item.url));
 }
 function plainText(html) {
-  const article = html.match(/<article\\b[^>]*>([\\s\\S]*?)<\\/article>/i)?.[1] || html;
+  const article = html.match(/<article\b[^>]*>([\s\S]*?)<\/article>/i)?.[1] || html;
   return decode(article
-    .replace(/<(script|style|noscript|nav|footer|header|svg)[^>]*>[\\s\\S]*?<\\/\\1>/gi, ' ')
-    .replace(/<(p|h[1-6]|li|blockquote)\\b[^>]*>/gi, '\\n')
+    .replace(/<(script|style|noscript|nav|footer|header|svg)[^>]*>[\s\S]*?<\/\1>/gi, ' ')
+    .replace(/<(p|h[1-6]|li|blockquote)\b[^>]*>/gi, '\n')
     .replace(/<[^>]+>/g, ' ')
     .replace(/&nbsp;/g, ' '))
-    .replace(/[ \\t]+/g, ' ').replace(/\\n\\s+/g, '\\n').replace(/\\n{3,}/g, '\\n\\n')
+    .replace(/[ \t]+/g, ' ').replace(/\n\s+/g, '\n').replace(/\n{3,}/g, '\n\n')
     .trim().slice(0, 12000);
 }
 async function fetchStory(item) {
@@ -72,7 +72,7 @@ function slugify(value) {
     .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 72);
 }
 async function generateDraft(item, articleText) {
-  const prompt = `You are the AURA Sport newsroom assistant. Create an original bilingual cricket-news draft using ONLY the supplied source material. Do not invent scores, dates, quotes, player details, causes, or context. If the source does not support a useful factual article, return {"skip":true,"reason":"..."}.
+  const prompt = \`You are the AURA Sport newsroom assistant. Create an original bilingual cricket-news draft using ONLY the supplied source material. Do not invent scores, dates, quotes, player details, causes, or context. If the source does not support a useful factual article, return {"skip":true,"reason":"..."}.
 Return JSON only with these keys: skip, reason, title, titleHi, excerpt, excerptHi, body, bodyHi, category, categoryHi, section, verifiedFacts.
 Rules:
 - Write clear professional English and natural Hindi, not literal machine translation.
@@ -87,8 +87,8 @@ SOURCE URL: ${item.url}
 SOURCE DATE: ${item.publishedAt}
 RSS SUMMARY: ${item.summary}
 SOURCE ARTICLE TEXT:
-${articleText}`;
-  const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${process.env.GEMINI_API_KEY}`, {
+${articleText}\`;
+  const response = await fetch(\`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${process.env.GEMINI_API_KEY}\`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({
@@ -98,15 +98,15 @@ ${articleText}`;
     signal: AbortSignal.timeout(60000),
   });
   const payload = await response.json();
-  if (!response.ok) throw new Error(`Gemini API ${response.status}: ${JSON.stringify(payload).slice(0, 1000)}`);
+  if (!response.ok) throw new Error(\`Gemini API ${response.status}: ${JSON.stringify(payload).slice(0, 1000)}\`);
   const raw = payload.candidates?.[0]?.content?.parts?.map((part) => part.text || '').join('');
   if (!raw) throw new Error('Gemini returned no draft content.');
-  return JSON.parse(raw.replace(/^```(?:json)?\\s*/i, '').replace(/\\s*```$/, ''));
+  return JSON.parse(raw.replace(/^\`\`\`(?:json)?\s*/i, '').replace(/\s*\`\`\`$/, ''));
 }
 function validateDraft(draft) {
   const required = ['title', 'titleHi', 'excerpt', 'excerptHi', 'body', 'bodyHi', 'category', 'categoryHi'];
   for (const field of required) if (typeof draft[field] !== 'string' || !draft[field].trim()) {
-    throw new Error(`Gemini draft is missing ${field}`);
+    throw new Error(\`Gemini draft is missing ${field}\`);
   }
   if (!['news', 'match-report', 'match-preview', 'analysis', 'knowledge'].includes(draft.section)) {
     draft.section = 'news';
@@ -124,14 +124,14 @@ async function main() {
   const items = [];
   for (const feed of FEEDS) {
     const response = await fetch(feed.url, { signal: AbortSignal.timeout(15000) });
-    if (!response.ok) throw new Error(`RSS feed failed (${response.status}): ${feed.url}`);
+    if (!response.ok) throw new Error(\`RSS feed failed (${response.status}): ${feed.url}\`);
     items.push(...parseFeed(await response.text(), feed.publisher));
   }
   const candidates = items.filter((item) => {
     const date = Date.parse(item.publishedAt);
     return item.url && !knownUrls.has(item.url) && (!Number.isFinite(date) || date >= cutoff);
   }).sort((a, b) => (Date.parse(b.publishedAt) || 0) - (Date.parse(a.publishedAt) || 0));
-  console.log(`Collected ${items.length} feed items; ${candidates.length} are new and recent.`);
+  console.log(\`Collected ${items.length} feed items; ${candidates.length} are new and recent.\`);
   for (const item of candidates.slice(0, 6)) {
     const articleText = await fetchStory(item);
     if (articleText.length < 500) {
@@ -146,9 +146,9 @@ async function main() {
     validateDraft(draft);
     const date = new Date().toISOString().slice(0, 10);
     const base = slugify(draft.title);
-    let slug = `${base}-${date}`;
+    let slug = \`${base}-${date}\`;
     let suffix = 2;
-    while (knownSlugs.has(slug)) slug = `${base}-${date}-${suffix++}`;
+    while (knownSlugs.has(slug)) slug = \`${base}-${date}-${suffix++}\`;
     const record = {
       slug,
       status: 'review',
@@ -169,12 +169,12 @@ async function main() {
         publisher: item.publisher,
         url: item.url,
         accessedAt: date,
-        notes: draft.verifiedFacts.map((fact) => `• ${fact}`).join('\\n'),
+        notes: draft.verifiedFacts.map((fact) => \`• ${fact}\`).join('\n'),
       }],
       editorialNotes: 'AI-assisted draft. Human editor must verify every fact, headline, translation and source before publication. No cover image has been assigned.',
     };
-    await writeFile(path.join(CONTENT_DIR, `${slug}.json`), JSON.stringify(record, null, 2) + '\\n', 'utf8');
-    console.log(`Created review draft: ${slug}`);
+    await writeFile(path.join(CONTENT_DIR, \`${slug}.json\`), JSON.stringify(record, null, 2) + '\n', 'utf8');
+    console.log(\`Created review draft: ${slug}\`);
     return;
   }
   console.log('No sufficiently supported new cricket story was found. No draft created.');
