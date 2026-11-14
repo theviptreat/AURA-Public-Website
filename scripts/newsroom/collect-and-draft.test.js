@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   canonicalUrl,
+  fetchAllowedText,
   isAllowedHost,
   parseFeed,
   slugify,
@@ -64,4 +65,52 @@ test('validateDraft rejects missing source claims', () => {
     body: 'Body', bodyHi: 'लेख', category: 'Cricket', categoryHi: 'क्रिकेट',
     section: 'news', sourceClaims: [],
   }), /source claims/);
+});
+
+test('fetchAllowedText validates every redirect hop before following it', async () => {
+  const visited = [];
+  const fetchImpl = async (url) => {
+    visited.push(url);
+    if (visited.length === 1) {
+      return new Response(null, { status: 302, headers: { location: 'https://outside.example/story' } });
+    }
+    return new Response('should never be fetched');
+  };
+  await assert.rejects(
+    fetchAllowedText('https://www.bbc.co.uk/story', ['bbc.co.uk'], { fetchImpl }),
+    /not an approved HTTPS publisher host/,
+  );
+  assert.deepEqual(visited, ['https://www.bbc.co.uk/story']);
+});
+
+test('fetchAllowedText follows only approved HTTPS redirects', async () => {
+  const visited = [];
+  const fetchImpl = async (url) => {
+    visited.push(url);
+    if (visited.length === 1) {
+      return new Response(null, { status: 301, headers: { location: 'https://www.bbc.co.uk/final' } });
+    }
+    return new Response('approved publisher content');
+  };
+  const body = await fetchAllowedText('https://bbc.co.uk/start', ['bbc.co.uk'], { fetchImpl });
+  assert.equal(body, 'approved publisher content');
+  assert.deepEqual(visited, ['https://bbc.co.uk/start', 'https://www.bbc.co.uk/final']);
+});
+
+test('fetchAllowedText rejects oversized responses', async () => {
+  const fetchImpl = async () => new Response('12345');
+  await assert.rejects(
+    fetchAllowedText('https://bbc.co.uk/story', ['bbc.co.uk'], { fetchImpl, maxBytes: 4 }),
+    /size limit/,
+  );
+});
+
+test('validateDraft rejects HTML and oversized fields', () => {
+  const valid = {
+    title: 'Title', titleHi: 'शीर्षक', excerpt: 'Summary', excerptHi: 'सारांश',
+    body: 'Body', bodyHi: 'लेख', category: 'Cricket', categoryHi: 'क्रिकेट',
+    section: 'news', sourceClaims: ['A source-backed claim.'],
+  };
+  assert.throws(() => validateDraft({ ...valid, body: '<script>alert(1)</script>' }), /contains HTML/);
+  assert.throws(() => validateDraft({ ...valid, title: 'x'.repeat(181) }), /exceeds limits/);
 });
