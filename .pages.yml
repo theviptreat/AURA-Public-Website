@@ -1,0 +1,179 @@
+media:
+  - name: article_images
+    label: Article images
+    input: public/images/articles
+    output: /images/articles
+    rename: safe
+    categories: [image]
+    extensions: [jpg, jpeg, png, webp]
+
+content:
+  - name: articles
+    label: Articles
+    type: collection
+    path: content/articles
+    format: json
+    filename: "{slug}.json"
+    exclude: [README.md]
+    operations:
+      rename: false
+      delete: false
+    view:
+      primary: title
+      fields: [title, section, status, publishedAt, featured]
+      sort: [publishedAt, title]
+      default:
+        sort: publishedAt
+        order: desc
+    fields:
+      - name: slug
+        label: URL slug
+        type: string
+        required: true
+        pattern: "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+      - name: status
+        label: Editorial status
+        type: select
+        required: true
+        options:
+          values:
+            - name: draft
+              label: Draft — AI/editor draft
+            - name: review
+              label: Ready for human review
+            - name: published
+              label: Published — approved by editor
+      - name: section
+        label: Editorial section
+        type: select
+        required: true
+        options:
+          values:
+            - name: news
+              label: Latest News
+            - name: match-report
+              label: Match Reports
+            - name: match-preview
+              label: Match Previews
+            - name: analysis
+              label: Cricket Analysis
+            - name: knowledge
+              label: Cricket Knowledge
+      - name: title
+        label: Headline (English)
+        type: string
+        required: true
+      - name: titleHi
+        label: Headline (Hindi)
+        type: string
+      - name: excerpt
+        label: Summary (English)
+        type: text
+        required: true
+      - name: excerptHi
+        label: Summary (Hindi)
+        type: text
+      - name: body
+        label: Article body (English)
+        type: text
+        required: true
+        description: Use a blank line between paragraphs. Keep this as plain text.
+      - name: bodyHi
+        label: Article body (Hindi)
+        type: text
+        description: Use a blank line between paragraphs. Keep this as plain text.
+      - name: category
+        label: Category (English)
+        type: string
+        required: true
+      - name: categoryHi
+        label: Category (Hindi)
+        type: string
+      - name: publishedAt
+        label: Publication date
+        type: date
+      - name: dateLabel
+        label: Display date (English)
+        type: string
+      - name: dateLabelHi
+        label: Display date (Hindi)
+        type: string
+      - name: author
+        label: Author (English)
+        type: string
+      - name: authorHi
+        label: Author (Hindi)
+        type: string
+      - name: featured
+        label: Featured story
+        type: boolean
+      - name: coverImage
+        label: Cover image
+        type: image
+        options:
+          media: article_images
+          extensions: [jpg, jpeg, png, webp]
+      - name: coverAlt
+        label: Image alt text (English)
+        type: string
+      - name: coverAltHi
+        label: Image alt text (Hindi)
+        type: string
+      - name: imageCredit
+        label: Image credit
+        type: string
+      - name: imageCreditHi
+        label: Image credit (Hindi)
+        type: string
+      - name: seoTitle
+        label: SEO title (English)
+        type: string
+      - name: seoTitleHi
+        label: SEO title (Hindi)
+        type: string
+      - name: seoDescription
+        label: SEO description (English)
+        type: text
+      - name: seoDescriptionHi
+        label: SEO description (Hindi)
+        type: text
+      - name: sources
+        label: Source references (editorial verification)
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title}"
+        fields:
+          - name: title
+            label: Source title
+            type: string
+            required: true
+          - name: publisher
+            label: Publisher
+            type: string
+          - name: url
+            label: Source URL
+            type: string
+            required: true
+            pattern: "^https?://"
+          - name: accessedAt
+            label: Checked on
+            type: date
+          - name: notes
+            label: Fact(s) verified
+            type: text
+      - name: editorialNotes
+        label: Internal editorial notes (not shown publicly)
+        type: text
+
+settings:
+  content:
+    merge: true
+  commit:
+    identity: app
+    templates:
+      create: "content(article): add {path}"
+      update: "content(article): update {path}"
+      delete: "content(article): delete {path}"
+      rename: "content(article): rename {oldPath} -> {newPath}"
