@@ -32,7 +32,6 @@ jobs:
         uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.1.0
         with:
           node-version: 22
-          package-manager-cache: false
       - name: Collect cricket news and prepare bilingual review draft
         env:
           GEMINI_API_KEY: ${{ secrets.NEWSROOM_GEMINI_API_KEY }}
