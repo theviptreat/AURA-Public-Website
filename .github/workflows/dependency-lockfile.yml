@@ -6,6 +6,7 @@ on:
       - feature/i18n-en-hi
     paths:
       - package.json
+      - .github/workflows/dependency-lockfile.yml
   workflow_dispatch:
 
 permissions:
@@ -32,7 +33,6 @@ jobs:
         uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.1.0
         with:
           node-version: 22
-          package-manager-cache: false
 
       - name: Resolve and generate npm lockfile without lifecycle scripts
         run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
@@ -51,7 +51,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          if git diff --quiet -- package-lock.json && [ -f package-lock.json ]; then
+          if git ls-files --error-unmatch package-lock.json >/dev/null 2>&1 && git diff --quiet -- package-lock.json; then
             echo "package-lock.json is already current."
             exit 0
           fi
