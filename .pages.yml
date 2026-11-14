@@ -13,7 +13,7 @@ content:
     type: collection
     path: content/articles
     format: json
-    filename: "{slug}.json"
+    filename: "{fields.slug}.json"
     exclude: [README.md]
     operations:
       rename: false
