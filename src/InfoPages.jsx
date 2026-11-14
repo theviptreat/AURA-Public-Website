@@ -1,22 +1,27 @@
 import React from 'react';
 import { localizePath } from './i18n/locale';
+import { getPublishedArticles } from './content/articles.js';
+import { localizeStory } from './i18n/localized-content.js';
 
 const tr = (locale, en, hi) => locale === 'hi' ? hi : en;
 
 const categoryPages = {
   '/match-preview': {
+    section: 'match-preview',
     eyebrow: ['Before the first ball', 'पहली गेंद से पहले'],
     title: ['Match Previews', 'मैच पूर्वावलोकन'],
     description: ['Build context around the fixtures ahead with considered previews and key points to watch.', 'आने वाले मैचों को बेहतर समझें। हर मुकाबले के अहम पहलुओं और देखने योग्य बातों के साथ।'],
     empty: ['Match previews will appear here when they are published.', 'मैच पूर्वावलोकन प्रकाशित होने पर यहाँ दिखाई देंगे।']
   },
   '/analysis': {
+    section: 'analysis',
     eyebrow: ['Look beyond the score', 'स्कोर से आगे की समझ'],
     title: ['AURA Sport Analysis', 'AURA Sport विश्लेषण'],
     description: ['Thoughtful cricket analysis, patterns and perspectives from the AURA Sport editorial team.', 'AURA Sport की संपादकीय टीम द्वारा क्रिकेट का गहन विश्लेषण, खेल के पैटर्न और उपयोगी दृष्टिकोण।'],
     empty: ['AURA Sport analysis articles will appear here when they are published.', 'AURA Sport के विश्लेषण लेख प्रकाशित होने पर यहाँ दिखाई देंगे।']
   },
   '/knowledge': {
+    section: 'knowledge',
     eyebrow: ['Understand the game', 'खेल को समझें'],
     title: ['Cricket Knowledge', 'क्रिकेट ज्ञान'],
     description: ['Clear explanations of cricket rules, formats, tactics and the details that make the game fascinating.', 'क्रिकेट के नियमों, प्रारूपों, रणनीतियों और खेल को दिलचस्प बनाने वाली बारीकियों की आसान जानकारी।'],
@@ -30,7 +35,34 @@ function PageHero({ eyebrow, title, description }) {
 
 function EditorialCategoryPage({ path, locale }) {
   const page = categoryPages[path];
-  return <main className="page-main"><PageHero eyebrow={page.eyebrow[locale === 'hi' ? 1 : 0]} title={page.title[locale === 'hi' ? 1 : 0]} description={page.description[locale === 'hi' ? 1 : 0]} /><section className="container info-content"><div className="info-empty"><span className="empty-symbol" aria-hidden="true">✳</span><p>{page.empty[locale === 'hi' ? 1 : 0]}</p><a className="text-link" href={localizePath('/news', locale)}>{tr(locale, 'Explore all news', 'सभी खबरें देखें')} ↗</a></div></section></main>;
+  const stories = getPublishedArticles()
+    .filter((article) => article.section === page.section)
+    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+    .map((article) => localizeStory(article, locale));
+  return (
+    <main className="page-main">
+      <PageHero eyebrow={page.eyebrow[locale === 'hi' ? 1 : 0]} title={page.title[locale === 'hi' ? 1 : 0]} description={page.description[locale === 'hi' ? 1 : 0]} />
+      <section className="container listing-section">
+        {stories.length > 0 ? (
+          <div className="news-list-grid">
+            {stories.map((story) => (
+              <article className="story-card" key={story.slug}>
+                <a href={localizePath('/news/' + story.slug, locale)} className="story-card-link">
+                  {story.coverImage ? <img className="story-image" src={story.coverImage} alt={story.coverAlt || story.title} loading="lazy" /> : <div className="story-image story-image-empty" aria-hidden="true" />}
+                  <span className="story-category">{story.category}</span>
+                  <h3>{story.title}</h3>
+                  {story.excerpt && <p>{story.excerpt}</p>}
+                  <time dateTime={story.publishedAt}>{story.dateLabel || story.publishedAt?.slice(0, 10)}</time>
+                </a>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="info-empty"><span className="empty-symbol" aria-hidden="true">✳</span><p>{page.empty[locale === 'hi' ? 1 : 0]}</p><a className="text-link" href={localizePath('/news', locale)}>{tr(locale, 'Explore all news', 'सभी खबरें देखें')} ↗</a></div>
+        )}
+      </section>
+    </main>
+  );
 }
 
 function AboutPage({ locale }) {

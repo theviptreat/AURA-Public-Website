@@ -52,9 +52,9 @@ test('published article HTML gets locale-specific title, description and social 
   assert.match(english, /property="og:type" content="article"/);
   assert.match(english, /property="og:image" content="https:\/\/images\.example\.test\/cricket\.jpg"/);
   assert.match(english, /<h1>A close cricket finish<\/h1>/);
-  assert.match(english, /<div class="article-body">Sample body<\/div>/);
+  assert.match(english, /<div class="article-body"><p>Sample body<\/p><\/div>/);
   assert.match(hindi, /<h1>क्रिकेट का रोमांचक मुकाबला<\/h1>/);
-  assert.match(hindi, /<div class="article-body">Sample body<\/div>/);
+  assert.match(hindi, /<div class="article-body"><p>Sample body<\/p><\/div>/);
   assert.match(hindi, /<html lang="hi-IN">/);
   assert.match(hindi, /<title>क्रिकेट का रोमांचक मुकाबला \| AURA Sport<\/title>/);
   assert.match(hindi, /name="description" content="नमूना खबर के लिए खोज विवरण।"/);
