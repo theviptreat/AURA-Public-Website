@@ -5,7 +5,7 @@ on:
     inputs:
       payload:
         description: Pages CMS action context (optional)
-        required: false
+        required: true
         type: string
         default: '{}'
   schedule:
