@@ -163,7 +163,7 @@ export default function App() {
   const sourceArticle = articles.find((article) => article.slug === articleSlug) || null;
   const localizedArticle = localizeStory(sourceArticle, locale);
   const metadata = {
-    '/': [['AURA Sport — Cricket, with context', 'AURA Sport brings you considered cricket news, match previews, analysis and knowledge.'], ['AURA Sport — क्रिकेट, सही संदर्भ के साथ', 'AURA Sport पर पढ़ें क्रिकेट की खबरें, मैच पूर्वावलोकन, विश्लेषण और उपयोगी जानकारी।']],
+    '/': [['AURA Sport — Beyond the Game', 'Discover AURA: a deeper perspective on cricket, built on skill, strategy, research and patience.'], ['AURA Sport — खेल से कहीं आगे', 'AURA को जानें: कौशल, रणनीति, शोध और धैर्य पर आधारित क्रिकेट को समझने का एक गहरा नज़रिया।']],
     '/news': [['Cricket News | AURA Sport', 'Read the latest cricket news and updates from AURA Sport.'], ['क्रिकेट समाचार | AURA Sport', 'AURA Sport पर पढ़ें क्रिकेट जगत की ताज़ा खबरें और अपडेट।']],
     '/match-preview': [['Cricket Match Previews | AURA Sport', 'Explore cricket match previews from AURA Sport.'], ['क्रिकेट मैच पूर्वावलोकन | AURA Sport', 'AURA Sport पर देखें आने वाले क्रिकेट मैचों का पूर्वावलोकन।']],
     '/analysis': [['Cricket Analysis | AURA Sport', 'Read thoughtful cricket analysis and perspectives from AURA Sport.'], ['क्रिकेट विश्लेषण | AURA Sport', 'AURA Sport पर पढ़ें क्रिकेट का विश्लेषण और विशेषज्ञ विचार।']],
