@@ -5,6 +5,7 @@ import { getPublishedArticles } from './content/articles.js';
 import { localizeStory } from './i18n/localized-content';
 import { getNewsCategories } from './content/news-categories.js';
 import { getArticleSeoMetadata, getLocalizedSeoUrls, getOpenGraphLocale } from './i18n/seo';
+import { sponsor, socialLinks } from './content/site-config.js';
 
 const tr = (locale, en, hi) => locale === 'hi' ? hi : en;
 const articles = getPublishedArticles();
@@ -73,6 +74,14 @@ function HomePage({ locale }) {
   </div></section>
   <section className="coming-section landing-section" id="play-zone"><div className="container coming-inner"><div className="section-index"><span>02</span><i/></div><div><span className="eyebrow">{tr(locale,'A NEW WAY TO EXPERIENCE CRICKET','क्रिकेट का अनुभव करने का नया तरीका')}</span><h2>AURA <span>PLAY ZONE</span></h2><p>{tr(locale,'A new way to experience cricket.','क्रिकेट का अनुभव करने का एक नया तरीका।')}</p></div><span className="coming-pill">{tr(locale,'COMING SOON','जल्द आ रहा है')}</span></div></section>
   <section className="android-section landing-section" id="android"><div className="container android-inner"><div className="android-copy"><span className="eyebrow">{tr(locale,'THE AURA EXPERIENCE, ON THE MOVE','AURA का अनुभव, अब आपके साथ')}</span><h2>{tr(locale,'AURA ON ANDROID.','एंड्रॉयड पर AURA।')}</h2><p>{tr(locale,'The AURA experience is coming soon to Android.','AURA का अनुभव जल्द ही Android पर उपलब्ध होगा।')}</p><span className="coming-pill">{tr(locale,'COMING SOON','जल्द आ रहा है')}</span></div><div className="android-phone" aria-hidden="true"><div className="android-phone-screen"><span className="preview-brand">AURA<span>.</span></span><div className="android-phone-glow"/><span className="phone-caption">BEYOND THE GAME</span></div></div></div></section>
+  {sponsor?.name && sponsor?.href && <section className="sponsor-section landing-section" aria-label={tr(locale,'AURA sponsor','AURA प्रायोजक')}>
+   <div className="container sponsor-inner"><span className="eyebrow">{tr(locale,'IN PARTNERSHIP WITH','के सहयोग से')}</span>
+    <a className="sponsor-link" href={sponsor.href} target="_blank" rel="noopener noreferrer">
+     {sponsor.logo ? <img src={sponsor.logo} alt={sponsor.name} loading="lazy" /> : <strong>{sponsor.name}</strong>}
+    </a>
+    {sponsor.message && <p>{sponsor.message}</p>}
+   </div>
+  </section>}
  </main>;
 }
 
@@ -143,6 +152,7 @@ function Footer({ locale = 'en' }) {
   <div className="footer-links">
    <div><span className="footer-label">{tr(locale,'AURA','AURA')}</span><a href={localizePath('/about',locale)}>{tr(locale,'About AURA','AURA के बारे में')}</a><a href={`${localizePath('/',locale)}#web-app`}>{tr(locale,'Web App','वेब ऐप')}</a><a href={localizePath('/contact',locale)}>{tr(locale,'Contact Us','संपर्क करें')}</a></div>
    <div><span className="footer-label">{tr(locale,'Information','जानकारी')}</span><a href={localizePath('/privacy-policy',locale)}>{tr(locale,'Privacy Policy','गोपनीयता नीति')}</a><a href={localizePath('/terms',locale)}>{tr(locale,'Terms & Conditions','नियम और शर्तें')}</a><a href={localizePath('/disclaimer',locale)}>{tr(locale,'Disclaimer','अस्वीकरण')}</a></div>
+   {socialLinks.length > 0 && <div><span className="footer-label">{tr(locale,'Follow AURA','AURA से जुड़ें')}</span>{socialLinks.map((item) => <a key={item.url} href={item.url} target="_blank" rel="noopener noreferrer">{item.label}</a>)}</div>}
   </div></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} AURA Sport. {tr(locale,'All rights reserved.','सर्वाधिकार सुरक्षित।')}</span><span>{tr(locale,'Made for the love of cricket.','क्रिकेट के प्रति प्रेम के लिए।')}</span></div></footer>;
 }
 
