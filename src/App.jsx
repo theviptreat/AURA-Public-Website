@@ -67,9 +67,9 @@ function HomePage({ locale }) {
    </div><div className="about-art" aria-hidden="true"><div className="about-orbit orbit-one"/><div className="about-orbit orbit-two"/><div className="about-orbit orbit-three"/>AURA</div>
   </div></section>
   <section className="webapp-section landing-section" id="web-app"><div className="container webapp-coming-soon">
-   <span className="eyebrow">{tr(locale,'THE AURA EXPERIENCE','AURA का अनुभव')}</span>
-   <h2>{tr(locale,'AURA WEB APP.','AURA वेब ऐप।')}</h2>
-   <p>{tr(locale,'A new way to experience cricket is on its way. We are working on the AURA Web App.','क्रिकेट का अनुभव करने का एक नया तरीका जल्द आ रहा है। हम AURA Web App पर काम कर रहे हैं।')}</p>
+   <span className="eyebrow">{tr(locale,'A NEW CRICKET EXPERIENCE','क्रिकेट का एक नया अनुभव')}</span>
+   <h2>{tr(locale,'AURA WEB APP','AURA वेब ऐप')}</h2>
+   <p>{tr(locale,'A new way to experience cricket is on its way. Get ready to see the game from a different perspective.','क्रिकेट का अनुभव करने का एक नया अंदाज़ जल्द आ रहा है। खेल को देखने का एक अलग नज़रिया।')}</p>
    <span className="coming-pill">{tr(locale,'COMING SOON','जल्द आ रहा है')}</span>
   </div></section>
   <section className="coming-section landing-section" id="play-zone"><div className="container coming-inner"><div className="section-index"><span>02</span><i/></div><div><span className="eyebrow">{tr(locale,'A NEW WAY TO EXPERIENCE CRICKET','क्रिकेट का अनुभव करने का नया तरीका')}</span><h2>AURA <span>PLAY ZONE</span></h2><p>{tr(locale,'A new way to experience cricket.','क्रिकेट का अनुभव करने का एक नया तरीका।')}</p></div><span className="coming-pill">{tr(locale,'COMING SOON','जल्द आ रहा है')}</span></div></section>
