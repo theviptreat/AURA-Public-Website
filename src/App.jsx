@@ -6,46 +6,22 @@ import { localizeStory } from './i18n/localized-content';
 import { getNewsCategories } from './content/news-categories.js';
 import { getArticleSeoMetadata, getLocalizedSeoUrls, getOpenGraphLocale } from './i18n/seo';
 
-const navigation = [
-  ['News', '/news'],
-  ['Match Preview', '/match-preview'],
-  ['Analysis', '/analysis'],
-  ['Knowledge', '/knowledge'],
-  ['About AURA Sport', '/about'],
-];
-const articles = getPublishedArticles();
-
-const tr = (locale, en, hi) => locale === 'hi' ? hi : en;
-
 function Brand({ locale = 'en' }) {
-  return <a className="brand" href={localizePath('/', locale)} aria-label={tr(locale, "AURA Sport home", "AURA Sport होमपेज")}><span className="brand-name">AURA Sport<span>.</span></span></a>;
+  return <a className="brand" href={localizePath('/', locale)} aria-label={tr(locale, 'AURA home', 'AURA होमपेज')}><span className="brand-symbol" aria-hidden="true">A</span><span className="brand-name">AURA<span>.</span></span></a>;
 }
 
 function Header({ locale = 'en', currentPath = '/', currentSearch = '', currentHash = '' }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const labels = locale === 'hi'
-    ? ['समाचार', 'मैच पूर्वावलोकन', 'विश्लेषण', 'क्रिकेट ज्ञान', 'AURA Sport के बारे में', 'ऐप डाउनलोड']
-    : ['News', 'Match Preview', 'Analysis', 'Knowledge', 'About AURA Sport', 'Get the App'];
-  const localizedNavigation = navigation.map(([, href], index) => [labels[index], localizePath(href, locale)]);
-  return (
-    <header className="site-header">
-      <div className="header-inner">
-        <Brand locale={locale} />
-        <nav className={menuOpen ? 'main-nav is-open' : 'main-nav'} id="primary-navigation" aria-label={tr(locale, 'Main navigation', 'मुख्य नेविगेशन')}>
-          {localizedNavigation.map(([label, href]) => <a key={label} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}
-          <a className="nav-download" href={localizePath('/download', locale)}>{labels[5]} <span aria-hidden="true">↗</span></a>
-          <div className="language-switch" aria-label={tr(locale, 'Language selection', 'भाषा चुनें')}>
-            <a href={getLocaleSwitchPath(currentPath, 'en', currentSearch, currentHash)} aria-current={locale === 'en' ? 'page' : undefined}>EN</a>
-            <span aria-hidden="true">|</span>
-            <a href={getLocaleSwitchPath(currentPath, 'hi', currentSearch, currentHash)} aria-current={locale === 'hi' ? 'page' : undefined}>हिंदी</a>
-          </div>
-        </nav>
-        <button className="menu-toggle" type="button" aria-label={menuOpen ? tr(locale, 'Close navigation menu', 'नेविगेशन मेनू बंद करें') : tr(locale, 'Open navigation menu', 'नेविगेशन मेनू खोलें')} aria-expanded={menuOpen} aria-controls="primary-navigation" onClick={() => setMenuOpen(!menuOpen)}>
-          <span /><span />
-        </button>
-      </div>
-    </header>
-  );
+  const links = [['About','हमारे बारे में','about'],['Web App','वेब ऐप','web-app'],['Play Zone','प्ले ज़ोन','play-zone'],['Android','एंड्रॉयड','android']];
+  return <header className="site-header cinematic-header"><div className="header-inner">
+    <Brand locale={locale} />
+    <nav className={menuOpen ? 'main-nav is-open' : 'main-nav'} id="primary-navigation" aria-label={tr(locale,'Main navigation','मुख्य नेविगेशन')}>
+      {links.map(([en,hi,id]) => <a key={id} href={`${localizePath('/',locale)}#${id}`} onClick={() => setMenuOpen(false)}>{tr(locale,en,hi)}</a>)}
+      <a className="nav-download" href={`${localizePath('/',locale)}#web-app`} onClick={() => setMenuOpen(false)}>{tr(locale,'Explore AURA','AURA देखें')} <span aria-hidden="true">↗</span></a>
+      <div className="language-switch" aria-label={tr(locale,'Language selection','भाषा चुनें')}><a href={getLocaleSwitchPath(currentPath,'en',currentSearch,currentHash)} aria-current={locale==='en'?'page':undefined}>EN</a><span aria-hidden="true">|</span><a href={getLocaleSwitchPath(currentPath,'hi',currentSearch,currentHash)} aria-current={locale==='hi'?'page':undefined}>हिंदी</a></div>
+    </nav>
+    <button className="menu-toggle" type="button" aria-label={menuOpen?tr(locale,'Close navigation menu','नेविगेशन मेनू बंद करें'):tr(locale,'Open navigation menu','नेविगेशन मेनू खोलें')} aria-expanded={menuOpen} aria-controls="primary-navigation" onClick={() => setMenuOpen(!menuOpen)}><span/><span/></button>
+  </div></header>;
 }
 
 function SectionHeading({ eyebrow, title, href, linkLabel = 'View all' }) {
@@ -70,36 +46,36 @@ function StoryCard({ story, locale }) {
 }
 
 function HomePage({ locale }) {
-  const featuredStory = articles.find((article) => article.featured) || null;
-  const latestStories = [...articles].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt)).filter((article) => article.slug !== featuredStory?.slug).slice(0, 4);
-  const previews = [];
-  const analysis = articles.filter((article) => article.section === 'analysis').slice(0, 3);
-  const knowledge = articles.filter((article) => article.section === 'knowledge').slice(0, 3);
-  return (
-    <>
-      <section className="intro-band"><div className="container intro-content">
-        <span className="eyebrow eyebrow-light">{tr(locale, 'A clearer view of the game', 'क्रिकेट को बेहतर समझने का नज़रिया')}</span>
-        <h1>{tr(locale, 'Cricket,', 'क्रिकेट,')} <em>{tr(locale, 'with context.', 'सही संदर्भ के साथ।')}</em></h1>
-        <p>{tr(locale, 'News, perspectives and knowledge for people who love the game.', 'खेल से प्यार करने वालों के लिए खबरें, विचार और क्रिकेट की जानकारी।')}</p>
-      </div><div className="intro-orbit orbit-one" /><div className="intro-orbit orbit-two" /></section>
-      <main>
-        {featuredStory && <section className="container featured-section"><SectionHeading eyebrow={tr(locale, 'The big story', 'आज की बड़ी खबर')} title={tr(locale, 'Featured', 'प्रमुख खबर')} /><StoryCard story={featuredStory} locale={locale} /></section>}
-        <section className="container content-section" id="news">
-          <SectionHeading eyebrow={tr(locale, 'From the cricket world', 'क्रिकेट जगत से')} title={tr(locale, 'Latest News', 'ताज़ा खबरें')} href={localizePath('/news', locale)} linkLabel={tr(locale, 'View all', 'सभी देखें')} />
-          {latestStories.length ? <div className="story-grid">{latestStories.map((story) => <StoryCard key={story.slug} story={story} locale={locale} />)}</div> : <EmptyStories message={tr(locale, 'Fresh cricket stories are on the way.', 'क्रिकेट की नई खबरें जल्द प्रकाशित होंगी।')} />}
-        </section>
-        {previews.length > 0 && <section className="container content-section" id="previews"><SectionHeading eyebrow={tr(locale, 'Before the first ball', 'पहली गेंद से पहले')} title={tr(locale, 'Match Previews', 'मैच पूर्वावलोकन')} href={localizePath('/match-preview', locale)} linkLabel={tr(locale, 'View all', 'सभी देखें')} /><div className="story-grid">{previews.map((story) => <StoryCard key={story.slug} story={story} locale={locale} />)}</div></section>}
-        {analysis.length > 0 && <section className="analysis-band content-section" id="analysis"><div className="container"><SectionHeading eyebrow={tr(locale, 'Look beyond the score', 'स्कोर से आगे की समझ')} title={tr(locale, 'AURA Sport Analysis', 'AURA Sport विश्लेषण')} href={localizePath('/analysis', locale)} linkLabel={tr(locale, 'View all', 'सभी देखें')} /><div className="story-grid">{analysis.map((story) => <StoryCard key={story.slug} story={story} locale={locale} />)}</div></div></section>}
-        {knowledge.length > 0 && <section className="container content-section" id="knowledge"><SectionHeading eyebrow={tr(locale, 'Understand the game', 'खेल को समझें')} title={tr(locale, 'Cricket Knowledge', 'क्रिकेट ज्ञान')} href={localizePath('/knowledge', locale)} linkLabel={tr(locale, 'View all', 'सभी देखें')} /><div className="story-grid">{knowledge.map((story) => <StoryCard key={story.slug} story={story} locale={locale} />)}</div></section>}
-        <section className="container app-promo" id="about"><div className="app-promo-copy">
-          <span className="eyebrow eyebrow-light">{tr(locale, 'The game goes with you', 'क्रिकेट का साथ हमेशा')}</span>
-          <h2>{tr(locale, 'Stay closer to the cricket that matters.', 'क्रिकेट की हर अहम बात से जुड़े रहें।')}</h2>
-          <p>{tr(locale, 'Explore the AURA Sport app for match coverage and team-researched predictions.', 'मैच कवरेज और अनुभवी टीम द्वारा तैयार किए गए पूर्वानुमानों के लिए AURA Sport ऐप देखें।')}</p>
-          <a className="button button-gold" href={localizePath('/download', locale)}>{tr(locale, 'Explore the AURA Sport App', 'AURA Sport ऐप देखें')} <span aria-hidden="true">↗</span></a>
-        </div><div className="app-promo-art" aria-hidden="true"><div className="art-ring ring-a" /><div className="art-ring ring-b" /><span>A</span></div></section>
-      </main>
-    </>
-  );
+ return <main className="landing-page">
+  <section className="hero-stadium" aria-labelledby="hero-title">
+   <div className="stadium-lights" aria-hidden="true"><i/><i/><i/><i/></div><div className="stadium-stands" aria-hidden="true"/><div className="stadium-pitch" aria-hidden="true"><span/></div>
+   <div className="hero-content container"><span className="hero-kicker">{tr(locale,'A NEW PERSPECTIVE ON CRICKET','क्रिकेट को देखने का एक नया नज़रिया')}</span><div className="hero-emblem" aria-hidden="true">A</div>
+    <h1 id="hero-title">BEYOND<br/><span>THE GAME.</span></h1><p>{tr(locale,'More than cricket. A deeper perspective.','क्रिकेट से बढ़कर। खेल को समझने का एक गहरा नज़रिया।')}</p>
+    <div className="hero-actions"><a className="button button-neon" href="#web-app">{tr(locale,'EXPLORE AURA','AURA देखें')} <span aria-hidden="true">↗</span></a><a className="button button-ghost" href="#about">{tr(locale,'DISCOVER AURA','AURA को जानें')} <span aria-hidden="true">↓</span></a></div>
+   </div><div className="hero-bottomline container"><span>AURA SPORT</span><span>{tr(locale,'BUILT ON SKILL · STRATEGY · PATIENCE','कौशल · रणनीति · धैर्य')}</span></div>
+  </section>
+  <section className="about-section landing-section" id="about"><div className="container about-layout"><div className="section-index"><span>01</span><i/></div>
+   <div className="about-copy"><span className="eyebrow">{tr(locale,'THE THINKING BEHIND AURA','AURA के पीछे की सोच')}</span><h2>{tr(locale,'MORE THAN JUST A GAME.','सिर्फ एक खेल से कहीं बढ़कर।')}</h2>
+    <p>{tr(locale,'Cricket is a game of skill, strategy, patience and possibilities.','क्रिकेट कौशल, रणनीति, धैर्य और संभावनाओं का खेल है।')}</p>
+    <p>{tr(locale,'At AURA, we believe understanding the game takes more than just watching it. It takes observation, research, patience and the ability to see beyond the obvious.','AURA में हमारा मानना है कि खेल को समझने के लिए सिर्फ उसे देखना काफी नहीं। इसके लिए निरीक्षण, शोध, धैर्य और स्पष्ट दिखाई देने वाली बातों से आगे देखने की क्षमता चाहिए।')}</p>
+    <p>{tr(locale,'Built for those who appreciate the deeper side of cricket, AURA brings a thoughtful perspective to the game.','उन लोगों के लिए जो क्रिकेट की गहराई को समझते हैं, AURA खेल को देखने का एक विचारशील नज़रिया लेकर आता है।')}</p>
+    <div className="about-words"><span>{tr(locale,'SKILL','कौशल')}</span><b>·</b><span>{tr(locale,'STRATEGY','रणनीति')}</span><b>·</b><span>{tr(locale,'PATIENCE','धैर्य')}</span></div>
+   </div><div className="about-art" aria-hidden="true"><div className="about-orbit orbit-one"/><div className="about-orbit orbit-two"/><div className="about-orbit orbit-three"/>AURA</div>
+  </div></section>
+  <section className="webapp-section landing-section" id="web-app"><div className="container">
+   <div className="webapp-heading"><div><span className="eyebrow">{tr(locale,'YOUR GAME. YOUR AURA.','आपका खेल। आपका AURA।')}</span><h2>{tr(locale,'THE AURA WEB APP.','AURA वेब ऐप।')}</h2></div><p>{tr(locale,'A closer look at the cricket experience we are building. Explore AURA on the web.','क्रिकेट के उस अनुभव को करीब से जानें जिसे हम बना रहे हैं। वेब पर AURA को एक्सप्लोर करें।')}</p></div>
+   <div className="device-showcase"><div className="desktop-device"><div className="device-camera"/><div className="device-screen">
+    <div className="preview-top"><span className="preview-brand">AURA<span>.</span></span><span>{tr(locale,'WEB APP PREVIEW','वेब ऐप प्रीव्यू')}</span><span className="preview-dot"/></div>
+    <div className="preview-body"><div className="preview-side"><i/><i/><i/><i/></div><div className="preview-main"><div className="preview-label">{tr(locale,'THE AURA EXPERIENCE','AURA का अनुभव')}</div><div className="preview-line wide"/><div className="preview-line medium"/><div className="preview-cards"><i/><i/><i/></div><div className="preview-line short"/></div></div>
+    <div className="preview-foot"><span>AURA SPORT</span><span>{tr(locale,'ACTUAL APP SCREENS WILL BE ADDED HERE','ऐप के वास्तविक स्क्रीनशॉट यहाँ जोड़े जाएँगे')}</span></div>
+   </div></div>
+   <div className="mobile-device"><div className="mobile-notch"/><div className="mobile-screen"><span className="preview-brand">AURA<span>.</span></span><div className="mobile-glow"/><small>{tr(locale,'YOUR CRICKET SPACE','आपकी क्रिकेट दुनिया')}</small><i/><i/><div className="mobile-tiles"><b/><b/><b/></div><small>{tr(locale,'APP PREVIEW','ऐप प्रीव्यू')}</small></div></div>
+   <div className="showcase-caption">{tr(locale,'PREVIEW PLACEHOLDER · AUTHENTIC APP SCREENS TO FOLLOW','प्रीव्यू प्लेसहोल्डर · वास्तविक ऐप स्क्रीन जल्द जोड़ी जाएँगी')}</div></div>
+   <div className="webapp-cta"><span>{tr(locale,'READY TO EXPLORE?','एक्सप्लोर करने के लिए तैयार हैं?')}</span><a className="button button-neon" href={localizePath('/download',locale)}>{tr(locale,'EXPLORE WEB APP','वेब ऐप देखें')} <span aria-hidden="true">↗</span></a></div>
+  </div></section>
+  <section className="coming-section landing-section" id="play-zone"><div className="container coming-inner"><div className="section-index"><span>02</span><i/></div><div><span className="eyebrow">{tr(locale,'A NEW WAY TO EXPERIENCE CRICKET','क्रिकेट का अनुभव करने का नया तरीका')}</span><h2>AURA <span>PLAY ZONE</span></h2><p>{tr(locale,'A new way to experience cricket.','क्रिकेट का अनुभव करने का एक नया तरीका।')}</p></div><span className="coming-pill">{tr(locale,'COMING SOON','जल्द आ रहा है')}</span></div></section>
+  <section className="android-section landing-section" id="android"><div className="container android-inner"><div className="android-copy"><span className="eyebrow">{tr(locale,'THE AURA EXPERIENCE, ON THE MOVE','AURA का अनुभव, अब आपके साथ')}</span><h2>{tr(locale,'AURA ON ANDROID.','एंड्रॉयड पर AURA।')}</h2><p>{tr(locale,'The AURA experience is coming soon to Android.','AURA का अनुभव जल्द ही Android पर उपलब्ध होगा।')}</p><span className="coming-pill">{tr(locale,'COMING SOON','जल्द आ रहा है')}</span></div><div className="android-phone" aria-hidden="true"><div className="android-phone-screen"><span className="preview-brand">AURA<span>.</span></span><div className="android-phone-glow"/><span className="phone-caption">BEYOND THE GAME</span></div></div></div></section>
+ </main>;
 }
 
 function NewsListingPage({ locale }) {
@@ -164,14 +140,12 @@ function ArticleDetailPage({ slug, locale }) {
 }
 
 function Footer({ locale = 'en' }) {
-  return <footer className="site-footer"><div className="container footer-main">
-    <div className="footer-brand"><Brand locale={locale} /><p>{tr(locale, 'Cricket, with context.', 'क्रिकेट, सही संदर्भ के साथ।')}</p></div>
-    <div className="footer-links">
-      <div><span className="footer-label">{tr(locale, 'Explore', 'देखें')}</span><a href={localizePath('/news', locale)}>{tr(locale, 'News', 'समाचार')}</a><a href={localizePath('/match-preview', locale)}>{tr(locale, 'Match Preview', 'मैच पूर्वावलोकन')}</a><a href={localizePath('/analysis', locale)}>{tr(locale, 'Analysis', 'विश्लेषण')}</a><a href={localizePath('/knowledge', locale)}>{tr(locale, 'Knowledge', 'क्रिकेट ज्ञान')}</a></div>
-      <div><span className="footer-label">AURA Sport</span><a href={localizePath('/about', locale)}>{tr(locale, 'About', 'हमारे बारे में')}</a><a href={localizePath('/contact', locale)}>{tr(locale, 'Contact & Help', 'संपर्क और सहायता')}</a><a href={localizePath('/download', locale)}>{tr(locale, 'Download App', 'ऐप डाउनलोड')}</a></div>
-      <div><span className="footer-label">{tr(locale, 'Information', 'जानकारी')}</span><a href={localizePath('/privacy-policy', locale)}>{tr(locale, 'Privacy Policy', 'गोपनीयता नीति')}</a><a href={localizePath('/terms', locale)}>{tr(locale, 'Terms & Conditions', 'नियम और शर्तें')}</a><a href={localizePath('/disclaimer', locale)}>{tr(locale, 'Disclaimer', 'अस्वीकरण')}</a></div>
-    </div>
-  </div><div className="container footer-bottom"><span>© {new Date().getFullYear()} AURA Sport. {tr(locale, 'All rights reserved.', 'सर्वाधिकार सुरक्षित।')}</span><span>{tr(locale, 'Made for the love of cricket.', 'क्रिकेट के प्रति प्रेम के लिए।')}</span></div></footer>;
+ return <footer className="site-footer cinematic-footer"><div className="container footer-main">
+  <div className="footer-brand"><Brand locale={locale}/><p>{tr(locale,'Beyond the Game.','खेल से कहीं आगे।')}</p></div>
+  <div className="footer-links">
+   <div><span className="footer-label">{tr(locale,'AURA','AURA')}</span><a href={localizePath('/about',locale)}>{tr(locale,'About AURA','AURA के बारे में')}</a><a href={localizePath('/download',locale)}>{tr(locale,'Web App','वेब ऐप')}</a><a href={localizePath('/contact',locale)}>{tr(locale,'Contact Us','संपर्क करें')}</a></div>
+   <div><span className="footer-label">{tr(locale,'Information','जानकारी')}</span><a href={localizePath('/privacy-policy',locale)}>{tr(locale,'Privacy Policy','गोपनीयता नीति')}</a><a href={localizePath('/terms',locale)}>{tr(locale,'Terms & Conditions','नियम और शर्तें')}</a><a href={localizePath('/disclaimer',locale)}>{tr(locale,'Disclaimer','अस्वीकरण')}</a></div>
+  </div></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} AURA Sport. {tr(locale,'All rights reserved.','सर्वाधिकार सुरक्षित।')}</span><span>{tr(locale,'Made for the love of cricket.','क्रिकेट के प्रति प्रेम के लिए।')}</span></div></footer>;
 }
 
 export default function App() {
