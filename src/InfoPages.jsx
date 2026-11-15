@@ -82,9 +82,11 @@ function ContactPage({ locale }) {
   return <main className="page-main">
     <PageHero eyebrow={tr(locale, "We're here to help", 'हम आपकी सहायता के लिए हैं')} title={tr(locale, 'Contact & Help', 'संपर्क और सहायता')} description={tr(locale, 'For questions about AURA Sport, its content or the app, this is the place to start.', 'AURA Sport, इसकी सामग्री या ऐप से जुड़े सवालों के लिए यहाँ से शुरुआत करें।')} />
     <section className="container info-content contact-content"><div className="info-copy"><span className="eyebrow">{tr(locale, 'Get in touch', 'संपर्क करें')}</span><h2>{tr(locale, 'How can we help?', 'हम आपकी क्या मदद कर सकते हैं?')}</h2>
-      <p>{tr(locale, 'Our official contact details and support channels will be published here before the website launches publicly.', 'वेबसाइट के सार्वजनिक लॉन्च से पहले हमारे आधिकारिक संपर्क विवरण और सहायता माध्यम यहाँ प्रकाशित किए जाएँगे।')}</p>
-      <p>{tr(locale, "We don't want to display an unverified email address or a contact form that cannot reliably deliver your message.", 'हम कोई अपुष्ट ईमेल पता या ऐसा संपर्क फ़ॉर्म नहीं दिखाना चाहते जो आपका संदेश भरोसेमंद तरीके से न पहुँचा सके।')}</p>
-    </div><div className="info-note"><strong>{tr(locale, 'Support information coming soon', 'सहायता की जानकारी जल्द उपलब्ध होगी')}</strong><p>{tr(locale, 'Please check back when the official AURA Sport contact channel is available.', 'AURA Sport का आधिकारिक संपर्क माध्यम उपलब्ध होने पर कृपया यहाँ दोबारा देखें।')}</p></div></section>
+      <p>{tr(locale, 'Choose the right email address and our team will be able to direct your enquiry.', 'अपनी आवश्यकता के अनुसार सही ईमेल चुनें, हमारी टीम आपकी बात संबंधित विभाग तक पहुँचा सकेगी।')}</p>
+    </div><div className="contact-email-list">
+      <div className="contact-email-card"><span className="eyebrow">{tr(locale, 'BUSINESS ENQUIRIES', 'व्यावसायिक पूछताछ')}</span><a href="mailto:business.aurasports@gmail.com">business.aurasports@gmail.com</a></div>
+      <div className="contact-email-card"><span className="eyebrow">{tr(locale, 'CUSTOMER SUPPORT', 'ग्राहक सहायता')}</span><a href="mailto:customercare.aurasports@gmail.com">customercare.aurasports@gmail.com</a></div>
+    </div></section>
   </main>;
 }
 
