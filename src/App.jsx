@@ -52,7 +52,7 @@ function StoryCard({ story, locale }) {
 function HomePage({ locale }) {
  return <main className="landing-page">
   <section className="hero-stadium" aria-labelledby="hero-title">
-   <div className="stadium-lights" aria-hidden="true"><i/><i/><i/><i/></div><div className="stadium-stands" aria-hidden="true"/><div className="stadium-pitch" aria-hidden="true"><span/></div>
+   <div className="stadium-lights" aria-hidden="true"><i/><i/><i/><i/></div><div className="stadium-stands" aria-hidden="true"><span className="stand-tier stand-tier-one"/><span className="stand-tier stand-tier-two"/><span className="stand-tier stand-tier-three"/></div><div className="stadium-pitch" aria-hidden="true"><span className="pitch-strip"><i className="pitch-crease pitch-crease-top"/><i className="pitch-crease pitch-crease-bottom"/><i className="pitch-stumps pitch-stumps-top"/><i className="pitch-stumps pitch-stumps-bottom"/></span><i className="pitch-boundary"/><i className="pitch-wave"/></div>
    <div className="hero-content container"><span className="hero-kicker">{tr(locale,'A NEW PERSPECTIVE ON CRICKET','क्रिकेट को देखने का एक नया नज़रिया')}</span>
     <h1 id="hero-title">BEYOND<br/><span>THE GAME.</span></h1><p>{tr(locale,'More than cricket. A deeper perspective.','क्रिकेट से बढ़कर। खेल को समझने का एक गहरा नज़रिया।')}</p>
     <div className="hero-actions"><a className="button button-neon" href="#web-app">{tr(locale,'EXPLORE AURA','AURA देखें')} <span aria-hidden="true">↗</span></a><a className="button button-ghost" href="#about">{tr(locale,'DISCOVER AURA','AURA को जानें')} <span aria-hidden="true">↓</span></a></div>
