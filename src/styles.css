@@ -363,3 +363,13 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
 .webapp-coming-soon{min-height:330px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:20px}
 .webapp-coming-soon h2{margin:0;color:#f4f8f2;font:800 clamp(38px,6vw,68px)/1 Arial,sans-serif;letter-spacing:-.06em}
 .webapp-coming-soon p{max-width:520px;margin:0;color:rgba(234,243,229,.67);font-size:14px;line-height:1.9}
+
+
+/* Optional sponsor placement — rendered only when verified sponsor details exist. */
+.sponsor-section{padding:42px 0;background:linear-gradient(105deg,#07100b,#0a1710 52%,#060c08);border-top:1px solid rgba(166,255,53,.1);border-bottom:1px solid rgba(166,255,53,.1)}
+.sponsor-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center}
+.sponsor-link{display:inline-flex;min-height:42px;align-items:center;justify-content:center;color:#f4f8f2;text-decoration:none}
+.sponsor-link img{display:block;width:auto;max-width:min(220px,65vw);max-height:58px;object-fit:contain}
+.sponsor-link strong{font-size:clamp(20px,3vw,30px);letter-spacing:.02em}
+.sponsor-inner>p{max-width:540px;margin:0;color:rgba(234,243,229,.62);font-size:12px;line-height:1.7}
+.cinematic-footer .footer-links{grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}
