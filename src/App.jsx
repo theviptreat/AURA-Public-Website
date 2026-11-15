@@ -6,6 +6,9 @@ import { localizeStory } from './i18n/localized-content';
 import { getNewsCategories } from './content/news-categories.js';
 import { getArticleSeoMetadata, getLocalizedSeoUrls, getOpenGraphLocale } from './i18n/seo';
 
+const tr = (locale, en, hi) => locale === 'hi' ? hi : en;
+const articles = getPublishedArticles();
+
 function Brand({ locale = 'en' }) {
   return <a className="brand" href={localizePath('/', locale)} aria-label={tr(locale, 'AURA home', 'AURA होमपेज')}><span className="brand-symbol" aria-hidden="true">A</span><span className="brand-name">AURA<span>.</span></span></a>;
 }
