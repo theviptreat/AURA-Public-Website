@@ -141,7 +141,7 @@ function Footer({ locale = 'en' }) {
  return <footer className="site-footer cinematic-footer"><div className="container footer-main">
   <div className="footer-brand"><Brand locale={locale}/><p>{tr(locale,'Beyond the Game.','खेल से कहीं आगे।')}</p></div>
   <div className="footer-links">
-   <div><span className="footer-label">{tr(locale,'AURA','AURA')}</span><a href={localizePath('/about',locale)}>{tr(locale,'About AURA','AURA के बारे में')}</a><a href={localizePath('/download',locale)}>{tr(locale,'Web App','वेब ऐप')}</a><a href={localizePath('/contact',locale)}>{tr(locale,'Contact Us','संपर्क करें')}</a></div>
+   <div><span className="footer-label">{tr(locale,'AURA','AURA')}</span><a href={localizePath('/about',locale)}>{tr(locale,'About AURA','AURA के बारे में')}</a><a href={`${localizePath('/',locale)}#web-app`}>{tr(locale,'Web App','वेब ऐप')}</a><a href={localizePath('/contact',locale)}>{tr(locale,'Contact Us','संपर्क करें')}</a></div>
    <div><span className="footer-label">{tr(locale,'Information','जानकारी')}</span><a href={localizePath('/privacy-policy',locale)}>{tr(locale,'Privacy Policy','गोपनीयता नीति')}</a><a href={localizePath('/terms',locale)}>{tr(locale,'Terms & Conditions','नियम और शर्तें')}</a><a href={localizePath('/disclaimer',locale)}>{tr(locale,'Disclaimer','अस्वीकरण')}</a></div>
   </div></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} AURA Sport. {tr(locale,'All rights reserved.','सर्वाधिकार सुरक्षित।')}</span><span>{tr(locale,'Made for the love of cricket.','क्रिकेट के प्रति प्रेम के लिए।')}</span></div></footer>;
 }
