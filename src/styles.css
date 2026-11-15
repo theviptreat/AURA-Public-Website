@@ -373,3 +373,10 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
 .sponsor-link strong{font-size:clamp(20px,3vw,30px);letter-spacing:.02em}
 .sponsor-inner>p{max-width:540px;margin:0;color:rgba(234,243,229,.62);font-size:12px;line-height:1.7}
 .cinematic-footer .footer-links{grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}
+
+.contact-email-list{display:grid;gap:16px;align-content:center}
+.contact-email-card{padding:24px;border:1px solid rgba(166,255,53,.18);border-radius:12px;background:linear-gradient(145deg,rgba(14,34,22,.82),rgba(5,13,8,.92));box-shadow:0 18px 50px rgba(0,0,0,.16)}
+.contact-email-card .eyebrow{display:block;margin-bottom:12px}
+.contact-email-card a{color:#f4f8f2;font-size:clamp(14px,1.7vw,18px);font-weight:650;text-decoration:none;overflow-wrap:anywhere}
+.contact-email-card a:hover{color:var(--aura-green)}
+@media(max-width:800px){.contact-email-list{width:100%}.contact-email-card{padding:20px}}
