@@ -294,6 +294,7 @@ button { font: inherit; }
 /* AURA cinematic landing page */
 :root{--aura-black:#050907;--aura-deep:#08130e;--aura-green:#a6ff35;--aura-white:#f4f8f2}
 html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-white)}
+.page-main{background:#fbfaf6;color:#17251f}
 .site-header.cinematic-header{background:rgba(4,10,7,.88);border-bottom-color:rgba(166,255,53,.13)}
 .cinematic-header .brand{gap:11px}.brand-symbol{width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--aura-green);color:var(--aura-green);font:800 19px Arial;transform:rotate(45deg)}
 .cinematic-header .brand-name{color:#f5f8f3;font-size:21px;letter-spacing:.2em}.cinematic-header .brand-name span,.cinematic-footer .brand-name span{color:var(--aura-green)}
