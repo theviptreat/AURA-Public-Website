@@ -163,7 +163,7 @@ export default function App() {
     '/match-preview': [['Cricket Match Previews | AURA Sport', 'Explore cricket match previews from AURA Sport.'], ['क्रिकेट मैच पूर्वावलोकन | AURA Sport', 'AURA Sport पर देखें आने वाले क्रिकेट मैचों का पूर्वावलोकन।']],
     '/analysis': [['Cricket Analysis | AURA Sport', 'Read thoughtful cricket analysis and perspectives from AURA Sport.'], ['क्रिकेट विश्लेषण | AURA Sport', 'AURA Sport पर पढ़ें क्रिकेट का विश्लेषण और विशेषज्ञ विचार।']],
     '/knowledge': [['Cricket Knowledge | AURA Sport', 'Understand cricket rules, formats and tactics with AURA Sport.'], ['क्रिकेट ज्ञान | AURA Sport', 'AURA Sport के साथ क्रिकेट के नियम, प्रारूप और रणनीतियाँ समझें।']],
-    '/about': [['About AURA Sport', 'Learn about AURA Sport and its cricket editorial approach.'], ['AURA Sport के बारे में', 'AURA Sport और क्रिकेट के प्रति उसके संपादकीय दृष्टिकोण के बारे में जानें।']],
+    '/about': [['About AURA — Beyond the Game', 'Discover AURA’s perspective on cricket, shaped by skill, strategy, observation, research and patience.'], ['AURA के बारे में — खेल से कहीं आगे', 'कौशल, रणनीति, निरीक्षण, शोध और धैर्य से बने क्रिकेट के प्रति AURA के नज़रिए को जानें।']],
     '/contact': [['Contact & Help | AURA Sport', 'Find information about contacting AURA Sport and getting support.'], ['संपर्क और सहायता | AURA Sport', 'AURA Sport से संपर्क और सहायता पाने की जानकारी।']],
     '/privacy-policy': [['Privacy Policy | AURA Sport', 'Read the AURA Sport website privacy policy.'], ['गोपनीयता नीति | AURA Sport', 'AURA Sport वेबसाइट की गोपनीयता नीति पढ़ें।']],
     '/terms': [['Terms & Conditions | AURA Sport', 'Read the terms and conditions for using AURA Sport.'], ['नियम और शर्तें | AURA Sport', 'AURA Sport के उपयोग से जुड़े नियम और शर्तें पढ़ें।']],
