@@ -99,13 +99,9 @@ function AboutBall() {
         <ellipse cx="160" cy="286" rx="102" ry="17" fill="#000" opacity=".32"/>
         <circle cx="160" cy="151" r="137" fill="url(#cricketBallRed)" stroke="#5d0b12" strokeWidth="3"/>
         <g clipPath="url(#cricketBallClip)">
-          <path d="M42 79 C103 122 217 181 280 233" fill="none" stroke="#650d15" strokeWidth="13" opacity=".7"/>
-          <path d="M40 74 C101 117 219 176 282 228" fill="none" stroke="url(#cricketBallSeam)" strokeWidth="5" strokeLinecap="round"/>
-          <path d="M47 62 C104 105 216 164 273 216" fill="none" stroke="#fff8e8" strokeWidth="1.5" strokeDasharray="3 8" opacity=".9"/>
-          <path d="M278 74 C216 117 101 176 38 228" fill="none" stroke="#650d15" strokeWidth="13" opacity=".7"/>
-          <path d="M280 69 C218 112 101 171 36 223" fill="none" stroke="url(#cricketBallSeam)" strokeWidth="5" strokeLinecap="round"/>
-          <path d="M273 58 C215 101 104 160 45 211" fill="none" stroke="#fff8e8" strokeWidth="1.5" strokeDasharray="3 8" opacity=".9"/>
-          <ellipse cx="111" cy="76" rx="66" ry="28" fill="#fff" opacity=".13" transform="rotate(-28 111 76)"/>
+          <path d="M42 157 C75 78 228 63 278 148 C243 229 87 246 42 157" fill="none" stroke="#650d15" strokeWidth="15" opacity=".78"/>
+          <path d="M42 157 C75 78 228 63 278 148 C243 229 87 246 42 157" fill="none" stroke="url(#cricketBallSeam)" strokeWidth="5.5" strokeLinecap="round"/>
+          <path d="M42 157 C75 78 228 63 278 148 C243 229 87 246 42 157" fill="none" stroke="#fff8e8" strokeWidth="2.5" strokeDasharray="1.5 7" strokeLinecap="round" opacity=".98"/><ellipse cx="111" cy="76" rx="66" ry="28" fill="#fff" opacity=".13" transform="rotate(-28 111 76)"/>
           <text x="160" y="169" textAnchor="middle" fill="url(#cricketBallGold)" stroke="#714719" strokeWidth="1.1" paintOrder="stroke" fontFamily="Arial, Helvetica, sans-serif" fontSize="39" fontWeight="900" letterSpacing="2">AURA</text>
           <path d="M87 184 Q160 204 233 184" fill="none" stroke="#f5d887" strokeWidth="1" opacity=".42"/>
         </g>
