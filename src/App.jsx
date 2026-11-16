@@ -61,7 +61,7 @@ function HomePage({ locale }) {
    </div><div className="hero-bottomline container"><span>AURA SPORTS</span><span>{tr(locale,'BUILT ON SKILL · STRATEGY · PATIENCE','कौशल · रणनीति · धैर्य')}</span></div>
   </section>
   <section className="about-section landing-section" id="about"><div className="container about-layout"><div className="section-index"><span>01</span><i/></div>
-   <div className="about-copy"><span className="eyebrow">{tr(locale,'THE THINKING BEHIND AURA','AURA के पीछे की सोच')}</span><h2>{tr(locale,'MORE THAN JUST A GAME','सिर्फ एक खेल से कहीं बढ़कर।')}</h2>
+   <div className="about-copy"><span className="eyebrow">{tr(locale,'THE THINKING BEHIND AURA','AURA के पीछे की सोच')}</span><h2>{tr(locale,'MORE THAN JUST A GAME','सिर्फ एक खेल से कहीं बढ़कर')}</h2>
     <p>{tr(locale,'Cricket is a game of skill, strategy, patience and possibilities.','क्रिकेट कौशल, रणनीति, धैर्य और संभावनाओं का खेल है।')}</p>
     <p>{tr(locale,'At AURA, we believe understanding the game takes more than just watching it. It takes observation, research, patience and the ability to see beyond the obvious.','AURA में हमारा मानना है कि खेल को समझने के लिए सिर्फ उसे देखना काफी नहीं। इसके लिए निरीक्षण, शोध, धैर्य और स्पष्ट दिखाई देने वाली बातों से आगे देखने की क्षमता चाहिए।')}</p>
     <p>{tr(locale,'Built for those who appreciate the deeper side of cricket, AURA brings a thoughtful perspective to the game.','उन लोगों के लिए जो क्रिकेट की गहराई को समझते हैं, AURA खेल को देखने का एक विचारशील नज़रिया लेकर आता है।')}</p>
@@ -135,7 +135,7 @@ function ArticleDetailPage({ slug, locale }) {
   const sourceArticle = articles.find((item) => item.slug === slug);
   const article = localizeStory(sourceArticle, locale);
   const related = sourceArticle ? articles.filter((item) => item.slug !== slug && item.category === sourceArticle.category).slice(0, 3).map((item) => localizeStory(item, locale)) : [];
-  if (!article) return <main className="page-main"><section className="container article-missing"><span className="eyebrow">AURA Sport</span><h1>{tr(locale, 'Story not available', 'खबर उपलब्ध नहीं है')}</h1><p>{tr(locale, 'This story may not have been published yet, or the link may have changed.', 'यह खबर अभी प्रकाशित नहीं हुई है या इसका लिंक बदल गया है।')}</p><a className="button button-gold" href={localizePath('/news', locale)}>{tr(locale, 'Back to News', 'खबरों पर वापस जाएँ')}</a></section></main>;
+  if (!article) return <main className="page-main"><section className="container article-missing"><span className="eyebrow">AURA Sports</span><h1>{tr(locale, 'Story not available', 'खबर उपलब्ध नहीं है')}</h1><p>{tr(locale, 'This story may not have been published yet, or the link may have changed.', 'यह खबर अभी प्रकाशित नहीं हुई है या इसका लिंक बदल गया है।')}</p><a className="button button-gold" href={localizePath('/news', locale)}>{tr(locale, 'Back to News', 'खबरों पर वापस जाएँ')}</a></section></main>;
   return (
     <main className="page-main"><div className="container article-shell"><article className="article-content">
       <nav className="breadcrumbs" aria-label={tr(locale, 'Breadcrumb', 'पेज का रास्ता')}><a href={localizePath('/', locale)}>{tr(locale, 'Home', 'होम')}</a><span>/</span><a href={localizePath('/news', locale)}>{tr(locale, 'News', 'समाचार')}</a><span>/</span><span>{article.category}</span></nav>
@@ -171,19 +171,19 @@ export default function App() {
   const localizedArticle = localizeStory(sourceArticle, locale);
   const metadata = {
     '/': [['AURA Sports — Beyond the Game', 'Discover AURA Sports: a deeper perspective on cricket, built on skill, strategy, research and patience.'], ['AURA Sports — खेल से कहीं आगे', 'AURA Sports को जानें: कौशल, रणनीति, शोध और धैर्य पर आधारित क्रिकेट को समझने का एक गहरा नज़रिया।']],
-    '/news': [['Cricket News | AURA Sport', 'Read the latest cricket news and updates from AURA Sport.'], ['क्रिकेट समाचार | AURA Sport', 'AURA Sport पर पढ़ें क्रिकेट जगत की ताज़ा खबरें और अपडेट।']],
-    '/match-preview': [['Cricket Match Previews | AURA Sport', 'Explore cricket match previews from AURA Sport.'], ['क्रिकेट मैच पूर्वावलोकन | AURA Sport', 'AURA Sport पर देखें आने वाले क्रिकेट मैचों का पूर्वावलोकन।']],
-    '/analysis': [['Cricket Analysis | AURA Sport', 'Read thoughtful cricket analysis and perspectives from AURA Sport.'], ['क्रिकेट विश्लेषण | AURA Sport', 'AURA Sport पर पढ़ें क्रिकेट का विश्लेषण और विशेषज्ञ विचार।']],
-    '/knowledge': [['Cricket Knowledge | AURA Sport', 'Understand cricket rules, formats and tactics with AURA Sport.'], ['क्रिकेट ज्ञान | AURA Sport', 'AURA Sport के साथ क्रिकेट के नियम, प्रारूप और रणनीतियाँ समझें।']],
+    '/news': [['Cricket News | AURA Sports', 'Read the latest cricket news and updates from AURA Sports.'], ['क्रिकेट समाचार | AURA Sports', 'AURA Sports पर पढ़ें क्रिकेट जगत की ताज़ा खबरें और अपडेट।']],
+    '/match-preview': [['Cricket Match Previews | AURA Sports', 'Explore cricket match previews from AURA Sports.'], ['क्रिकेट मैच पूर्वावलोकन | AURA Sports', 'AURA Sports पर देखें आने वाले क्रिकेट मैचों का पूर्वावलोकन।']],
+    '/analysis': [['Cricket Analysis | AURA Sports', 'Read thoughtful cricket analysis and perspectives from AURA Sports.'], ['क्रिकेट विश्लेषण | AURA Sports', 'AURA Sports पर पढ़ें क्रिकेट का विश्लेषण और विशेषज्ञ विचार।']],
+    '/knowledge': [['Cricket Knowledge | AURA Sports', 'Understand cricket rules, formats and tactics with AURA Sports.'], ['क्रिकेट ज्ञान | AURA Sports', 'AURA Sports के साथ क्रिकेट के नियम, प्रारूप और रणनीतियाँ समझें।']],
     '/about': [['About AURA — Beyond the Game', 'Discover AURA’s perspective on cricket, shaped by skill, strategy, observation, research and patience.'], ['AURA के बारे में — खेल से कहीं आगे', 'कौशल, रणनीति, निरीक्षण, शोध और धैर्य से बने क्रिकेट के प्रति AURA के नज़रिए को जानें।']],
-    '/contact': [['Contact & Help | AURA Sport', 'Find information about contacting AURA Sport and getting support.'], ['संपर्क और सहायता | AURA Sport', 'AURA Sport से संपर्क और सहायता पाने की जानकारी।']],
-    '/privacy-policy': [['Privacy Policy | AURA Sport', 'Read the AURA Sport website privacy policy.'], ['गोपनीयता नीति | AURA Sport', 'AURA Sport वेबसाइट की गोपनीयता नीति पढ़ें।']],
-    '/terms': [['Terms & Conditions | AURA Sport', 'Read the terms and conditions for using AURA Sport.'], ['नियम और शर्तें | AURA Sport', 'AURA Sport के उपयोग से जुड़े नियम और शर्तें पढ़ें।']],
-    '/disclaimer': [['Disclaimer | AURA Sport', 'Important information about AURA Sport editorial content and predictions.'], ['अस्वीकरण | AURA Sport', 'AURA Sport की सामग्री और पूर्वानुमानों से जुड़ी महत्वपूर्ण जानकारी।']],
-    '/download': [['Get the AURA Sport App', 'Find official information about downloading the AURA Sport app.'], ['AURA Sport ऐप डाउनलोड करें', 'AURA Sport ऐप डाउनलोड करने की आधिकारिक जानकारी।']]
+    '/contact': [['Contact & Help | AURA Sports', 'Find information about contacting AURA Sports and getting support.'], ['संपर्क और सहायता | AURA Sports', 'AURA Sports से संपर्क और सहायता पाने की जानकारी।']],
+    '/privacy-policy': [['Privacy Policy | AURA Sports', 'Read the AURA Sports website privacy policy.'], ['गोपनीयता नीति | AURA Sports', 'AURA Sports वेबसाइट की गोपनीयता नीति पढ़ें।']],
+    '/terms': [['Terms & Conditions | AURA Sports', 'Read the terms and conditions for using AURA Sports.'], ['नियम और शर्तें | AURA Sports', 'AURA Sports के उपयोग से जुड़े नियम और शर्तें पढ़ें।']],
+    '/disclaimer': [['Disclaimer | AURA Sports', 'Important information about AURA Sports editorial content and predictions.'], ['अस्वीकरण | AURA Sports', 'AURA Sports की सामग्री और पूर्वानुमानों से जुड़ी महत्वपूर्ण जानकारी।']],
+    '/download': [['Get the AURA Sports App', 'Find official information about downloading the AURA Sports app.'], ['AURA Sports ऐप डाउनलोड करें', 'AURA Sports ऐप डाउनलोड करने की आधिकारिक जानकारी।']]
   };
-  const pageMeta = (metadata[path] || [['Page Not Found | AURA Sport', 'The requested page could not be found on AURA Sport.'], ['पेज नहीं मिला | AURA Sport', 'आपका खोजा गया पेज AURA Sport पर उपलब्ध नहीं है।']])[locale === 'hi' ? 1 : 0];
-  const fallbackArticleMeta = [tr(locale, 'Cricket Story | AURA Sport', 'क्रिकेट खबर | AURA Sport'), tr(locale, 'Read cricket news and perspectives from AURA Sport.', 'AURA Sport पर पढ़ें क्रिकेट की खबरें और विचार।')];
+  const pageMeta = (metadata[path] || [['Page Not Found | AURA Sports', 'The requested page could not be found on AURA Sports.'], ['पेज नहीं मिला | AURA Sports', 'आपका खोजा गया पेज AURA Sports पर उपलब्ध नहीं है।']])[locale === 'hi' ? 1 : 0];
+  const fallbackArticleMeta = [tr(locale, 'Cricket Story | AURA Sports', 'क्रिकेट खबर | AURA Sports'), tr(locale, 'Read cricket news and perspectives from AURA Sports.', 'AURA Sports पर पढ़ें क्रिकेट की खबरें और विचार।')];
   const articleSeo = localizedArticle ? getArticleSeoMetadata(localizedArticle, locale) : null;
   const pageMetadata = articleSeo
     ? { title: articleSeo.title, description: articleSeo.description, image: articleSeo.image }
