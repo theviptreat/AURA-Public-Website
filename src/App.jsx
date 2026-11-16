@@ -56,7 +56,7 @@ function HomePage({ locale }) {
     <img src="/images/hero/cricket-stadium-night.jpeg" alt="" fetchPriority="high" />
    </div>
    <div className="hero-content container"><span className="hero-kicker">{tr(locale,'A NEW PERSPECTIVE ON CRICKET','क्रिकेट को देखने का एक नया नज़रिया')}</span>
-    <h1 id="hero-title">BEYOND<br/><span>THE GAME.</span></h1><p>{tr(locale,'More than cricket. A deeper perspective.','क्रिकेट से बढ़कर। खेल को समझने का एक गहरा नज़रिया।')}</p>
+    <h1 id="hero-title">BEYOND<br/><span>THE GAME</span></h1><p>{tr(locale,'More than cricket. A deeper perspective.','क्रिकेट से बढ़कर। खेल को समझने का एक गहरा नज़रिया।')}</p>
     <div className="hero-actions"><a className="button button-neon" href="#web-app">{tr(locale,'EXPLORE AURA','AURA देखें')} <span aria-hidden="true">↗</span></a><a className="button button-ghost" href="#about">{tr(locale,'DISCOVER AURA','AURA को जानें')} <span aria-hidden="true">↓</span></a></div>
    </div><div className="hero-bottomline container"><span>AURA SPORTS</span><span>{tr(locale,'BUILT ON SKILL · STRATEGY · PATIENCE','कौशल · रणनीति · धैर्य')}</span></div>
   </section>
@@ -150,7 +150,7 @@ function ArticleDetailPage({ slug, locale }) {
 
 function Footer({ locale = 'en' }) {
  return <footer className="site-footer cinematic-footer"><div className="container footer-main">
-  <div className="footer-brand"><Brand locale={locale}/><p>{tr(locale,'Beyond the Game.','खेल से कहीं आगे।')}</p></div>
+  <div className="footer-brand"><Brand locale={locale}/><p>{tr(locale,'Beyond the Game','खेल से कहीं आगे।')}</p></div>
   <div className="footer-links">
    <div><span className="footer-label">{tr(locale,'AURA','AURA')}</span><a href={localizePath('/about',locale)}>{tr(locale,'About AURA','AURA के बारे में')}</a><a href={`${localizePath('/',locale)}#web-app`}>{tr(locale,'Web App','वेब ऐप')}</a><a href={`${localizePath('/',locale)}#play-zone`}>{tr(locale,'Play Zone','प्ले ज़ोन')}</a><a href={`${localizePath('/',locale)}#android`}>{tr(locale,'Android','एंड्रॉयड')}</a><a href={localizePath('/contact',locale)}>{tr(locale,'Contact Us','संपर्क करें')}</a></div>
    <div><span className="footer-label">{tr(locale,'Information','जानकारी')}</span><a href={localizePath('/privacy-policy',locale)}>{tr(locale,'Privacy Policy','गोपनीयता नीति')}</a><a href={localizePath('/terms',locale)}>{tr(locale,'Terms & Conditions','नियम और शर्तें')}</a><a href={localizePath('/disclaimer',locale)}>{tr(locale,'Disclaimer','अस्वीकरण')}</a></div>
