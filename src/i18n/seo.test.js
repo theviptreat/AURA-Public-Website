@@ -38,7 +38,7 @@ test('article SEO uses localized editorial metadata and image', () => {
     seoDescription: 'A focused search description.',
     coverImage: '/images/story.jpg',
   }, 'en'), {
-    title: 'A focused headline | AURA Sport',
+    title: 'A focused headline | AURA Sports',
     description: 'A focused search description.',
     image: '/images/story.jpg',
   });
@@ -50,7 +50,7 @@ test('article SEO uses localized editorial metadata and image', () => {
     excerptHi: 'हिंदी सारांश।',
     seoDescriptionHi: 'हिंदी खोज विवरण।',
   }, 'hi'), {
-    title: 'खास क्रिकेट खबर | AURA Sport',
+    title: 'खास क्रिकेट खबर | AURA Sports',
     description: 'हिंदी खोज विवरण।',
     image: '',
   });
