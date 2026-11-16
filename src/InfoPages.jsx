@@ -16,9 +16,9 @@ const categoryPages = {
   '/analysis': {
     section: 'analysis',
     eyebrow: ['Look beyond the score', 'स्कोर से आगे की समझ'],
-    title: ['AURA Sport Analysis', 'AURA Sport विश्लेषण'],
-    description: ['Thoughtful cricket analysis, patterns and perspectives from the AURA Sport editorial team.', 'AURA Sport की संपादकीय टीम द्वारा क्रिकेट का गहन विश्लेषण, खेल के पैटर्न और उपयोगी दृष्टिकोण।'],
-    empty: ['AURA Sport analysis articles will appear here when they are published.', 'AURA Sport के विश्लेषण लेख प्रकाशित होने पर यहाँ दिखाई देंगे।']
+    title: ['AURA Sports Analysis', 'AURA Sports विश्लेषण'],
+    description: ['Thoughtful cricket analysis, patterns and perspectives from the AURA Sports editorial team.', 'AURA Sports की संपादकीय टीम द्वारा क्रिकेट का गहन विश्लेषण, खेल के पैटर्न और उपयोगी दृष्टिकोण।'],
+    empty: ['AURA Sports analysis articles will appear here when they are published.', 'AURA Sports के विश्लेषण लेख प्रकाशित होने पर यहाँ दिखाई देंगे।']
   },
   '/knowledge': {
     section: 'knowledge',
@@ -70,7 +70,7 @@ function AboutPage({ locale }) {
     <PageHero eyebrow={tr(locale, 'The thinking behind AURA', 'AURA के पीछे की सोच')} title={tr(locale, 'About AURA', 'AURA के बारे में')} description={tr(locale, 'More than cricket. A deeper perspective.', 'क्रिकेट से बढ़कर। खेल को समझने का एक गहरा नज़रिया।')} />
     <section className="container info-content"><div className="info-copy">
       <span className="eyebrow">{tr(locale, 'Our perspective', 'हमारा नज़रिया')}</span>
-      <h2>{tr(locale, 'More than just a game.', 'सिर्फ एक खेल से कहीं बढ़कर।')}</h2>
+      <h2>{tr(locale, 'More than just a game', 'सिर्फ एक खेल से कहीं बढ़कर')}</h2>
       <p>{tr(locale, 'Cricket is a game of skill, strategy, patience and possibilities.', 'क्रिकेट कौशल, रणनीति, धैर्य और संभावनाओं का खेल है।')}</p>
       <p>{tr(locale, 'At AURA, we believe understanding the game takes more than just watching it. It takes observation, research, patience and the ability to see beyond the obvious.', 'AURA में हमारा मानना है कि खेल को समझने के लिए सिर्फ उसे देखना काफी नहीं। इसके लिए निरीक्षण, शोध, धैर्य और स्पष्ट दिखाई देने वाली बातों से आगे देखने की क्षमता चाहिए।')}</p>
       <p>{tr(locale, 'Built for those who appreciate the deeper side of cricket, AURA brings a thoughtful perspective to the game.', 'उन लोगों के लिए जो क्रिकेट की गहराई को समझते हैं, AURA खेल को देखने का एक विचारशील नज़रिया लेकर आता है।')}</p>
@@ -80,7 +80,7 @@ function AboutPage({ locale }) {
 
 function ContactPage({ locale }) {
   return <main className="page-main">
-    <PageHero eyebrow={tr(locale, "We're here to help", 'हम आपकी सहायता के लिए हैं')} title={tr(locale, 'Contact & Help', 'संपर्क और सहायता')} description={tr(locale, 'For questions about AURA Sport, its content or the app, this is the place to start.', 'AURA Sport, इसकी सामग्री या ऐप से जुड़े सवालों के लिए यहाँ से शुरुआत करें।')} />
+    <PageHero eyebrow={tr(locale, "We're here to help", 'हम आपकी सहायता के लिए हैं')} title={tr(locale, 'Contact & Help', 'संपर्क और सहायता')} description={tr(locale, 'For questions about AURA Sports, its content or the app, this is the place to start.', 'AURA Sports, इसकी सामग्री या ऐप से जुड़े सवालों के लिए यहाँ से शुरुआत करें।')} />
     <section className="container info-content contact-content"><div className="info-copy"><span className="eyebrow">{tr(locale, 'Get in touch', 'संपर्क करें')}</span><h2>{tr(locale, 'How can we help?', 'हम आपकी क्या मदद कर सकते हैं?')}</h2>
       <p>{tr(locale, 'Choose the right email address and our team will be able to direct your enquiry.', 'अपनी आवश्यकता के अनुसार सही ईमेल चुनें, हमारी टीम आपकी बात संबंधित विभाग तक पहुँचा सकेगी।')}</p>
     </div><div className="contact-email-list">
@@ -94,32 +94,32 @@ const legalPages = {
   '/privacy-policy': {
     title: ['Privacy Policy', 'गोपनीयता नीति'],
     eyebrow: ['Your information', 'आपकी जानकारी'],
-    description: ['A clear explanation of how information is handled on the AURA Sport website and related services.', 'AURA Sport वेबसाइट और संबंधित सेवाओं पर जानकारी को कैसे संभाला जाता है, इसका स्पष्ट विवरण।'],
+    description: ['A clear explanation of how information is handled on the AURA Sports website and related services.', 'AURA Sports वेबसाइट और संबंधित सेवाओं पर जानकारी को कैसे संभाला जाता है, इसका स्पष्ट विवरण।'],
     notice: ['Draft page — not a published privacy policy.', 'मसौदा पृष्ठ — यह प्रकाशित गोपनीयता नीति नहीं है।'],
     sections: [
-      [['Before publication', 'प्रकाशन से पहले'], ['This page is a structural placeholder. AURA Sport must document its actual website hosting, server logs, cookies, analytics, contact channels, app data practices, third-party services and user rights before this policy is published.', 'यह पृष्ठ अभी प्रारंभिक मसौदा है। इस नीति को प्रकाशित करने से पहले AURA Sport को वेबसाइट होस्टिंग, सर्वर लॉग, कुकीज़, एनालिटिक्स, संपर्क माध्यम, ऐप में डेटा के उपयोग, तृतीय-पक्ष सेवाओं और उपयोगकर्ता अधिकारों का वास्तविक विवरण दर्ज करना होगा।']],
+      [['Before publication', 'प्रकाशन से पहले'], ['This page is a structural placeholder. AURA Sports must document its actual website hosting, server logs, cookies, analytics, contact channels, app data practices, third-party services and user rights before this policy is published.', 'यह पृष्ठ अभी प्रारंभिक मसौदा है। इस नीति को प्रकाशित करने से पहले AURA Sports को वेबसाइट होस्टिंग, सर्वर लॉग, कुकीज़, एनालिटिक्स, संपर्क माध्यम, ऐप में डेटा के उपयोग, तृतीय-पक्ष सेवाओं और उपयोगकर्ता अधिकारों का वास्तविक विवरण दर्ज करना होगा।']],
       [['No assumptions', 'बिना पुष्टि के कोई दावा नहीं'], ['This draft does not claim that the website or app collects, stores, shares or deletes any particular personal information. Those details must be verified against the implemented services.', 'यह मसौदा यह दावा नहीं करता कि वेबसाइट या ऐप कोई विशेष व्यक्तिगत जानकारी एकत्र, संग्रहीत, साझा या हटाता है। इन बातों की पुष्टि लागू सेवाओं के आधार पर की जानी आवश्यक है।']]
     ]
   },
   '/terms': {
     title: ['Terms & Conditions', 'नियम और शर्तें'],
-    eyebrow: ['Using AURA Sport', 'AURA Sport का उपयोग'],
-    description: ['The terms that will govern access to the AURA Sport public website and its content.', 'AURA Sport की सार्वजनिक वेबसाइट और उसकी सामग्री के उपयोग पर लागू होने वाली शर्तें।'],
+    eyebrow: ['Using AURA Sports', 'AURA Sports का उपयोग'],
+    description: ['The terms that will govern access to the AURA Sports public website and its content.', 'AURA Sports की सार्वजनिक वेबसाइट और उसकी सामग्री के उपयोग पर लागू होने वाली शर्तें।'],
     notice: ['Draft page — not published terms.', 'मसौदा पृष्ठ — ये प्रकाशित नियम और शर्तें नहीं हैं।'],
     sections: [
-      [['Before publication', 'प्रकाशन से पहले'], ['The final terms must be reviewed and approved by AURA Sport and should accurately describe permitted use, intellectual property, content availability, third-party links, limitations and applicable legal requirements.', 'अंतिम शर्तों की AURA Sport द्वारा समीक्षा और स्वीकृति आवश्यक है। इनमें अनुमत उपयोग, बौद्धिक संपदा, सामग्री की उपलब्धता, तृतीय-पक्ष लिंक, सीमाएँ और लागू कानूनी आवश्यकताएँ सही रूप में बताई जानी चाहिए।']],
-      [['Informational content', 'जानकारीपरक सामग्री'], ['AURA Sport editorial content is provided for general information and cricket discussion. Any final terms must clearly distinguish editorial material from app features and predictions.', 'AURA Sport की संपादकीय सामग्री सामान्य जानकारी और क्रिकेट चर्चा के लिए है। अंतिम शर्तों में संपादकीय सामग्री, ऐप की सुविधाओं और पूर्वानुमानों के बीच स्पष्ट अंतर होना चाहिए।']]
+      [['Before publication', 'प्रकाशन से पहले'], ['The final terms must be reviewed and approved by AURA Sports and should accurately describe permitted use, intellectual property, content availability, third-party links, limitations and applicable legal requirements.', 'अंतिम शर्तों की AURA Sports द्वारा समीक्षा और स्वीकृति आवश्यक है। इनमें अनुमत उपयोग, बौद्धिक संपदा, सामग्री की उपलब्धता, तृतीय-पक्ष लिंक, सीमाएँ और लागू कानूनी आवश्यकताएँ सही रूप में बताई जानी चाहिए।']],
+      [['Informational content', 'जानकारीपरक सामग्री'], ['AURA Sports editorial content is provided for general information and cricket discussion. Any final terms must clearly distinguish editorial material from app features and predictions.', 'AURA Sports की संपादकीय सामग्री सामान्य जानकारी और क्रिकेट चर्चा के लिए है। अंतिम शर्तों में संपादकीय सामग्री, ऐप की सुविधाओं और पूर्वानुमानों के बीच स्पष्ट अंतर होना चाहिए।']]
     ]
   },
   '/disclaimer': {
     title: ['Disclaimer', 'अस्वीकरण'],
     eyebrow: ['Important information', 'महत्वपूर्ण जानकारी'],
-    description: ['How to understand the information and opinions published by AURA Sport.', 'AURA Sport द्वारा प्रकाशित जानकारी और विचारों को समझने के लिए आवश्यक विवरण।'],
+    description: ['How to understand the information and opinions published by AURA Sports.', 'AURA Sports द्वारा प्रकाशित जानकारी और विचारों को समझने के लिए आवश्यक विवरण।'],
     notice: ['Draft page — final wording requires review.', 'मसौदा पृष्ठ — अंतिम भाषा की समीक्षा आवश्यक है।'],
     sections: [
       [['Editorial content', 'संपादकीय सामग्री'], ['Cricket news, previews, analysis and educational material are published for general information. Match conditions and information can change, and readers should verify time-sensitive details with appropriate official sources.', 'क्रिकेट समाचार, पूर्वावलोकन, विश्लेषण और शैक्षिक सामग्री सामान्य जानकारी के लिए प्रकाशित की जाती है। मैच की परिस्थितियाँ और जानकारी बदल सकती हैं। समय-संवेदनशील विवरणों की पुष्टि उचित आधिकारिक स्रोतों से करें।']],
-      [['Predictions', 'पूर्वानुमान'], ['AURA Sport predictions are team-researched opinions, not guarantees of an outcome. No claim of guaranteed accuracy or certainty is made.', 'AURA Sport के पूर्वानुमान टीम द्वारा शोध के आधार पर तैयार किए गए विचार हैं, किसी परिणाम की गारंटी नहीं। शत-प्रतिशत सटीकता या निश्चितता का कोई दावा नहीं किया जाता।']],
-      [['Not betting advice', 'सट्टेबाज़ी संबंधी सलाह नहीं'], ['AURA Sport is a cricket content and prediction platform, not a betting service. Content should not be treated as encouragement to gamble or as financial advice.', 'AURA Sport क्रिकेट सामग्री और पूर्वानुमान का मंच है, सट्टेबाज़ी सेवा नहीं। इसकी सामग्री को जुआ खेलने के प्रोत्साहन या वित्तीय सलाह के रूप में न लें।']]
+      [['Predictions', 'पूर्वानुमान'], ['AURA Sports predictions are team-researched opinions, not guarantees of an outcome. No claim of guaranteed accuracy or certainty is made.', 'AURA Sports के पूर्वानुमान टीम द्वारा शोध के आधार पर तैयार किए गए विचार हैं, किसी परिणाम की गारंटी नहीं। शत-प्रतिशत सटीकता या निश्चितता का कोई दावा नहीं किया जाता।']],
+      [['Not betting advice', 'सट्टेबाज़ी संबंधी सलाह नहीं'], ['AURA Sports is a cricket content and prediction platform, not a betting service. Content should not be treated as encouragement to gamble or as financial advice.', 'AURA Sports क्रिकेट सामग्री और पूर्वानुमान का मंच है, सट्टेबाज़ी सेवा नहीं। इसकी सामग्री को जुआ खेलने के प्रोत्साहन या वित्तीय सलाह के रूप में न लें।']]
     ]
   }
 };
@@ -132,8 +132,8 @@ function LegalPage({ path, locale }) {
 
 function DownloadPage({ locale }) {
   return <main className="page-main">
-    <PageHero eyebrow={tr(locale, 'Take AURA Sport with you', 'AURA Sport को अपने साथ रखें')} title={tr(locale, 'Get the AURA Sport App', 'AURA Sport ऐप प्राप्त करें')} description={tr(locale, "AURA Sport's app is where match coverage and team-researched predictions come together.", 'AURA Sport ऐप पर मैच कवरेज और टीम द्वारा शोध के आधार पर तैयार किए गए पूर्वानुमान एक साथ मिलेंगे।')} />
-    <section className="container info-content download-content"><div className="info-copy"><span className="eyebrow">{tr(locale, 'Coming soon', 'जल्द उपलब्ध होगा')}</span><h2>{tr(locale, 'The app download link will be available here.', 'ऐप डाउनलोड करने का लिंक यहाँ उपलब्ध होगा।')}</h2><p>{tr(locale, 'We will publish the official download option once the public release is ready. Use only the official AURA Sport link when it becomes available.', 'सार्वजनिक रिलीज़ तैयार होने पर हम डाउनलोड का आधिकारिक विकल्प प्रकाशित करेंगे। उपलब्ध होने पर केवल AURA Sport के आधिकारिक लिंक का उपयोग करें।')}</p><a className="text-link" href={localizePath('/', locale)}>{tr(locale, 'Return to homepage', 'होमपेज पर वापस जाएँ')} ↗</a></div></section>
+    <PageHero eyebrow={tr(locale, 'Take AURA Sports with you', 'AURA Sports को अपने साथ रखें')} title={tr(locale, 'Get the AURA Sports App', 'AURA Sports ऐप प्राप्त करें')} description={tr(locale, "AURA Sports's app is where match coverage and team-researched predictions come together.", 'AURA Sports ऐप पर मैच कवरेज और टीम द्वारा शोध के आधार पर तैयार किए गए पूर्वानुमान एक साथ मिलेंगे।')} />
+    <section className="container info-content download-content"><div className="info-copy"><span className="eyebrow">{tr(locale, 'Coming soon', 'जल्द उपलब्ध होगा')}</span><h2>{tr(locale, 'The app download link will be available here.', 'ऐप डाउनलोड करने का लिंक यहाँ उपलब्ध होगा।')}</h2><p>{tr(locale, 'We will publish the official download option once the public release is ready. Use only the official AURA Sports link when it becomes available.', 'सार्वजनिक रिलीज़ तैयार होने पर हम डाउनलोड का आधिकारिक विकल्प प्रकाशित करेंगे। उपलब्ध होने पर केवल AURA Sports के आधिकारिक लिंक का उपयोग करें।')}</p><a className="text-link" href={localizePath('/', locale)}>{tr(locale, 'Return to homepage', 'होमपेज पर वापस जाएँ')} ↗</a></div></section>
   </main>;
 }
 
@@ -143,5 +143,5 @@ export function AdditionalPage({ path, locale = 'en' }) {
   if (path === '/contact') return <ContactPage locale={locale} />;
   if (legalPages[path]) return <LegalPage path={path} locale={locale} />;
   if (path === '/download') return <DownloadPage locale={locale} />;
-  return <main className="page-main"><section className="container article-missing"><span className="eyebrow">AURA Sport</span><h1>{tr(locale, 'Page not found', 'पेज नहीं मिला')}</h1><p>{tr(locale, "The page you're looking for isn't available.", 'आपका खोजा गया पेज उपलब्ध नहीं है।')}</p><a className="button button-gold" href={localizePath('/', locale)}>{tr(locale, 'Back to Home', 'होम पर वापस जाएँ')}</a></section></main>;
+  return <main className="page-main"><section className="container article-missing"><span className="eyebrow">AURA Sports</span><h1>{tr(locale, 'Page not found', 'पेज नहीं मिला')}</h1><p>{tr(locale, "The page you're looking for isn't available.", 'आपका खोजा गया पेज उपलब्ध नहीं है।')}</p><a className="button button-gold" href={localizePath('/', locale)}>{tr(locale, 'Back to Home', 'होम पर वापस जाएँ')}</a></section></main>;
 }
