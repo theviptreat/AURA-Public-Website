@@ -446,3 +446,9 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
 @media(max-width:800px){.stadium-photo img{object-position:center 50%;transform:scale(1.08);animation-name:stadium-drift-tablet}@keyframes stadium-drift-tablet{from{transform:scale(1.08)}to{transform:scale(1.115)}}}
 @media(max-width:480px){.stadium-photo img{object-position:center 46%;transform:scale(1.16);animation-name:stadium-drift-mobile}@keyframes stadium-drift-mobile{from{transform:scale(1.16)}to{transform:scale(1.195)}}}
 @media(prefers-reduced-motion:reduce){.stadium-photo img{animation:none;transform:scale(1.015)}}
+
+
+/* Keep the ball stage sizing authoritative after legacy About responsive rules. */
+.about-art{min-height:340px;perspective:900px;isolation:isolate;overflow:visible}
+@media(max-width:800px){.about-art{min-height:270px}}
+@media(max-width:480px){.about-art{min-height:225px}}
