@@ -35,7 +35,7 @@ export function getArticleSeoMetadata(article, locale = 'en') {
   const title = localizedArticle?.seoTitle?.trim() || localizedArticle?.title?.trim() || 'Cricket Story';
   const description = localizedArticle?.seoDescription?.trim() || localizedArticle?.excerpt?.trim() || '';
   return Object.freeze({
-    title: title.includes('AURA Sport') ? title : `${title} | AURA Sport`,
+    title: title.includes('AURA Sports') ? title : `${title} | AURA Sports`,
     description,
     image: typeof localizedArticle?.coverImage === 'string' ? localizedArticle.coverImage : '',
   });
