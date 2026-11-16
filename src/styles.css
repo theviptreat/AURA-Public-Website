@@ -452,3 +452,16 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
 .about-art{min-height:340px;perspective:900px;isolation:isolate;overflow:visible}
 @media(max-width:800px){.about-art{min-height:270px}}
 @media(max-width:480px){.about-art{min-height:225px}}
+
+
+/* Subtle axial turn keeps the gold AURA mark readable while the ball stays alive. */
+@keyframes about-ball-hit{
+  0%{opacity:0;transform:translate3d(175px,105px,-700px) scale(.12) rotateY(-68deg) rotateZ(-78deg)}
+  58%{opacity:1;transform:translate3d(-8px,-5px,90px) scale(1.12) rotateY(15deg) rotateZ(9deg)}
+  78%{transform:translate3d(0,3px,0) scale(.97) rotateY(-5deg) rotateZ(-3deg)}
+  100%{opacity:1;transform:translate3d(0,0,0) scale(1) rotateY(0deg) rotateZ(0deg)}
+}
+@keyframes about-ball-idle{
+  0%,100%{transform:translate3d(0,0,0) rotateY(-5deg) rotateX(2deg) rotateZ(-2deg) scale(1)}
+  50%{transform:translate3d(0,-9px,0) rotateY(5deg) rotateX(-2deg) rotateZ(2deg) scale(1.015)}
+}
