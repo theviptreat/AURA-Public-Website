@@ -318,6 +318,50 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
 .hero-content p{margin:25px 0 30px;color:rgba(239,247,236,.72);font-size:clamp(14px,1.6vw,18px);letter-spacing:.03em}.hero-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:13px}
 .button{transition:transform .25s ease,background .25s ease,box-shadow .25s ease}.button:hover{transform:translateY(-3px)}.button-neon{background:var(--aura-green);color:#071006;box-shadow:0 0 28px rgba(166,255,53,.17)}.button-neon:hover{background:#c0ff79;box-shadow:0 0 34px rgba(166,255,53,.3)}.button-ghost{border:1px solid rgba(242,248,239,.3);color:#f4f8f2;background:rgba(5,12,8,.25)}
 .hero-bottomline{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);display:flex;justify-content:space-between;color:rgba(239,247,236,.78);font-size:9px;letter-spacing:.18em}
+
+/* About section: scroll-triggered, branded 3D cricket ball */
+.about-art{position:relative;min-height:340px;display:grid;place-items:center;isolation:isolate;perspective:900px;overflow:visible}
+.about-ball{position:relative;width:clamp(205px,24vw,285px);aspect-ratio:1;opacity:0;transform:translate3d(150px,85px,-650px) scale(.12) rotate(-75deg);filter:drop-shadow(0 24px 25px rgba(0,0,0,.42));will-change:transform,opacity}
+.about-art.is-entered .about-ball{animation:about-ball-hit 1.5s cubic-bezier(.16,.78,.22,1) both,about-ball-idle 5.8s ease-in-out 1.5s infinite}
+.about-ball-art{display:block;width:100%;height:100%;overflow:visible}
+.about-ball-glint{position:absolute;inset:8% 13% auto auto;width:24%;height:10%;border-radius:50%;background:rgba(255,245,220,.5);filter:blur(12px);transform:rotate(-34deg);pointer-events:none}
+.about-art .about-orbit{z-index:-1;border-color:rgba(166,255,53,.13);transition:opacity .8s ease}
+.about-art.is-entered .about-orbit{animation:about-orbit-breathe 8s ease-in-out infinite}
+.about-art.is-entered .orbit-two{animation-delay:-2.5s}
+.about-art.is-entered .orbit-three{animation-delay:-5s}
+@keyframes about-ball-hit{
+  0%{opacity:0;transform:translate3d(175px,105px,-700px) scale(.12) rotate(-78deg)}
+  58%{opacity:1;transform:translate3d(-8px,-5px,90px) scale(1.12) rotate(9deg)}
+  78%{transform:translate3d(0,3px,0) scale(.97) rotate(-3deg)}
+  100%{opacity:1;transform:translate3d(0,0,0) scale(1) rotate(0)}
+}
+@keyframes about-ball-idle{
+  0%,100%{transform:translate3d(0,0,0) rotate(-2deg) scale(1)}
+  50%{transform:translate3d(0,-9px,0) rotate(2deg) scale(1.015)}
+}
+@keyframes about-orbit-breathe{
+  0%,100%{opacity:.55;filter:drop-shadow(0 0 0 rgba(166,255,53,0))}
+  50%{opacity:1;filter:drop-shadow(0 0 8px rgba(166,255,53,.16))}
+}
+@media(max-width:800px){
+  .about-art{grid-column:2;min-height:270px}
+  .about-ball{width:min(62vw,235px)}
+  .about-orbit.orbit-one{width:230px;height:145px}
+  .about-orbit.orbit-two{width:190px;height:235px}
+  .about-orbit.orbit-three{width:280px;height:92px}
+}
+@media(max-width:480px){
+  .about-art{min-height:225px}
+  .about-ball{width:min(65vw,205px)}
+  .about-orbit.orbit-one{width:190px;height:120px}
+  .about-orbit.orbit-two{width:160px;height:195px}
+  .about-orbit.orbit-three{width:230px;height:76px}
+}
+@media(prefers-reduced-motion:reduce){
+  .about-ball{opacity:1;transform:none;will-change:auto}
+  .about-art.is-entered .about-ball,.about-art.is-entered .about-orbit{animation:none}
+}
+
 .about-section{padding:clamp(82px,11vw,145px) 0;background:linear-gradient(110deg,#080f0b,#0a1710 55%,#07100b)}.about-layout{display:grid;grid-template-columns:55px minmax(0,1fr) minmax(220px,.75fr);gap:clamp(24px,5vw,70px);align-items:center}
 .section-index{display:flex;flex-direction:column;align-items:center;gap:14px;align-self:start;color:rgba(166,255,53,.7);font-size:11px;letter-spacing:.1em}.section-index i{width:1px;height:90px;background:linear-gradient(var(--aura-green),transparent)}
 .about-copy{max-width:650px}.about-copy h2,.webapp-heading h2,.android-copy h2{margin:15px 0 24px;color:#f4f8f2;font:800 clamp(36px,5.5vw,66px)/1.02 Arial,sans-serif;letter-spacing:-.06em}
@@ -402,3 +446,28 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
 @media(max-width:800px){.stadium-photo img{object-position:center 50%;transform:scale(1.08);animation-name:stadium-drift-tablet}@keyframes stadium-drift-tablet{from{transform:scale(1.08)}to{transform:scale(1.115)}}}
 @media(max-width:480px){.stadium-photo img{object-position:center 46%;transform:scale(1.16);animation-name:stadium-drift-mobile}@keyframes stadium-drift-mobile{from{transform:scale(1.16)}to{transform:scale(1.195)}}}
 @media(prefers-reduced-motion:reduce){.stadium-photo img{animation:none;transform:scale(1.015)}}
+
+
+/* Keep the ball stage sizing authoritative after legacy About responsive rules. */
+.about-art{min-height:340px;perspective:900px;isolation:isolate;overflow:visible}
+@media(max-width:800px){.about-art{min-height:270px}}
+@media(max-width:480px){.about-art{min-height:225px}}
+
+
+/* Subtle axial turn keeps the gold AURA mark readable while the ball stays alive. */
+@keyframes about-ball-hit{
+  0%{opacity:0;transform:translate3d(175px,105px,-700px) scale(.12) rotateY(-68deg) rotateZ(-78deg)}
+  58%{opacity:1;transform:translate3d(-8px,-5px,90px) scale(1.12) rotateY(15deg) rotateZ(9deg)}
+  78%{transform:translate3d(0,3px,0) scale(.97) rotateY(-5deg) rotateZ(-3deg)}
+  100%{opacity:1;transform:translate3d(0,0,0) scale(1) rotateY(0deg) rotateZ(0deg)}
+}
+@keyframes about-ball-idle{
+  0%,100%{transform:translate3d(0,0,0) rotateY(-5deg) rotateX(2deg) rotateZ(-2deg) scale(1)}
+  50%{transform:translate3d(0,-9px,0) rotateY(5deg) rotateX(-2deg) rotateZ(2deg) scale(1.015)}
+}
+
+
+/* Real leather finish and clearer brand/seam separation for the About cricket ball. */
+.about-ball{filter:drop-shadow(0 26px 24px rgba(0,0,0,.5)) drop-shadow(0 0 18px rgba(151,20,25,.13))}
+.about-ball-art{overflow:visible;transform:rotate(-2deg)}
+.about-ball-glint{inset:7% 12% auto auto;width:22%;height:8%;background:rgba(255,244,222,.42);filter:blur(10px)}

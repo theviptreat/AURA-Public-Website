@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AdditionalPage } from './InfoPages';
 import { getLocaleSwitchPath, localizePath, resolveLocalizedPath } from './i18n/locale';
 import { getPublishedArticles } from './content/articles.js';
@@ -49,6 +49,93 @@ function StoryCard({ story, locale }) {
   );
 }
 
+
+function AboutBall() {
+  const [entered, setEntered] = useState(false);
+  const ballStageRef = useRef(null);
+
+  useEffect(() => {
+    const stage = ballStageRef.current;
+    if (!stage) return;
+    if (!('IntersectionObserver' in window)) {
+      setEntered(true);
+      return;
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setEntered(true);
+        observer.disconnect();
+      }
+    }, { threshold: 0.35, rootMargin: '0px 0px -8% 0px' });
+    observer.observe(stage);
+    return () => observer.disconnect();
+  }, []);
+
+  return <div ref={ballStageRef} className={entered ? 'about-art is-entered' : 'about-art'} aria-hidden="true">
+    <div className="about-orbit orbit-one"/>
+    <div className="about-orbit orbit-two"/>
+    <div className="about-orbit orbit-three"/>
+    <div className="about-ball">
+      <svg className="about-ball-art" viewBox="0 0 320 320" role="presentation">
+        <defs>
+          <radialGradient id="cricketBallRed" cx="35%" cy="25%" r="78%">
+            <stop offset="0%" stopColor="#f56b66"/>
+            <stop offset="22%" stopColor="#bd2528"/>
+            <stop offset="62%" stopColor="#7e1019"/>
+            <stop offset="100%" stopColor="#27050a"/>
+          </radialGradient>
+          <linearGradient id="cricketBallGold" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#fff0ae"/>
+            <stop offset="35%" stopColor="#d7a441"/>
+            <stop offset="65%" stopColor="#f7d77b"/>
+            <stop offset="100%" stopColor="#8a571b"/>
+          </linearGradient>
+          <linearGradient id="cricketBallSeam" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#fff9e9"/>
+            <stop offset="50%" stopColor="#d8cdb8"/>
+            <stop offset="100%" stopColor="#9c8060"/>
+          </linearGradient>
+          <radialGradient id="ballGloss" cx="32%" cy="18%" r="72%">
+            <stop offset="0%" stopColor="#fff" stopOpacity=".42"/>
+            <stop offset="34%" stopColor="#fff" stopOpacity=".09"/>
+            <stop offset="100%" stopColor="#fff" stopOpacity="0"/>
+          </radialGradient>
+          <filter id="leatherGrain" x="-10%" y="-10%" width="120%" height="120%">
+            <feTurbulence type="fractalNoise" baseFrequency=".82" numOctaves="2" seed="9" result="grain"/>
+            <feColorMatrix in="grain" type="saturate" values="0" result="mono"/>
+            <feComponentTransfer in="mono" result="softGrain">
+              <feFuncA type="table" tableValues="0 .15"/>
+            </feComponentTransfer>
+            <feBlend in="SourceGraphic" in2="softGrain" mode="soft-light"/>
+          </filter>
+          <clipPath id="cricketBallClip"><circle cx="160" cy="151" r="137"/></clipPath>
+        </defs>
+        <ellipse cx="160" cy="291" rx="103" ry="15" fill="#000" opacity=".38"/>
+        <circle cx="160" cy="151" r="137" fill="#35070d" opacity=".8"/>
+        <circle cx="160" cy="151" r="137" fill="url(#cricketBallRed)" stroke="#4b080e" strokeWidth="3"/>
+        <g clipPath="url(#cricketBallClip)">
+          <circle cx="160" cy="151" r="137" fill="url(#cricketBallRed)" filter="url(#leatherGrain)"/>
+          <path d="M83 20 C24 76 24 208 103 279" fill="none" stroke="#3e080e" strokeWidth="15" strokeLinecap="round" opacity=".75"/>
+          <path d="M83 20 C24 76 24 208 103 279" fill="none" stroke="#a43a35" strokeWidth="8" strokeLinecap="round" opacity=".9"/>
+          <path d="M78 22 C20 78 20 205 98 276" fill="none" stroke="url(#cricketBallSeam)" strokeWidth="3.6" strokeLinecap="round"/>
+          <path d="M68 18 C10 78 11 205 88 282" fill="none" stroke="#fff0d8" strokeWidth="3" strokeDasharray="1.8 7.2" strokeLinecap="round"/>
+          <path d="M91 23 C33 75 34 208 111 274" fill="none" stroke="#fff0d8" strokeWidth="3" strokeDasharray="1.8 7.2" strokeLinecap="round"/>
+          <path d="M70 35 C43 83 43 193 92 255" fill="none" stroke="#fff" strokeWidth="1" opacity=".16"/>
+          <ellipse cx="113" cy="67" rx="74" ry="35" fill="#fff" opacity=".12" transform="rotate(-31 113 67)"/>
+          <ellipse cx="210" cy="92" rx="36" ry="15" fill="#fff" opacity=".08" transform="rotate(-32 210 92)"/>
+          <circle cx="160" cy="151" r="137" fill="url(#ballGloss)"/>
+          <text x="196" y="160" textAnchor="middle" fill="url(#cricketBallGold)" stroke="#70451a" strokeWidth="1.2" paintOrder="stroke" fontFamily="Arial, Helvetica, sans-serif" fontSize="34" fontWeight="900" letterSpacing="1.5">AURA</text>
+          <path d="M147 122 Q195 105 245 119" fill="none" stroke="url(#cricketBallGold)" strokeWidth="2.4" strokeLinecap="round" opacity=".95"/>
+          <path d="M149 184 Q198 197 243 179" fill="none" stroke="url(#cricketBallGold)" strokeWidth="2.1" strokeLinecap="round" opacity=".85"/>
+          <path d="M145 208 Q193 222 233 205" fill="none" stroke="#f0b84f" strokeWidth=".8" opacity=".18"/>
+        </g>
+        <circle cx="160" cy="151" r="137" fill="none" stroke="#ffb1a0" strokeWidth="1.8" opacity=".24"/>
+      </svg>
+      <span className="about-ball-glint"/>
+    </div>
+  </div>;
+}
+
 function HomePage({ locale }) {
  return <main className="landing-page">
   <section className="hero-stadium" aria-labelledby="hero-title">
@@ -66,7 +153,7 @@ function HomePage({ locale }) {
     <p>{tr(locale,'At AURA, we believe understanding the game takes more than just watching it. It takes observation, research, patience and the ability to see beyond the obvious.','AURA में हमारा मानना है कि खेल को समझने के लिए सिर्फ उसे देखना काफी नहीं। इसके लिए निरीक्षण, शोध, धैर्य और स्पष्ट दिखाई देने वाली बातों से आगे देखने की क्षमता चाहिए।')}</p>
     <p>{tr(locale,'Built for those who appreciate the deeper side of cricket, AURA brings a thoughtful perspective to the game.','उन लोगों के लिए जो क्रिकेट की गहराई को समझते हैं, AURA खेल को देखने का एक विचारशील नज़रिया लेकर आता है।')}</p>
     <div className="about-words"><span>{tr(locale,'SKILL','कौशल')}</span><b>·</b><span>{tr(locale,'STRATEGY','रणनीति')}</span><b>·</b><span>{tr(locale,'PATIENCE','धैर्य')}</span></div>
-   </div><div className="about-art" aria-hidden="true"><div className="about-orbit orbit-one"/><div className="about-orbit orbit-two"/><div className="about-orbit orbit-three"/>AURA</div>
+   </div><AboutBall/>
   </div></section>
   <section className="webapp-section landing-section" id="web-app"><div className="container webapp-coming-soon">
    <span className="eyebrow">{tr(locale,'A NEW CRICKET EXPERIENCE','क्रिकेट का एक नया अनुभव')}</span>
