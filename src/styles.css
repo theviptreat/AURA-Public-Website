@@ -465,3 +465,9 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
   0%,100%{transform:translate3d(0,0,0) rotateY(-5deg) rotateX(2deg) rotateZ(-2deg) scale(1)}
   50%{transform:translate3d(0,-9px,0) rotateY(5deg) rotateX(-2deg) rotateZ(2deg) scale(1.015)}
 }
+
+
+/* Real leather finish and clearer brand/seam separation for the About cricket ball. */
+.about-ball{filter:drop-shadow(0 26px 24px rgba(0,0,0,.5)) drop-shadow(0 0 18px rgba(151,20,25,.13))}
+.about-ball-art{overflow:visible;transform:rotate(-2deg)}
+.about-ball-glint{inset:7% 12% auto auto;width:22%;height:8%;background:rgba(255,244,222,.42);filter:blur(10px)}
