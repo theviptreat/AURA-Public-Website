@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AdditionalPage } from './InfoPages';
 import { getLocaleSwitchPath, localizePath, resolveLocalizedPath } from './i18n/locale';
 import { getPublishedArticles } from './content/articles.js';
@@ -49,6 +49,73 @@ function StoryCard({ story, locale }) {
   );
 }
 
+
+function AboutBall() {
+  const [entered, setEntered] = useState(false);
+  const ballStageRef = useRef(null);
+
+  useEffect(() => {
+    const stage = ballStageRef.current;
+    if (!stage) return;
+    if (!('IntersectionObserver' in window)) {
+      setEntered(true);
+      return;
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setEntered(true);
+        observer.disconnect();
+      }
+    }, { threshold: 0.35, rootMargin: '0px 0px -8% 0px' });
+    observer.observe(stage);
+    return () => observer.disconnect();
+  }, []);
+
+  return <div ref={ballStageRef} className={entered ? 'about-art is-entered' : 'about-art'} aria-hidden="true">
+    <div className="about-orbit orbit-one"/>
+    <div className="about-orbit orbit-two"/>
+    <div className="about-orbit orbit-three"/>
+    <div className="about-ball">
+      <svg className="about-ball-art" viewBox="0 0 320 320" role="presentation">
+        <defs>
+          <radialGradient id="cricketBallRed" cx="34%" cy="25%" r="78%">
+            <stop offset="0%" stopColor="#ff8580"/>
+            <stop offset="24%" stopColor="#d93635"/>
+            <stop offset="68%" stopColor="#8f1019"/>
+            <stop offset="100%" stopColor="#35070d"/>
+          </radialGradient>
+          <linearGradient id="cricketBallGold" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#fff1b0"/>
+            <stop offset="38%" stopColor="#d6a84c"/>
+            <stop offset="68%" stopColor="#f8dc86"/>
+            <stop offset="100%" stopColor="#8c5a19"/>
+          </linearGradient>
+          <linearGradient id="cricketBallSeam" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#fffdf0"/>
+            <stop offset="100%" stopColor="#c9c4b5"/>
+          </linearGradient>
+          <clipPath id="cricketBallClip"><circle cx="160" cy="160" r="137"/></clipPath>
+        </defs>
+        <ellipse cx="160" cy="286" rx="102" ry="17" fill="#000" opacity=".32"/>
+        <circle cx="160" cy="151" r="137" fill="url(#cricketBallRed)" stroke="#5d0b12" strokeWidth="3"/>
+        <g clipPath="url(#cricketBallClip)">
+          <path d="M42 79 C103 122 217 181 280 233" fill="none" stroke="#650d15" strokeWidth="13" opacity=".7"/>
+          <path d="M40 74 C101 117 219 176 282 228" fill="none" stroke="url(#cricketBallSeam)" strokeWidth="5" strokeLinecap="round"/>
+          <path d="M47 62 C104 105 216 164 273 216" fill="none" stroke="#fff8e8" strokeWidth="1.5" strokeDasharray="3 8" opacity=".9"/>
+          <path d="M278 74 C216 117 101 176 38 228" fill="none" stroke="#650d15" strokeWidth="13" opacity=".7"/>
+          <path d="M280 69 C218 112 101 171 36 223" fill="none" stroke="url(#cricketBallSeam)" strokeWidth="5" strokeLinecap="round"/>
+          <path d="M273 58 C215 101 104 160 45 211" fill="none" stroke="#fff8e8" strokeWidth="1.5" strokeDasharray="3 8" opacity=".9"/>
+          <ellipse cx="111" cy="76" rx="66" ry="28" fill="#fff" opacity=".13" transform="rotate(-28 111 76)"/>
+          <text x="160" y="169" textAnchor="middle" fill="url(#cricketBallGold)" stroke="#714719" strokeWidth="1.1" paintOrder="stroke" fontFamily="Arial, Helvetica, sans-serif" fontSize="39" fontWeight="900" letterSpacing="2">AURA</text>
+          <path d="M87 184 Q160 204 233 184" fill="none" stroke="#f5d887" strokeWidth="1" opacity=".42"/>
+        </g>
+        <circle cx="160" cy="151" r="137" fill="none" stroke="#ff9c89" strokeWidth="2" opacity=".2"/>
+      </svg>
+      <span className="about-ball-glint"/>
+    </div>
+  </div>;
+}
+
 function HomePage({ locale }) {
  return <main className="landing-page">
   <section className="hero-stadium" aria-labelledby="hero-title">
@@ -66,7 +133,7 @@ function HomePage({ locale }) {
     <p>{tr(locale,'At AURA, we believe understanding the game takes more than just watching it. It takes observation, research, patience and the ability to see beyond the obvious.','AURA में हमारा मानना है कि खेल को समझने के लिए सिर्फ उसे देखना काफी नहीं। इसके लिए निरीक्षण, शोध, धैर्य और स्पष्ट दिखाई देने वाली बातों से आगे देखने की क्षमता चाहिए।')}</p>
     <p>{tr(locale,'Built for those who appreciate the deeper side of cricket, AURA brings a thoughtful perspective to the game.','उन लोगों के लिए जो क्रिकेट की गहराई को समझते हैं, AURA खेल को देखने का एक विचारशील नज़रिया लेकर आता है।')}</p>
     <div className="about-words"><span>{tr(locale,'SKILL','कौशल')}</span><b>·</b><span>{tr(locale,'STRATEGY','रणनीति')}</span><b>·</b><span>{tr(locale,'PATIENCE','धैर्य')}</span></div>
-   </div><div className="about-art" aria-hidden="true"><div className="about-orbit orbit-one"/><div className="about-orbit orbit-two"/><div className="about-orbit orbit-three"/>AURA</div>
+   </div><AboutBall/>
   </div></section>
   <section className="webapp-section landing-section" id="web-app"><div className="container webapp-coming-soon">
    <span className="eyebrow">{tr(locale,'A NEW CRICKET EXPERIENCE','क्रिकेट का एक नया अनुभव')}</span>
