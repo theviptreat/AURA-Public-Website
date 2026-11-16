@@ -52,9 +52,49 @@ function StoryCard({ story, locale }) {
 function HomePage({ locale }) {
  return <main className="landing-page">
   <section className="hero-stadium" aria-labelledby="hero-title">
-   <div className="stadium-photo" aria-hidden="true">
-    <img src="/images/articles/aura-sport-cricket-homepage.png" alt="" fetchPriority="high" />
-   </div>
+   <svg className="stadium-scene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" role="presentation" aria-hidden="true">
+    <defs>
+     <linearGradient id="nightSky" x2="0" y2="1"><stop stopColor="#030806"/><stop offset=".62" stopColor="#102018"/><stop offset="1" stopColor="#1a3420"/></linearGradient>
+     <linearGradient id="standFace" x2="0" y2="1"><stop stopColor="#26372d"/><stop offset=".35" stopColor="#101c15"/><stop offset="1" stopColor="#050b07"/></linearGradient>
+     <linearGradient id="upperTier" x2="0" y2="1"><stop stopColor="#526254"/><stop offset=".22" stopColor="#1d2b21"/><stop offset="1" stopColor="#0a120c"/></linearGradient>
+     <linearGradient id="fieldGrass" x2="0" y2="1"><stop stopColor="#456b3d"/><stop offset=".48" stopColor="#244b2b"/><stop offset="1" stopColor="#0b2414"/></linearGradient>
+     <linearGradient id="pitchClay" x2="1" y2="0"><stop stopColor="#756747"/><stop offset=".5" stopColor="#b0a078"/><stop offset="1" stopColor="#665a40"/></linearGradient>
+     <radialGradient id="lightBloom"><stop stopColor="#fff" stopOpacity=".72"/><stop offset=".22" stopColor="#eaf4ff" stopOpacity=".25"/><stop offset="1" stopColor="#eaf4ff" stopOpacity="0"/></radialGradient>
+     <pattern id="seatRows" width="18" height="13" patternUnits="userSpaceOnUse"><path d="M0 11H18" stroke="#b9c7b5" strokeOpacity=".18" strokeWidth="1"/><path d="M2 3h2M9 3h2" stroke="#d7dfd2" strokeOpacity=".13" strokeWidth="2"/></pattern>
+     <clipPath id="bowlClip"><path d="M0 150 Q800 -70 1600 150 L1600 520 Q800 370 0 520Z"/></clipPath>
+    </defs>
+    <rect width="1600" height="900" fill="url(#nightSky)"/>
+    <path d="M0 145 Q800 -90 1600 145 L1600 525 Q800 390 0 525Z" fill="#070f0a" stroke="#657465" strokeOpacity=".25" strokeWidth="8"/>
+    <g clipPath="url(#bowlClip)">
+     <path d="M-40 135 Q800 -55 1640 135 L1640 240 Q800 35 -40 240Z" fill="#344337"/>
+     <path d="M-40 155 Q800 -25 1640 155 L1640 290 Q800 85 -40 290Z" fill="url(#upperTier)"/>
+     <path d="M-40 155 Q800 -25 1640 155 L1640 290 Q800 85 -40 290Z" fill="url(#seatRows)" opacity=".8"/>
+     <path d="M-40 265 Q800 70 1640 265 L1640 385 Q800 205 -40 385Z" fill="#17251a" stroke="#879481" strokeOpacity=".28" strokeWidth="5"/>
+     <path d="M-40 265 Q800 70 1640 265 L1640 385 Q800 205 -40 385Z" fill="url(#seatRows)" opacity=".75"/>
+     <path d="M-40 365 Q800 210 1640 365 L1640 495 Q800 340 -40 495Z" fill="#0c170f" stroke="#82917c" strokeOpacity=".24" strokeWidth="5"/>
+     <path d="M-40 365 Q800 210 1640 365 L1640 495 Q800 340 -40 495Z" fill="url(#seatRows)" opacity=".65"/>
+     <path d="M0 470 Q800 340 1600 470" fill="none" stroke="#c4d0bd" strokeOpacity=".42" strokeWidth="7"/>
+     <path d="M0 482 Q800 352 1600 482" fill="none" stroke="#020604" strokeOpacity=".85" strokeWidth="14"/>
+     <g fill="#d4dfd0" opacity=".26"><circle cx="230" cy="260" r="2"/><circle cx="270" cy="302" r="2"/><circle cx="410" cy="220" r="2"/><circle cx="520" cy="330" r="2"/><circle cx="680" cy="250" r="2"/><circle cx="920" cy="290" r="2"/><circle cx="1080" cy="225" r="2"/><circle cx="1250" cy="315" r="2"/><circle cx="1390" cy="255" r="2"/></g>
+    </g>
+    <path d="M0 490 Q800 390 1600 490 L1600 900 L0 900Z" fill="url(#fieldGrass)"/>
+    <path d="M0 520 Q800 430 1600 520" fill="none" stroke="#d7e2ce" strokeOpacity=".55" strokeWidth="3"/>
+    <path d="M0 550 Q800 450 1600 550" fill="none" stroke="#0b1b10" strokeOpacity=".7" strokeWidth="12"/>
+    <path d="M70 610 Q800 470 1530 610" fill="none" stroke="#dce8d1" strokeOpacity=".36" strokeWidth="3"/>
+    <path d="M-80 735 Q800 500 1680 735" fill="none" stroke="#dce8d1" strokeOpacity=".24" strokeWidth="2"/>
+    <path d="M0 790 Q800 555 1600 790" fill="none" stroke="#a9c49a" strokeOpacity=".12" strokeWidth="2"/>
+    <path d="M790 480 L810 480 L965 900 L635 900Z" fill="url(#pitchClay)" stroke="#d4c49a" strokeOpacity=".55" strokeWidth="2"/>
+    <path d="M796 495 L804 495 L935 900 L665 900Z" fill="#c0ad7e" opacity=".2"/>
+    <path d="M770 535 L830 535 L850 560 L750 560Z M650 840 L950 840 L960 864 L640 864Z" fill="none" stroke="#f6f0dc" strokeOpacity=".9" strokeWidth="3"/>
+    <g stroke="#f8f1dd" strokeWidth="3" strokeLinecap="round"><path d="M784 530v-13m8 13v-13m8 13v-13"/><path d="M780 840v-17m8 17v-17m8 17v-17"/></g>
+    <g fill="url(#lightBloom)">
+     <ellipse cx="120" cy="150" rx="180" ry="220"/><ellipse cx="1480" cy="150" rx="180" ry="220"/>
+    </g>
+    <g stroke="#aab9ad" strokeOpacity=".7" strokeWidth="7" fill="none"><path d="M115 180 L82 515 M1485 180 L1518 515"/><path d="M82 515h38 M1485 515h38"/></g>
+    <g fill="#f9fcff" filter="url(#none)"><rect x="48" y="126" width="138" height="18" rx="5"/><rect x="1414" y="126" width="138" height="18" rx="5"/></g>
+    <g fill="#fff"><circle cx="60" cy="135" r="4"/><circle cx="82" cy="135" r="4"/><circle cx="104" cy="135" r="4"/><circle cx="126" cy="135" r="4"/><circle cx="148" cy="135" r="4"/><circle cx="170" cy="135" r="4"/><circle cx="1430" cy="135" r="4"/><circle cx="1452" cy="135" r="4"/><circle cx="1474" cy="135" r="4"/><circle cx="1496" cy="135" r="4"/><circle cx="1518" cy="135" r="4"/><circle cx="1540" cy="135" r="4"/></g>
+    <path d="M0 0H1600V900H0Z" fill="url(#nightSky)" opacity=".08"/>
+   </svg>
    <div className="hero-content container"><span className="hero-kicker">{tr(locale,'A NEW PERSPECTIVE ON CRICKET','क्रिकेट को देखने का एक नया नज़रिया')}</span>
     <h1 id="hero-title">BEYOND<br/><span>THE GAME.</span></h1><p>{tr(locale,'More than cricket. A deeper perspective.','क्रिकेट से बढ़कर। खेल को समझने का एक गहरा नज़रिया।')}</p>
     <div className="hero-actions"><a className="button button-neon" href="#web-app">{tr(locale,'EXPLORE AURA','AURA देखें')} <span aria-hidden="true">↗</span></a><a className="button button-ghost" href="#about">{tr(locale,'DISCOVER AURA','AURA को जानें')} <span aria-hidden="true">↓</span></a></div>
