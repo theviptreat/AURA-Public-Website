@@ -951,7 +951,6 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
 }
 .footer-card.is-open .footer-card-trigger {
   color: #fff;
-  border-color: rgba(166,255,53,.72);
 }
 .footer-card-trigger:focus-visible {
   box-shadow: inset 0 0 0 2px var(--aura-green);
@@ -1028,7 +1027,7 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
   color: rgba(255,255,255,.8);
 }
 .footer-card.is-open {
-  border-color: rgba(166,255,53,.48);
+  border-color: rgba(166,255,53,.1);
   box-shadow: 0 0 22px rgba(166,255,53,.08), inset 0 0 18px rgba(166,255,53,.025);
 }
 @keyframes footer-panel-in {
