@@ -863,4 +863,3 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
 .play-zone-gif{display:block;width:100%;height:auto;object-fit:contain}
 @media(max-width:800px){.play-zone-heading{grid-template-columns:30px minmax(0,1fr)}.play-zone-heading .coming-pill{grid-column:2;justify-self:start}.play-scene{margin-top:24px;border-radius:16px}}
 @media(max-width:480px){.play-zone-section{padding:48px 0 52px}.play-zone-heading{gap:15px}.play-zone-heading h2{font-size:29px}.play-zone-heading p{font-size:12px}.play-scene{margin-top:22px;border-radius:12px}}
-@media(prefers-reduced-motion:reduce){.play-zone-gif{animation:none}}
