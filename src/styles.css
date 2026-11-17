@@ -471,3 +471,50 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
 .about-ball{filter:drop-shadow(0 26px 24px rgba(0,0,0,.5)) drop-shadow(0 0 18px rgba(151,20,25,.13))}
 .about-ball-art{overflow:visible;transform:rotate(-2deg)}
 .about-ball-glint{inset:7% 12% auto auto;width:22%;height:8%;background:rgba(255,244,222,.42);filter:blur(10px)}
+
+
+/* AURA Web App — real desktop screen showcase */
+.webapp-section{overflow:hidden}
+.webapp-heading{max-width:1160px;margin-inline:auto;margin-bottom:34px}
+.webapp-heading h2{font-size:clamp(38px,5vw,62px)}
+.webapp-showcase{position:relative;max-width:1120px;margin:0 auto}
+.laptop-stage{position:relative;width:100%;padding:0 3.2% 24px;perspective:1500px}
+.laptop-screen-shell{position:relative;padding:clamp(8px,1.1vw,13px) clamp(8px,1.1vw,13px) clamp(10px,1.25vw,15px);border:1px solid #526257;border-bottom-color:#1c2820;border-radius:16px 16px 9px 9px;background:linear-gradient(145deg,#26332a 0%,#111a14 48%,#080d0a 100%);box-shadow:0 32px 85px rgba(0,0,0,.58),0 0 58px rgba(166,255,53,.075),inset 0 1px 0 rgba(255,255,255,.12)}
+.laptop-camera{position:absolute;top:4px;left:50%;width:4px;height:4px;border-radius:50%;background:#718078;box-shadow:0 0 5px rgba(166,255,53,.24)}
+.laptop-screen{overflow:hidden;position:relative;aspect-ratio:2.12/1;border:1px solid rgba(166,255,53,.16);background:#080d19;box-shadow:inset 0 0 30px rgba(0,0,0,.2)}
+.webapp-slide-deck{position:absolute;inset:0;overflow:hidden;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none;outline:none}
+.webapp-slide-deck:active{cursor:grabbing}
+.webapp-slide-deck:focus-visible{outline:2px solid var(--aura-green);outline-offset:-3px}
+.webapp-slide{position:absolute;top:4%;left:8%;width:84%;height:92%;display:grid;place-items:center;opacity:0;pointer-events:none;transform:translate3d(calc(var(--slide-offset)*76%),0,0) scale(.82) rotateY(calc(var(--slide-offset)*-7deg));filter:brightness(.68) saturate(.86);transition:transform 1.05s cubic-bezier(.2,.72,.2,1),opacity .85s ease,filter .85s ease;will-change:transform,opacity}
+.webapp-slide img{display:block;width:100%;height:100%;object-fit:contain;border-radius:2px;box-shadow:0 16px 42px rgba(0,0,0,.42);pointer-events:none}
+.webapp-slide.is-active{z-index:3;opacity:1;transform:translate3d(0,0,0) scale(1) rotateY(0);filter:none}
+.webapp-slide.is-previous,.webapp-slide.is-next{z-index:2;opacity:.62;pointer-events:none}
+.webapp-slide.is-hidden{visibility:hidden}
+.laptop-base{position:relative;width:100%;height:clamp(12px,1.7vw,20px);margin:0 auto;background:linear-gradient(180deg,#657168 0%,#303b33 24%,#121a14 78%,#080d0a 100%);clip-path:polygon(3.2% 0,96.8% 0,100% 76%,97% 100%,3% 100%,0 76%);border-radius:0 0 12px 12px;filter:drop-shadow(0 8px 8px rgba(0,0,0,.45))}
+.laptop-base span{position:absolute;top:0;left:43%;width:14%;height:4px;border-radius:0 0 5px 5px;background:linear-gradient(180deg,#111a14,#59645b)}
+.laptop-shadow{width:84%;height:22px;margin:-1px auto 0;border-radius:50%;background:rgba(0,0,0,.58);filter:blur(17px)}
+.showcase-caption{position:static;margin:22px 0 0;text-align:center;color:rgba(229,241,222,.48);font-size:9px;letter-spacing:.2em}
+@media(max-width:800px){
+ .webapp-section{padding-block:72px}
+ .webapp-heading{display:block;margin-bottom:30px}
+ .webapp-heading p{max-width:520px;margin-top:14px}
+ .laptop-stage{padding-inline:1.5%;padding-bottom:18px}
+ .laptop-screen-shell{border-radius:10px 10px 6px 6px}
+ .webapp-slide{left:5%;width:90%}
+ .showcase-caption{font-size:8px}
+}
+@media(max-width:480px){
+ .webapp-section{padding-block:60px}
+ .webapp-heading h2{font-size:38px}
+ .laptop-stage{padding-inline:0;padding-bottom:13px}
+ .laptop-screen-shell{padding:6px 6px 8px;border-radius:8px 8px 4px 4px}
+ .laptop-screen{aspect-ratio:2.02/1}
+ .webapp-slide{left:2%;width:96%;top:3%;height:94%}
+ .webapp-slide.is-previous,.webapp-slide.is-next{opacity:.42}
+ .laptop-base{height:10px}
+ .laptop-shadow{height:14px}
+ .showcase-caption{margin-top:15px;font-size:7px;letter-spacing:.14em}
+}
+@media(prefers-reduced-motion:reduce){
+ .webapp-slide{transition:none}
+}
