@@ -863,3 +863,141 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
 .play-zone-gif{display:block;width:100%;height:auto;object-fit:contain}
 @media(max-width:800px){.play-zone-heading{grid-template-columns:30px minmax(0,1fr)}.play-zone-heading .coming-pill{grid-column:2;justify-self:start}.play-scene{margin-top:24px;border-radius:16px}}
 @media(max-width:480px){.play-zone-section{padding:48px 0 52px}.play-zone-heading{gap:15px}.play-zone-heading h2{font-size:29px}.play-zone-heading p{font-size:12px}.play-scene{margin-top:22px;border-radius:12px}}
+
+/* AURA premium footer accordion */
+.cinematic-footer .footer-main {
+  align-items: flex-start;
+  gap: clamp(34px, 6vw, 88px);
+}
+.footer-accordion {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 14px;
+  width: min(680px, 100%);
+}
+.footer-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(166,255,53,.2);
+  border-radius: 12px;
+  background: linear-gradient(145deg, rgba(17,39,25,.94), rgba(5,13,8,.96));
+  box-shadow: inset 0 1px rgba(255,255,255,.035);
+  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+}
+.footer-card-trigger {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  width: 100%;
+  min-height: 66px;
+  padding: 18px 20px;
+  overflow: hidden;
+  border: 0;
+  color: #f4f8f2;
+  background: transparent;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  isolation: isolate;
+}
+.footer-card-trigger::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  background: linear-gradient(105deg, transparent 12%, rgba(166,255,53,.94) 48%, rgba(166,255,53,.78) 58%, transparent 88%);
+  transform: translateX(-112%);
+  transition: transform .65s cubic-bezier(.2,.7,.2,1);
+}
+.footer-card-trigger::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  content: "";
+  pointer-events: none;
+}
+.footer-card-trigger:hover::before,
+.footer-card-trigger:focus-visible::before {
+  transform: translateX(112%);
+}
+.footer-card-trigger:hover,
+.footer-card-trigger:focus-visible {
+  color: #071006;
+  outline: none;
+}
+.footer-card-trigger:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--aura-green);
+}
+.footer-card-icon {
+  display: grid;
+  flex: 0 0 27px;
+  width: 27px;
+  height: 27px;
+  place-items: center;
+  border: 1px solid rgba(166,255,53,.45);
+  border-radius: 50%;
+  color: var(--aura-green);
+  font-size: 17px;
+  font-weight: 400;
+  transition: color .3s ease, background .3s ease, border-color .3s ease;
+}
+.footer-card-trigger:hover .footer-card-icon,
+.footer-card-trigger:focus-visible .footer-card-icon {
+  color: #071006;
+  border-color: #071006;
+  background: rgba(7,16,6,.12);
+}
+.footer-card-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 20px 19px;
+  animation: footer-panel-in .24s ease both;
+}
+.footer-card-panel[hidden] { display: none; }
+.footer-card-panel a {
+  width: fit-content;
+  color: rgba(244,248,242,.68);
+  font-size: 12px;
+  line-height: 1.5;
+  transition: color .2s ease, transform .2s ease;
+}
+.footer-card-panel a:hover,
+.footer-card-panel a:focus-visible {
+  color: var(--aura-green);
+  transform: translateX(3px);
+  outline: none;
+}
+.footer-coming-soon {
+  color: rgba(244,248,242,.46);
+  font-size: 11px;
+  line-height: 1.6;
+}
+.footer-card.is-open {
+  border-color: rgba(166,255,53,.48);
+  box-shadow: 0 0 22px rgba(166,255,53,.08), inset 0 0 18px rgba(166,255,53,.025);
+}
+@keyframes footer-panel-in {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 800px) {
+  .cinematic-footer .footer-main { gap: 28px; }
+  .footer-accordion { width: 100%; grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width: 480px) {
+  .footer-accordion { grid-template-columns: minmax(0,1fr); gap: 10px; }
+  .footer-card-trigger { min-height: 60px; padding: 16px 17px; font-size: 11px; }
+  .footer-card-panel { padding: 0 17px 17px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .footer-card, .footer-card-trigger::before, .footer-card-icon, .footer-card-panel a { transition: none; }
+  .footer-card-panel { animation: none; }
+}
