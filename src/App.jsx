@@ -138,14 +138,14 @@ function AboutBall() {
 
 
 const webAppSlides = [
-  { src: '/images/webapp/dashboard.webp', alt: 'AURA Sports dashboard with performance summary and quick navigation' },
-  { src: '/images/webapp/match-results.webp', alt: 'AURA match result and historical evaluation screen' },
-  { src: '/images/webapp/calendar.webp', alt: 'AURA cricket schedule calendar screen' },
-  { src: '/images/webapp/promo-offers.webp', alt: 'AURA promo and offers screen' },
-  { src: '/images/webapp/account-analytics.webp', alt: 'AURA account and historical prediction analytics screen' },
-  { src: '/images/webapp/today.webp', alt: 'AURA Today page showing match categories and fixtures' },
-  { src: '/images/webapp/live-alerts.webp', alt: 'AURA live match predictions and alerts screen' },
-  { src: '/images/webapp/match-detail.webp', alt: 'AURA individual match detail and prediction screen' },
+  { src: '/images/webapp/dashboard.jpeg', alt: 'AURA Sports dashboard with performance summary and quick navigation' },
+  { src: '/images/webapp/match-results.jpeg', alt: 'AURA match result and historical evaluation screen' },
+  { src: '/images/webapp/calendar.jpeg', alt: 'AURA cricket schedule calendar screen' },
+  { src: '/images/webapp/promo-offers.jpeg', alt: 'AURA promo and offers screen' },
+  { src: '/images/webapp/account-analytics.jpeg', alt: 'AURA account and historical prediction analytics screen' },
+  { src: '/images/webapp/today.jpeg', alt: 'AURA Today page showing match categories and fixtures' },
+  { src: '/images/webapp/live-alerts.jpeg', alt: 'AURA live match predictions and alerts screen' },
+  { src: '/images/webapp/match-detail.jpeg', alt: 'AURA individual match detail and prediction screen' },
 ];
 
 function WebAppShowcase({ locale }) {
