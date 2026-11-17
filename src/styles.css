@@ -822,3 +822,13 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
   .android-phone, .android-phone-halo, .android-ambient { animation: none !important; }
   .android-phone { transform: rotateY(-8deg); }
 }
+
+/* Give the More Than a Game cricket ball more breathing room above. */
+.about-art .about-ball {
+  top: 22px;
+}
+@media (max-width: 800px) {
+  .about-art .about-ball {
+    top: 16px;
+  }
+}
