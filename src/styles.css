@@ -908,11 +908,26 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
 .footer-card-trigger::before {
   position: absolute;
   z-index: -1;
-  inset: 0;
+  top: -42%;
+  left: -135%;
+  width: 132%;
+  height: 184%;
+  border-radius: 48% 52% 46% 54%;
   content: "";
-  background: linear-gradient(105deg, transparent 12%, rgba(166,255,53,.94) 48%, rgba(166,255,53,.78) 58%, transparent 88%);
-  transform: translateX(-112%);
-  transition: transform .65s cubic-bezier(.2,.7,.2,1);
+  background:
+    radial-gradient(ellipse at 28% 18%, rgba(255,255,255,.34), transparent 32%),
+    linear-gradient(112deg, #91ed25 0%, #b7ff70 44%, #a6ff35 70%, #7ddc1d 100%);
+  box-shadow: 0 0 28px rgba(166,255,53,.32);
+  transform: rotate(-5deg);
+  transition: left .72s cubic-bezier(.2,.78,.18,1), border-radius .72s ease, transform .72s ease;
+}
+.footer-card-trigger:hover::before,
+.footer-card-trigger:focus-visible::before,
+.footer-card-trigger:active::before,
+.footer-card.is-open .footer-card-trigger::before {
+  left: -12%;
+  border-radius: 42% 58% 52% 48%;
+  transform: rotate(0deg);
 }
 .footer-card-trigger::after {
   position: absolute;
@@ -923,12 +938,13 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
   content: "";
   pointer-events: none;
 }
-.footer-card-trigger:hover::before,
-.footer-card-trigger:focus-visible::before {
-  transform: translateX(112%);
+.footer-card:hover {
+  border-color: rgba(166,255,53,.62);
+  box-shadow: 0 0 26px rgba(166,255,53,.12), inset 0 0 18px rgba(166,255,53,.035);
 }
 .footer-card-trigger:hover,
-.footer-card-trigger:focus-visible {
+.footer-card-trigger:focus-visible,
+.footer-card.is-open .footer-card-trigger {
   color: #071006;
   outline: none;
 }
@@ -999,6 +1015,7 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
 }
 @media (prefers-reduced-motion: reduce) {
   .footer-card, .footer-card-trigger::before, .footer-card-icon, .footer-card-panel a { transition: none; }
+  .footer-card-trigger::before { left: -12%; }
   .footer-card-panel { animation: none; }
 }
 
