@@ -271,8 +271,6 @@ function HomePage({ locale }) {
      </div>
      <span className="android-orbit android-orbit-a" aria-hidden="true"/>
      <span className="android-orbit android-orbit-b" aria-hidden="true"/>
-     <span className="android-light-particle particle-one" aria-hidden="true"/>
-     <span className="android-light-particle particle-two" aria-hidden="true"/>
     </div>
    </div>
   </section>
