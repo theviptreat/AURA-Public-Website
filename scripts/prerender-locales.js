@@ -101,6 +101,7 @@ export function buildArticleDocument(template, sourceArticle, locale) {
     '</article></div></main>',
   ].join('');
   html = html.replace('<div id="root"></div>', '<div id="root">' + articleMarkup + '</div>');
+  html = html.replace(/<link id="hero-image-preload"[^>]*>\\s*/, '');
   return html;
 }
 
@@ -121,11 +122,12 @@ export function buildLocalizedDocument(template, route, locale) {
   const [title, description] = page;
   const lang = locale === 'hi' ? 'hi-IN' : 'en';
   const localeTag = locale === 'hi' ? 'hi_IN' : 'en_US';
-  return template
+  const html = template
     .replace('<html lang="en">', `<html lang="${lang}">`)
     .replace(/<title>[^<]*<\/title>/, `<title>${escapeHtml(title)}</title>`)
     .replace(/<meta name="description" content="[^"]*"\s*\/>/, `<meta name="description" content="${escapeHtml(description)}" />`)
     .replace('</head>', `  <meta property="og:title" content="${escapeHtml(title)}" />\n    <meta property="og:description" content="${escapeHtml(description)}" />\n    <meta property="og:locale" content="${localeTag}" />\n  </head>`);
+  return route === '/' ? html : html.replace(/<link id="hero-image-preload"[^>]*>\\s*/, '');
 }
 
 export async function prerenderLocalizedRoutes() {
