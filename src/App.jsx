@@ -233,7 +233,49 @@ function HomePage({ locale }) {
    <WebAppShowcase locale={locale}/>
   </div></section>
   <section className="coming-section landing-section" id="play-zone"><div className="container coming-inner"><div className="section-index"><span>02</span><i/></div><div><span className="eyebrow">{tr(locale,'A NEW WAY TO EXPERIENCE CRICKET','क्रिकेट का अनुभव करने का नया तरीका')}</span><h2>AURA <span>PLAY ZONE</span></h2><p>{tr(locale,'A new way to experience cricket.','क्रिकेट का अनुभव करने का एक नया तरीका।')}</p></div><span className="coming-pill">{tr(locale,'COMING SOON','जल्द आ रहा है')}</span></div></section>
-  <section className="android-section landing-section" id="android"><div className="container android-inner"><div className="android-copy"><span className="eyebrow">{tr(locale,'THE AURA EXPERIENCE, ON THE MOVE','AURA का अनुभव, अब आपके साथ')}</span><h2>{tr(locale,'AURA ON ANDROID','एंड्रॉयड पर AURA')}</h2><p>{tr(locale,'The AURA experience is coming soon to Android.','AURA का अनुभव जल्द ही Android पर उपलब्ध होगा।')}</p><span className="coming-pill">{tr(locale,'COMING SOON','जल्द आ रहा है')}</span></div><div className="android-phone" aria-hidden="true"><div className="android-phone-screen"><span className="preview-brand">AURA SPORTS</span><div className="android-phone-glow"/><span className="phone-caption">BEYOND THE GAME</span></div></div></div></section>
+  <section className="android-section landing-section" id="android">
+   <div className="android-ambient android-ambient-one" aria-hidden="true"/>
+   <div className="android-ambient android-ambient-two" aria-hidden="true"/>
+   <div className="container android-inner">
+    <div className="android-copy">
+     <span className="eyebrow">{tr(locale,'THE AURA EXPERIENCE, ON THE MOVE','AURA का अनुभव, अब आपके साथ')}</span>
+     <h2>{tr(locale,'AURA ON ANDROID','एंड्रॉयड पर AURA')}</h2>
+     <p>{tr(locale,'The AURA experience is coming soon to Android.','AURA का अनुभव जल्द ही Android पर उपलब्ध होगा।')}</p>
+     <span className="coming-pill">{tr(locale,'COMING SOON','जल्द आ रहा है')}</span>
+    </div>
+    <div className="android-phone-stage" aria-label="A preview of the AURA Android experience">
+     <div className="android-phone-halo" aria-hidden="true"/>
+     <div className="android-phone" aria-hidden="true">
+      <div className="android-phone-side"/>
+      <div className="android-phone-screen">
+       <div className="phone-status"><span>9:41</span><span className="phone-status-icons">● ▮ ▰</span></div>
+       <div className="phone-brand-row"><span className="preview-brand">AURA <b>SPORTS</b></span><span className="phone-menu-mark">•••</span></div>
+       <div className="phone-screen-heading"><span>THE GAME, IN FOCUS</span><strong>MATCH CENTRE</strong></div>
+       <div className="phone-match-card">
+        <div className="phone-match-top"><span>INTERNATIONAL · T20</span><span className="sample-match-tag">SAMPLE</span></div>
+        <div className="phone-teams">
+         <div className="phone-team"><span className="phone-team-mark">IND</span><span>INDIA</span></div>
+         <div className="phone-score"><strong>186<span>/4</span></strong><small>18.2 OV</small></div>
+         <div className="phone-team"><span className="phone-team-mark team-mark-gold">AUS</span><span>AUSTRALIA</span></div>
+        </div>
+        <div className="phone-match-note">India batting · Illustrative score</div>
+       </div>
+       <div className="phone-insight-title"><span>QUICK INSIGHTS</span><i/></div>
+       <div className="phone-stat-grid">
+        <div className="phone-stat"><span>RUN RATE</span><strong>10.14</strong></div>
+        <div className="phone-stat"><span>LAST 5 OV</span><strong>48/1</strong></div>
+       </div>
+       <div className="phone-form-strip"><span>RECENT MOMENTUM</span><div><i/><i/><i/><i/><i/></div></div>
+       <div className="phone-screen-footer"><span className="phone-footer-diamond"/>BEYOND THE GAME</div>
+      </div>
+     </div>
+     <span className="android-orbit android-orbit-a" aria-hidden="true"/>
+     <span className="android-orbit android-orbit-b" aria-hidden="true"/>
+     <span className="android-light-particle particle-one" aria-hidden="true"/>
+     <span className="android-light-particle particle-two" aria-hidden="true"/>
+    </div>
+   </div>
+  </section>
   {sponsor?.name && sponsor?.href && <section className="sponsor-section landing-section" aria-label={tr(locale,'AURA sponsor','AURA प्रायोजक')}>
    <div className="container sponsor-inner"><span className="eyebrow">{tr(locale,'IN PARTNERSHIP WITH','के सहयोग से')}</span>
     <a className="sponsor-link" href={sponsor.href} target="_blank" rel="noopener noreferrer">
