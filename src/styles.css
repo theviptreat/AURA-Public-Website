@@ -564,3 +564,9 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
     font-size: 28px;
   }
 }
+
+
+/* Slightly align the About copy paragraphs with the headline's visual edge. */
+.about-copy p {
+  margin-left: -8px;
+}
