@@ -832,3 +832,9 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
     top: 16px;
   }
 }
+
+/* Remove decorative orbit rings from the cricket ball and Android phone stages. */
+.about-orbit,
+.android-orbit {
+  display: none !important;
+}
