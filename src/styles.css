@@ -1093,3 +1093,60 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
   .footer-card-panel a:hover::before,
   .footer-card-panel a:focus-visible::before { animation: none; }
 }
+
+
+/* Footer interaction: keep only the parent liquid wave; remove decorative hover effects. */
+.footer-card:hover {
+  border-color: rgba(166,255,53,.1);
+  box-shadow: inset 0 1px rgba(255,255,255,.035);
+  transform: none;
+}
+.footer-card-trigger:hover {
+  color: #fff;
+  background: transparent;
+  box-shadow: none;
+}
+.footer-card-trigger:focus-visible {
+  color: #fff;
+  background: transparent;
+  box-shadow: inset 0 0 0 2px var(--aura-green);
+  outline: none;
+}
+.footer-card-trigger:hover .footer-card-icon {
+  color: #fff;
+  border-color: rgba(255,255,255,.78);
+  background: transparent;
+}
+.footer-card-panel a {
+  transition: none;
+}
+.footer-card-panel a:hover {
+  color: #fff;
+  border-color: rgba(166,255,53,.34);
+  background: rgba(2,10,6,.48);
+  box-shadow: inset 0 1px rgba(255,255,255,.035);
+  transform: none;
+  outline: none;
+}
+.footer-card-panel a:focus-visible {
+  color: #fff;
+  border-color: var(--aura-green);
+  background: rgba(2,10,6,.48);
+  box-shadow: inset 0 0 0 2px rgba(166,255,53,.55);
+  transform: none;
+  outline: none;
+}
+.footer-card-panel a::before,
+.footer-card-panel a:hover::before,
+.footer-card-panel a:focus-visible::before {
+  opacity: 0;
+  animation: none;
+}
+.footer-card-panel a:hover::after {
+  color: var(--aura-green);
+  transform: none;
+}
+.footer-card.is-open {
+  border-color: rgba(166,255,53,.1);
+  box-shadow: inset 0 1px rgba(255,255,255,.035);
+}
