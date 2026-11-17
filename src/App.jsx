@@ -424,6 +424,38 @@ function Footer({ locale = 'en' }) {
   </footer>;
 }
 
+function PageNavigation({ locale = 'en' }) {
+  const handleBack = () => {
+    let cameFromAuraPage = false;
+    try {
+      cameFromAuraPage = Boolean(document.referrer)
+        && new URL(document.referrer).origin === window.location.origin;
+    } catch {
+      cameFromAuraPage = false;
+    }
+
+    if (cameFromAuraPage && window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+
+    window.location.assign(localizePath('/', locale));
+  };
+
+  return (
+    <nav className="page-navigation" aria-label={tr(locale, 'Page navigation', 'पेज नेविगेशन')}>
+      <button className="page-navigation-back" type="button" onClick={handleBack}>
+        <span aria-hidden="true">←</span>
+        {tr(locale, 'Back', 'वापस')}
+      </button>
+      <a className="page-navigation-home" href={localizePath('/', locale)} aria-label={tr(locale, 'Go to AURA home', 'AURA होमपेज पर जाएँ')}>
+        <span aria-hidden="true">⌂</span>
+        {tr(locale, 'Home', 'होम')}
+      </a>
+    </nav>
+  );
+}
+
 export default function App() {
   const resolvedRoute = resolveLocalizedPath(window.location.pathname);
   const locale = resolvedRoute.locale;
@@ -508,5 +540,5 @@ export default function App() {
     page = <ArticleDetailPage slug={articleSlug || '__invalid_url__'} locale={locale} />;
   } else page = <AdditionalPage path={path} locale={locale} />;
 
-  return <><Header locale={locale} currentPath={path} currentSearch={window.location.search} currentHash={window.location.hash} />{page}<Footer locale={locale} /></>;
+  return <><Header locale={locale} currentPath={path} currentSearch={window.location.search} currentHash={window.location.hash} />{page}{path !== '/' && <PageNavigation locale={locale} />}<Footer locale={locale} /></>;
 }
