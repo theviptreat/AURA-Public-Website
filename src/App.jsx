@@ -364,13 +364,64 @@ function ArticleDetailPage({ slug, locale }) {
 }
 
 function Footer({ locale = 'en' }) {
- return <footer className="site-footer cinematic-footer"><div className="container footer-main">
-  <div className="footer-brand"><Brand locale={locale}/><p>{tr(locale,'Beyond the Game','खेल से कहीं आगे।')}</p></div>
-  <div className="footer-links">
-   <div><span className="footer-label">{tr(locale,'AURA','AURA')}</span><a href={localizePath('/about',locale)}>{tr(locale,'About AURA','AURA के बारे में')}</a><a href={`${localizePath('/',locale)}#web-app`}>{tr(locale,'Web App','वेब ऐप')}</a><a href={`${localizePath('/',locale)}#play-zone`}>{tr(locale,'Play Zone','प्ले ज़ोन')}</a><a href={`${localizePath('/',locale)}#android`}>{tr(locale,'Android','एंड्रॉयड')}</a><a href={localizePath('/contact',locale)}>{tr(locale,'Contact Us','संपर्क करें')}</a></div>
-   <div><span className="footer-label">{tr(locale,'Information','जानकारी')}</span><a href={localizePath('/privacy-policy',locale)}>{tr(locale,'Privacy Policy','गोपनीयता नीति')}</a><a href={localizePath('/terms',locale)}>{tr(locale,'Terms & Conditions','नियम और शर्तें')}</a><a href={localizePath('/disclaimer',locale)}>{tr(locale,'Disclaimer','अस्वीकरण')}</a></div>
-   {socialLinks.length > 0 && <div><span className="footer-label">{tr(locale,'Follow AURA','AURA से जुड़ें')}</span>{socialLinks.map((item) => <a key={item.url} href={item.url} target="_blank" rel="noopener noreferrer">{item.label}</a>)}</div>}
-  </div></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} AURA Sports. {tr(locale,'All rights reserved.','सर्वाधिकार सुरक्षित।')}</span><span>{tr(locale,'Made for the love of cricket.','क्रिकेट के प्रति प्रेम के लिए।')}</span></div></footer>;
+  const [openGroup, setOpenGroup] = useState(null);
+  const groups = [
+    {
+      id: 'discover',
+      title: tr(locale, 'Discover AURA', 'AURA को जानें'),
+      links: [
+        { label: tr(locale, 'About AURA', 'AURA के बारे में'), href: localizePath('/about', locale) },
+        { label: tr(locale, 'Web App', 'वेब ऐप'), href: `${localizePath('/', locale)}#web-app` },
+        { label: tr(locale, 'Play Zone', 'प्ले ज़ोन'), href: `${localizePath('/', locale)}#play-zone` },
+        { label: tr(locale, 'Android', 'एंड्रॉयड'), href: `${localizePath('/', locale)}#android` },
+      ],
+    },
+    {
+      id: 'connect',
+      title: tr(locale, 'Connect', 'संपर्क'),
+      links: [
+        { label: tr(locale, 'Customer Support', 'ग्राहक सहायता'), href: 'mailto:customercare.aurasports@gmail.com' },
+        { label: tr(locale, 'Business with AURA', 'AURA के साथ व्यवसाय'), href: 'mailto:business.aurasports@gmail.com' },
+      ],
+    },
+    {
+      id: 'information',
+      title: tr(locale, 'Information', 'जानकारी'),
+      links: [
+        { label: tr(locale, 'Privacy Policy', 'गोपनीयता नीति'), href: localizePath('/privacy-policy', locale) },
+        { label: tr(locale, 'Terms & Conditions', 'नियम और शर्तें'), href: localizePath('/terms', locale) },
+        { label: tr(locale, 'Disclaimer', 'अस्वीकरण'), href: localizePath('/disclaimer', locale) },
+      ],
+    },
+    {
+      id: 'social',
+      title: tr(locale, 'Social Media', 'सोशल मीडिया'),
+      comingSoon: true,
+      links: [],
+    },
+  ];
+
+  return <footer className="site-footer cinematic-footer">
+    <div className="container footer-main">
+      <div className="footer-brand"><Brand locale={locale}/><p>{tr(locale,'Beyond the Game','खेल से कहीं आगे।')}</p></div>
+      <div className="footer-accordion" aria-label={tr(locale, 'Footer navigation', 'फुटर नेविगेशन')}>
+        {groups.map((group) => {
+          const isOpen = openGroup === group.id;
+          return <section className={`footer-card ${isOpen ? 'is-open' : ''}`} key={group.id}>
+            <button className="footer-card-trigger" type="button" aria-expanded={isOpen} aria-controls={`footer-panel-${group.id}`} onClick={() => setOpenGroup(isOpen ? null : group.id)}>
+              <span>{group.title}</span><span className="footer-card-icon" aria-hidden="true">{isOpen ? '−' : '+'}</span>
+            </button>
+            <div className="footer-card-panel" id={`footer-panel-${group.id}`} hidden={!isOpen}>
+              {group.comingSoon
+                ? <span className="footer-coming-soon">{tr(locale, 'Social channels coming soon', 'सोशल चैनल जल्द जुड़ेंगे')}</span>
+                : group.links.map((item) => <a key={item.label} href={item.href}>{item.label}</a>)}
+            </div>
+          </section>;
+        })}
+      </div>
+    </div>
+    <div className="container footer-bottom"><span>© {new Date().getFullYear()} AURA Sports. {tr(locale,'All rights reserved.','सर्वाधिकार सुरक्षित।')}</span><span>{tr(locale,'Made for the love of cricket.','क्रिकेट के प्रति प्रेम के लिए।')}</span></div>
+  </footer>;
 }
 
 export default function App() {
