@@ -239,50 +239,14 @@ function HomePage({ locale }) {
      <div><span className="eyebrow">{tr(locale,'A NEW WAY TO EXPERIENCE CRICKET','क्रिकेट का अनुभव करने का नया तरीका')}</span><h2>AURA <span>PLAY ZONE</span></h2><p>{tr(locale,'A new way to experience cricket.','क्रिकेट का अनुभव करने का एक नया तरीका।')}</p></div>
      <span className="coming-pill">{tr(locale,'COMING SOON','जल्द आ रहा है')}</span>
     </div>
-    <div className="play-scene" role="img" aria-label={tr(locale,'Four friends celebrate a win. One holds a phone as a glowing You Win message rises from its screen.','चार दोस्त जीत का जश्न मना रहे हैं। एक के फोन से चमकता हुआ You Win संदेश ऊपर उठता है।')}>
-     <div className="play-scene-glow"/>
-     <svg className="play-people" viewBox="0 0 900 430" aria-hidden="true">
-      <defs>
-       <linearGradient id="play-charcoal" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#65716d"/><stop offset=".5" stopColor="#202a29"/><stop offset="1" stopColor="#0b1112"/></linearGradient>
-       <linearGradient id="play-cream" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#fff8e9"/><stop offset=".55" stopColor="#d8d0bf"/><stop offset="1" stopColor="#928b7e"/></linearGradient>
-       <linearGradient id="play-beige" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#d8b99a"/><stop offset=".55" stopColor="#9b765e"/><stop offset="1" stopColor="#594437"/></linearGradient>
-       <linearGradient id="play-navy" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#52647a"/><stop offset=".55" stopColor="#202d40"/><stop offset="1" stopColor="#0d1522"/></linearGradient>
-       <radialGradient id="play-skin"><stop stopColor="#f1c7a7"/><stop offset="1" stopColor="#a96f51"/></radialGradient>
-       <filter id="play-shadow"><feGaussianBlur stdDeviation="12"/></filter>
-      </defs>
-      <ellipse cx="450" cy="390" rx="340" ry="22" fill="#000" opacity=".55" filter="url(#play-shadow)"/>
-      <g className="play-person person-left">
-       <path d="M150 390 Q142 305 166 252 Q191 225 224 246 Q254 273 255 390Z" fill="url(#play-cream)" stroke="#fff" strokeOpacity=".2"/>
-       <path d="M172 263 Q125 232 118 185 Q116 174 126 171 Q137 170 144 190 L174 221" fill="none" stroke="url(#play-skin)" strokeWidth="19" strokeLinecap="round"/>
-       <path d="M233 264 Q274 235 290 202" fill="none" stroke="url(#play-skin)" strokeWidth="19" strokeLinecap="round"/>
-       <circle cx="204" cy="190" r="34" fill="url(#play-skin)"/><path d="M170 188 Q169 145 207 148 Q238 150 239 181 Q215 167 193 174Z" fill="#24201e"/>
-       <path d="M180 390 L177 425 M229 390 L238 425" stroke="#1b2020" strokeWidth="22" strokeLinecap="round"/>
-      </g>
-      <g className="play-person person-holder">
-       <path d="M335 390 Q330 285 353 237 Q382 214 420 236 Q452 269 450 390Z" fill="url(#play-charcoal)" stroke="#a8b5ae" strokeOpacity=".25"/>
-       <path d="M355 253 Q321 218 328 172 Q330 160 340 163 Q350 165 350 184 L368 217" fill="none" stroke="url(#play-skin)" strokeWidth="19" strokeLinecap="round"/>
-       <path d="M421 258 Q450 226 463 180 Q466 168 477 171 Q488 175 481 192 L459 253" fill="none" stroke="url(#play-skin)" strokeWidth="19" strokeLinecap="round"/>
-       <circle cx="389" cy="177" r="35" fill="url(#play-skin)"/><path d="M354 176 Q352 133 391 136 Q424 137 425 169 Q401 151 377 159Z" fill="#171b1b"/>
-       <path d="M357 390 L354 425 M428 390 L437 425" stroke="#111719" strokeWidth="23" strokeLinecap="round"/>
-       <g className="play-phone"><rect x="312" y="112" width="35" height="65" rx="7" fill="#101817" stroke="#b9c4bd" strokeWidth="2"/><rect x="317" y="117" width="25" height="54" rx="4" fill="#1d2925"/><circle cx="329" cy="123" r="2" fill="#78877e"/><path d="M322 132h15" stroke="#8b9b90" strokeOpacity=".35"/></g>
-      </g>
-      <g className="play-person person-right">
-       <path d="M515 390 Q510 285 537 243 Q569 218 601 245 Q629 281 627 390Z" fill="url(#play-beige)" stroke="#f4d8bd" strokeOpacity=".2"/>
-       <path d="M539 258 Q511 220 526 175" fill="none" stroke="url(#play-skin)" strokeWidth="19" strokeLinecap="round"/>
-       <path d="M602 258 Q642 225 649 182" fill="none" stroke="url(#play-skin)" strokeWidth="19" strokeLinecap="round"/>
-       <circle cx="570" cy="181" r="34" fill="url(#play-skin)"/><path d="M536 182 Q529 134 571 140 Q606 145 606 180 Q582 159 556 165Z" fill="#34251f"/>
-       <path d="M541 390 L537 425 M601 390 L610 425" stroke="#30251f" strokeWidth="22" strokeLinecap="round"/>
-      </g>
-      <g className="play-person person-far">
-       <path d="M690 390 Q684 302 706 265 Q733 242 762 265 Q785 296 784 390Z" fill="url(#play-navy)" stroke="#a9bad0" strokeOpacity=".2"/>
-       <path d="M708 276 Q681 242 689 208" fill="none" stroke="url(#play-skin)" strokeWidth="18" strokeLinecap="round"/>
-       <path d="M764 277 Q794 247 799 216" fill="none" stroke="url(#play-skin)" strokeWidth="18" strokeLinecap="round"/>
-       <circle cx="744" cy="211" r="31" fill="url(#play-skin)"/><path d="M713 209 Q711 170 747 171 Q778 173 776 205 Q754 188 731 194Z" fill="#171b20"/>
-       <path d="M715 390 L712 425 M765 390 L774 425" stroke="#111927" strokeWidth="21" strokeLinecap="round"/>
-      </g>
-     </svg>
-     <div className="play-win-popup"><span className="play-win-check">✓</span><strong>YOU WIN!</strong><small>AURA PLAY ZONE</small></div>
-     <span className="play-scene-caption">THE MOMENT. THE CELEBRATION.</span>
+    <div className="play-scene">
+     <img
+      className="play-zone-gif"
+      src="/images/Friends%20Celebrate%20a%20Neon%20Victory.gif"
+      alt={tr(locale,'Four friends celebrate a win as a glowing You Win message rises from a phone.','चार दोस्त जीत का जश्न मना रहे हैं और फोन से चमकता हुआ You Win संदेश ऊपर उठता है।')}
+      loading="lazy"
+      decoding="async"
+     />
     </div>
    </div>
   </section>
