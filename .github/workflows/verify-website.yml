@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - feature/webapp-desktop-showcase
+  pull_request:
+    branches:
+      - feature/webapp-desktop-showcase
 
 permissions:
   contents: read
