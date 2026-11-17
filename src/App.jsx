@@ -136,6 +136,79 @@ function AboutBall() {
   </div>;
 }
 
+
+const webAppSlides = [
+  { src: '/images/webapp/dashboard.webp', alt: 'AURA Sports dashboard with performance summary and quick navigation' },
+  { src: '/images/webapp/match-results.webp', alt: 'AURA match result and historical evaluation screen' },
+  { src: '/images/webapp/calendar.webp', alt: 'AURA cricket schedule calendar screen' },
+  { src: '/images/webapp/promo-offers.webp', alt: 'AURA promo and offers screen' },
+  { src: '/images/webapp/account-analytics.webp', alt: 'AURA account and historical prediction analytics screen' },
+  { src: '/images/webapp/today.webp', alt: 'AURA Today page showing match categories and fixtures' },
+  { src: '/images/webapp/live-alerts.webp', alt: 'AURA live match predictions and alerts screen' },
+  { src: '/images/webapp/match-detail.webp', alt: 'AURA individual match detail and prediction screen' },
+];
+
+function WebAppShowcase({ locale }) {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const pointerStart = useRef(null);
+  const dragDistance = useRef(0);
+  const slideCount = webAppSlides.length;
+
+  const moveSlide = (direction) => {
+    setActiveSlide((current) => (current + direction + slideCount) % slideCount);
+  };
+
+  useEffect(() => {
+    if (isPaused || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    const timer = window.setInterval(() => moveSlide(1), 6500);
+    return () => window.clearInterval(timer);
+  }, [isPaused, slideCount]);
+
+  const handlePointerDown = (event) => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    pointerStart.current = event.clientX;
+    dragDistance.current = 0;
+    event.currentTarget.setPointerCapture?.(event.pointerId);
+  };
+
+  const handlePointerUp = (event) => {
+    if (pointerStart.current === null) return;
+    const distance = event.clientX - pointerStart.current;
+    dragDistance.current = Math.abs(distance);
+    if (Math.abs(distance) > 45) moveSlide(distance < 0 ? 1 : -1);
+    pointerStart.current = null;
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'ArrowRight') { event.preventDefault(); moveSlide(1); }
+    if (event.key === 'ArrowLeft') { event.preventDefault(); moveSlide(-1); }
+  };
+
+  return <div className="webapp-showcase" onMouseEnter={() => setIsPaused(true)} onMouseLeave={() => setIsPaused(false)} onFocus={() => setIsPaused(true)} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setIsPaused(false); }}>
+    <div className="laptop-stage">
+      <div className="laptop-screen-shell">
+        <span className="laptop-camera" aria-hidden="true"/>
+        <div className="laptop-screen">
+          <div className="webapp-slide-deck" role="region" aria-roledescription="carousel" aria-label={tr(locale, 'AURA Web App screen previews', 'AURA वेब ऐप स्क्रीन प्रीव्यू')} tabIndex={0} onKeyDown={handleKeyDown} onPointerDown={handlePointerDown} onPointerUp={handlePointerUp} onPointerCancel={() => { pointerStart.current = null; }}>
+            {webAppSlides.map((slide, index) => {
+              const offset = (index - activeSlide + slideCount) % slideCount;
+              const relative = offset > slideCount / 2 ? offset - slideCount : offset;
+              const isVisible = Math.abs(relative) <= 1;
+              return <div key={slide.src} className={`webapp-slide ${relative === 0 ? 'is-active' : ''} ${relative === -1 ? 'is-previous' : ''} ${relative === 1 ? 'is-next' : ''} ${!isVisible ? 'is-hidden' : ''}`} aria-hidden={relative !== 0} style={{ '--slide-offset': relative }}>
+                <img src={slide.src} alt={relative === 0 ? slide.alt : ''} draggable="false" loading={index < 2 ? 'eager' : 'lazy'} />
+              </div>;
+            })}
+          </div>
+        </div>
+      </div>
+      <div className="laptop-base" aria-hidden="true"><span/></div>
+      <div className="laptop-shadow" aria-hidden="true"/>
+    </div>
+    <p className="showcase-caption">{tr(locale, 'A CLOSER LOOK INSIDE AURA', 'AURA के अंदर की एक झलक')}</p>
+  </div>;
+}
+
 function HomePage({ locale }) {
  return <main className="landing-page">
   <section className="hero-stadium" aria-labelledby="hero-title">
@@ -155,11 +228,9 @@ function HomePage({ locale }) {
     <div className="about-words"><span>{tr(locale,'SKILL','कौशल')}</span><b>·</b><span>{tr(locale,'STRATEGY','रणनीति')}</span><b>·</b><span>{tr(locale,'PATIENCE','धैर्य')}</span></div>
    </div><AboutBall/>
   </div></section>
-  <section className="webapp-section landing-section" id="web-app"><div className="container webapp-coming-soon">
-   <span className="eyebrow">{tr(locale,'A NEW CRICKET EXPERIENCE','क्रिकेट का एक नया अनुभव')}</span>
-   <h2>{tr(locale,'AURA WEB APP','AURA वेब ऐप')}</h2>
-   <p>{tr(locale,'A new way to experience cricket is on its way. Get ready to see the game from a different perspective.','क्रिकेट का अनुभव करने का एक नया अंदाज़ जल्द आ रहा है। खेल को देखने का एक अलग नज़रिया।')}</p>
-   <span className="coming-pill">{tr(locale,'COMING SOON','जल्द आ रहा है')}</span>
+  <section className="webapp-section landing-section" id="web-app"><div className="container">
+   <div className="webapp-heading"><div><span className="eyebrow">{tr(locale,'A NEW CRICKET EXPERIENCE','क्रिकेट का एक नया अनुभव')}</span><h2>{tr(locale,'AURA WEB APP','AURA वेब ऐप')}</h2></div><p>{tr(locale,'A closer look at the tools and insights inside AURA.','AURA के अंदर मौजूद टूल्स और इनसाइट्स की एक झलक।')}</p></div>
+   <WebAppShowcase locale={locale}/>
   </div></section>
   <section className="coming-section landing-section" id="play-zone"><div className="container coming-inner"><div className="section-index"><span>02</span><i/></div><div><span className="eyebrow">{tr(locale,'A NEW WAY TO EXPERIENCE CRICKET','क्रिकेट का अनुभव करने का नया तरीका')}</span><h2>AURA <span>PLAY ZONE</span></h2><p>{tr(locale,'A new way to experience cricket.','क्रिकेट का अनुभव करने का एक नया तरीका।')}</p></div><span className="coming-pill">{tr(locale,'COMING SOON','जल्द आ रहा है')}</span></div></section>
   <section className="android-section landing-section" id="android"><div className="container android-inner"><div className="android-copy"><span className="eyebrow">{tr(locale,'THE AURA EXPERIENCE, ON THE MOVE','AURA का अनुभव, अब आपके साथ')}</span><h2>{tr(locale,'AURA ON ANDROID','एंड्रॉयड पर AURA')}</h2><p>{tr(locale,'The AURA experience is coming soon to Android.','AURA का अनुभव जल्द ही Android पर उपलब्ध होगा।')}</p><span className="coming-pill">{tr(locale,'COMING SOON','जल्द आ रहा है')}</span></div><div className="android-phone" aria-hidden="true"><div className="android-phone-screen"><span className="preview-brand">AURA SPORTS</span><div className="android-phone-glow"/><span className="phone-caption">BEYOND THE GAME</span></div></div></div></section>
