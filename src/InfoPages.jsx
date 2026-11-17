@@ -95,6 +95,7 @@ const legalPages = {
     title: ['Privacy Policy', 'गोपनीयता नीति'],
     eyebrow: ['Your privacy', 'आपकी गोपनीयता'],
     description: ['How information may be processed when you visit the AURA website.', 'AURA वेबसाइट पर आने के दौरान जानकारी को कैसे प्रोसेस किया जा सकता है।'],
+    lastUpdated: ['Last Updated: 17 November 2026', 'अंतिम अपडेट: 17 नवंबर 2026'],
     sections: [
       { heading: ['1. About This Website', '1. इस वेबसाइट के बारे में'], paragraphs: [
         ['AURA (“we”, “our” or “us”) respects your privacy. This Privacy Policy explains how information may be processed when you visit the AURA website.', 'AURA (“हम”, “हमारा” या “हमें”) आपकी गोपनीयता का सम्मान करता है। यह गोपनीयता नीति बताती है कि AURA वेबसाइट पर आने के दौरान जानकारी को कैसे प्रोसेस किया जा सकता है।'],
@@ -181,7 +182,7 @@ const legalPages = {
 function LegalPage({ path, locale }) {
   const page = legalPages[path];
   const index = locale === 'hi' ? 1 : 0;
-  return <main className="page-main"><PageHero eyebrow={page.eyebrow[index]} title={page.title[index]} description={page.description[index]} /><section className="container legal-content">{page.notice && <div className="draft-notice">{page.notice[index]}</div>}{page.sections.map((section) => {
+  return <main className="page-main"><PageHero eyebrow={page.eyebrow[index]} title={page.title[index]} description={page.description[index]} /><section className="container legal-content">{page.lastUpdated && <p className="legal-updated">{page.lastUpdated[index]}</p>}{page.notice && <div className="draft-notice">{page.notice[index]}</div>}{page.sections.map((section) => {
     if (Array.isArray(section)) {
       const [heading, body] = section;
       return <section className="legal-section" key={heading[0]}><h2>{heading[index]}</h2><p>{body[index]}</p></section>;
