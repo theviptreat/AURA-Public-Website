@@ -518,3 +518,49 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
 @media(prefers-reduced-motion:reduce){
  .webapp-slide{transition:none}
 }
+
+
+/* Mobile viewport guard: prevent decorative motion and long flex rows from widening the page. */
+@media (max-width: 800px) {
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  .hero-bottomline {
+    width: calc(100% - 40px);
+    max-width: 650px;
+    gap: 12px;
+  }
+
+  .hero-bottomline span {
+    min-width: 0;
+  }
+
+  .hero-bottomline span:last-child {
+    text-align: right;
+  }
+
+  .about-art {
+    overflow: clip;
+  }
+
+  .android-copy {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-bottomline {
+    width: calc(100% - 36px);
+    gap: 8px;
+    font-size: 6px;
+    letter-spacing: .06em;
+  }
+
+  .android-copy h2 {
+    font-size: 28px;
+  }
+}
