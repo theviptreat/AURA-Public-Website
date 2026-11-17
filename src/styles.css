@@ -1001,3 +1001,30 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
   .footer-card, .footer-card-trigger::before, .footer-card-icon, .footer-card-panel a { transition: none; }
   .footer-card-panel { animation: none; }
 }
+
+/* Animated perimeter trace on the shared footer-card hover treatment. */
+.footer-card-trigger::after {
+  inset: -1px;
+  border: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(from 0deg, transparent 0deg 285deg, rgba(166,255,53,.95) 318deg, transparent 350deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+.footer-card-trigger:hover::after,
+.footer-card-trigger:focus-visible::after {
+  opacity: 1;
+  animation: footer-border-trace 2.4s linear infinite;
+}
+@keyframes footer-border-trace {
+  to { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .footer-card-trigger:hover::after,
+  .footer-card-trigger:focus-visible::after { animation: none; }
+}
