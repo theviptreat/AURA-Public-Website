@@ -260,6 +260,9 @@ button { font: inherit; }
 .legal-section { padding-block: 8px 25px; }
 .legal-section h2 { margin: 0 0 10px; color: #17251f; font: 700 21px var(--heading); }
 .legal-section p { margin: 0; color: #5f6d65; font-size: 14px; line-height: 1.9; }
+.legal-updated { margin: 0 0 28px; color: var(--muted); font-size: 12px; font-weight: 600; }
+.legal-section ul { margin: 12px 0 16px; padding-left: 22px; color: #5f6d65; font-size: 14px; line-height: 1.9; }
+.legal-section li { padding-left: 4px; }
 .download-content { grid-template-columns: minmax(0, 1fr); }
 .download-content .info-copy { max-width: 720px; }
 @media (max-width: 800px) {

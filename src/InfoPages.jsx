@@ -93,12 +93,67 @@ function ContactPage({ locale }) {
 const legalPages = {
   '/privacy-policy': {
     title: ['Privacy Policy', 'गोपनीयता नीति'],
-    eyebrow: ['Your information', 'आपकी जानकारी'],
-    description: ['A clear explanation of how information is handled on the AURA Sports website and related services.', 'AURA Sports वेबसाइट और संबंधित सेवाओं पर जानकारी को कैसे संभाला जाता है, इसका स्पष्ट विवरण।'],
-    notice: ['Draft page — not a published privacy policy.', 'मसौदा पृष्ठ — यह प्रकाशित गोपनीयता नीति नहीं है।'],
+    eyebrow: ['Your privacy', 'आपकी गोपनीयता'],
+    description: ['How information may be processed when you visit the AURA website.', 'AURA वेबसाइट पर आने के दौरान जानकारी को कैसे प्रोसेस किया जा सकता है।'],
+    lastUpdated: ['Last Updated: 17 November 2026', 'अंतिम अपडेट: 17 नवंबर 2026'],
     sections: [
-      [['Before publication', 'प्रकाशन से पहले'], ['This page is a structural placeholder. AURA Sports must document its actual website hosting, server logs, cookies, analytics, contact channels, app data practices, third-party services and user rights before this policy is published.', 'यह पृष्ठ अभी प्रारंभिक मसौदा है। इस नीति को प्रकाशित करने से पहले AURA Sports को वेबसाइट होस्टिंग, सर्वर लॉग, कुकीज़, एनालिटिक्स, संपर्क माध्यम, ऐप में डेटा के उपयोग, तृतीय-पक्ष सेवाओं और उपयोगकर्ता अधिकारों का वास्तविक विवरण दर्ज करना होगा।']],
-      [['No assumptions', 'बिना पुष्टि के कोई दावा नहीं'], ['This draft does not claim that the website or app collects, stores, shares or deletes any particular personal information. Those details must be verified against the implemented services.', 'यह मसौदा यह दावा नहीं करता कि वेबसाइट या ऐप कोई विशेष व्यक्तिगत जानकारी एकत्र, संग्रहीत, साझा या हटाता है। इन बातों की पुष्टि लागू सेवाओं के आधार पर की जानी आवश्यक है।']]
+      { heading: ['1. About This Website', '1. इस वेबसाइट के बारे में'], paragraphs: [
+        ['AURA (“we”, “our” or “us”) respects your privacy. This Privacy Policy explains how information may be processed when you visit the AURA website.', 'AURA (“हम”, “हमारा” या “हमें”) आपकी गोपनीयता का सम्मान करता है। यह गोपनीयता नीति बताती है कि AURA वेबसाइट पर आने के दौरान जानकारी को कैसे प्रोसेस किया जा सकता है।'],
+        ['AURA is currently an independently operated brand managed by its founder and is not a separately incorporated company.', 'AURA फिलहाल अपने संस्थापक द्वारा संचालित एक स्वतंत्र ब्रांड है और अलग से पंजीकृत कंपनी नहीं है।'],
+        ['The AURA website currently serves as an informational landing page. It does not offer user registration, login accounts, membership services, online purchases, payments or contact forms.', 'AURA वेबसाइट फिलहाल एक जानकारी देने वाले लैंडिंग पेज के रूप में काम करती है। इस पर यूज़र रजिस्ट्रेशन, लॉगिन अकाउंट, सदस्यता सेवाएँ, ऑनलाइन खरीदारी, भुगतान या संपर्क फ़ॉर्म उपलब्ध नहीं हैं।']
+      ]},
+      { heading: ['2. Information We Collect', '2. हम कौन-सी जानकारी एकत्र करते हैं'], paragraphs: [
+        ['AURA does not currently ask visitors to submit personal information through website forms or account features.', 'AURA फिलहाल वेबसाइट फ़ॉर्म या अकाउंट सुविधाओं के माध्यम से आगंतुकों से व्यक्तिगत जानकारी जमा करने के लिए नहीं कहता।'],
+        ['Certain technical information may be processed automatically by website hosting and infrastructure providers when you visit the website. This may include:', 'वेबसाइट पर आने के दौरान होस्टिंग और इन्फ्रास्ट्रक्चर प्रदाता कुछ तकनीकी जानकारी को अपने आप प्रोसेस कर सकते हैं। इसमें शामिल हो सकता है:']
+      ], bullets: {
+        en: ['IP address', 'Browser and device information', 'Technical request information', 'Security and diagnostic information'],
+        hi: ['IP एड्रेस', 'ब्राउज़र और डिवाइस की जानकारी', 'तकनीकी रिक्वेस्ट से जुड़ी जानकारी', 'सुरक्षा और समस्या-जाँच से जुड़ी जानकारी']
+      }, closing: ['Such processing may be necessary to deliver, maintain and protect the website.', 'वेबसाइट उपलब्ध कराने, बनाए रखने और सुरक्षित रखने के लिए ऐसी प्रोसेसिंग आवश्यक हो सकती है।']},
+      { heading: ['3. Information You Send to Us', '3. आपके द्वारा भेजी गई जानकारी'], paragraphs: [
+        ['If you contact AURA directly by email, we may receive information you choose to provide, such as your email address, name and message.', 'यदि आप AURA से सीधे ईमेल के माध्यम से संपर्क करते हैं, तो हमें आपके द्वारा दी गई जानकारी मिल सकती है, जैसे आपका ईमेल पता, नाम और संदेश।'],
+        ['We use this information to understand and respond to your communication and to maintain relevant correspondence where necessary.', 'हम इस जानकारी का उपयोग आपके संदेश को समझने और उसका जवाब देने तथा आवश्यकता होने पर संबंधित पत्राचार का रिकॉर्ड रखने के लिए करते हैं।'],
+        ['Please avoid sending sensitive personal information unless it is genuinely necessary.', 'जब तक वास्तव में आवश्यक न हो, कृपया संवेदनशील व्यक्तिगत जानकारी न भेजें।']
+      ]},
+      { heading: ['4. Cookies and Tracking Technologies', '4. कुकीज़ और ट्रैकिंग तकनीक'], paragraphs: [
+        ['AURA does not currently use website analytics or advertising-tracking tools.', 'AURA फिलहाल वेबसाइट एनालिटिक्स या विज्ञापन ट्रैकिंग टूल का उपयोग नहीं करता।'],
+        ['We do not intentionally use tracking technologies for advertising profiling or behavioural monitoring.', 'हम विज्ञापन प्रोफाइलिंग या व्यवहार की निगरानी के लिए जानबूझकर ट्रैकिंग तकनीकों का उपयोग नहीं करते।'],
+        ['However, hosting and infrastructure services may use technical mechanisms necessary for website delivery, security and operation. Their own privacy policies may apply to such processing.', 'हालाँकि, होस्टिंग और इन्फ्रास्ट्रक्चर सेवाएँ वेबसाइट उपलब्ध कराने, सुरक्षा और संचालन के लिए आवश्यक तकनीकी तरीकों का उपयोग कर सकती हैं। ऐसी प्रोसेसिंग पर उनकी अपनी गोपनीयता नीतियाँ लागू हो सकती हैं।']
+      ]},
+      { heading: ['5. Third-Party Services and External Links', '5. थर्ड-पार्टी सेवाएँ और बाहरी लिंक'], paragraphs: [
+        ['The AURA website uses third-party hosting infrastructure to make the website available. These providers may process technical information in accordance with their own privacy policies and applicable service terms.', 'AURA वेबसाइट को उपलब्ध कराने के लिए थर्ड-पार्टी होस्टिंग इन्फ्रास्ट्रक्चर का उपयोग करती है। ये प्रदाता अपनी गोपनीयता नीतियों और लागू सेवा शर्तों के अनुसार तकनीकी जानकारी प्रोसेस कर सकते हैं।'],
+        ['The website may also contain links to external websites. When you visit those websites, their respective privacy policies and terms apply. AURA does not control the privacy practices of independent third-party websites.', 'वेबसाइट पर बाहरी वेबसाइटों के लिंक भी हो सकते हैं। उन वेबसाइटों पर जाने के बाद उनकी अपनी गोपनीयता नीतियाँ और शर्तें लागू होंगी। स्वतंत्र थर्ड-पार्टी वेबसाइटों की गोपनीयता प्रक्रियाओं पर AURA का नियंत्रण नहीं है।']
+      ]},
+      { heading: ['6. How Information Is Used', '6. जानकारी का उपयोग कैसे किया जाता है'], paragraphs: [
+        ['Information received through direct email communication or processed by website infrastructure may be used for the following purposes:', 'सीधे ईमेल के माध्यम से प्राप्त या वेबसाइट इन्फ्रास्ट्रक्चर द्वारा प्रोसेस की गई जानकारी का उपयोग इन उद्देश्यों के लिए किया जा सकता है:']
+      ], bullets: {
+        en: ['Responding to enquiries', 'Maintaining website availability', 'Protecting the website against misuse and security threats', 'Diagnosing technical issues', 'Complying with applicable legal obligations'],
+        hi: ['पूछताछ का जवाब देना', 'वेबसाइट की उपलब्धता बनाए रखना', 'दुरुपयोग और सुरक्षा खतरों से वेबसाइट की रक्षा करना', 'तकनीकी समस्याओं की जाँच करना', 'लागू कानूनी दायित्वों का पालन करना']
+      }, closing: ['AURA does not sell visitors’ personal information.', 'AURA आगंतुकों की व्यक्तिगत जानकारी नहीं बेचता।']},
+      { heading: ['7. Sharing of Information', '7. जानकारी साझा करना'], paragraphs: [
+        ['AURA does not sell visitors’ personal information.', 'AURA आगंतुकों की व्यक्तिगत जानकारी नहीं बेचता।'],
+        ['Information may be processed by hosting and infrastructure providers where necessary to operate and secure the website. Information may also be disclosed where required by applicable law or a lawful government request.', 'वेबसाइट के संचालन और सुरक्षा के लिए आवश्यक होने पर होस्टिंग और इन्फ्रास्ट्रक्चर प्रदाता जानकारी प्रोसेस कर सकते हैं। लागू कानून या किसी वैध सरकारी अनुरोध के तहत भी जानकारी साझा की जा सकती है।']
+      ]},
+      { heading: ['8. Data Security and Retention', '8. डेटा सुरक्षा और उसे रखने की अवधि'], paragraphs: [
+        ['We take reasonable steps appropriate to the nature of the website to protect information handled directly by AURA.', 'AURA द्वारा सीधे संभाली जाने वाली जानकारी की सुरक्षा के लिए हम वेबसाइट की प्रकृति के अनुरूप उचित कदम उठाते हैं।'],
+        ['Information received through email may be retained for as long as reasonably necessary to respond to the communication, maintain relevant records or meet legal obligations.', 'ईमेल से प्राप्त जानकारी को संदेश का जवाब देने, संबंधित रिकॉर्ड रखने या कानूनी दायित्वों को पूरा करने के लिए उचित रूप से आवश्यक अवधि तक रखा जा सकता है।'],
+        ['Technical information handled by third-party infrastructure providers is subject to their applicable retention practices and policies.', 'थर्ड-पार्टी इन्फ्रास्ट्रक्चर प्रदाताओं द्वारा संभाली जाने वाली तकनीकी जानकारी उनकी लागू डेटा-रिटेंशन प्रक्रियाओं और नीतियों के अधीन होगी।']
+      ]},
+      { heading: ['9. Your Privacy Choices and Requests', '9. आपकी गोपनीयता संबंधी पसंद और अनुरोध'], paragraphs: [
+        ['You can choose not to provide personal information to AURA through direct email communication.', 'आप सीधे ईमेल के माध्यम से AURA को व्यक्तिगत जानकारी न देने का विकल्प चुन सकते हैं।'],
+        ['If you have a privacy-related question or request concerning information you have shared with AURA, you can contact us using the email address provided below. We will consider such requests in accordance with applicable law.', 'यदि AURA के साथ साझा की गई जानकारी के संबंध में आपका कोई गोपनीयता-संबंधी प्रश्न या अनुरोध है, तो नीचे दिए गए ईमेल पते पर संपर्क करें। हम ऐसे अनुरोधों पर लागू कानून के अनुसार विचार करेंगे।']
+      ]},
+      { heading: ['10. Children’s Privacy', '10. बच्चों की गोपनीयता'], paragraphs: [
+        ['The AURA website is a general informational landing page and does not currently offer account registration or forms for collecting visitor information.', 'AURA वेबसाइट एक सामान्य जानकारी देने वाला लैंडिंग पेज है और फिलहाल अकाउंट रजिस्ट्रेशन या आगंतुकों की जानकारी एकत्र करने वाले फ़ॉर्म उपलब्ध नहीं कराती।'],
+        ['We do not intentionally request personal information from children through the website.', 'हम वेबसाइट के माध्यम से जानबूझकर बच्चों से व्यक्तिगत जानकारी नहीं माँगते।']
+      ]},
+      { heading: ['11. Changes to This Privacy Policy', '11. इस गोपनीयता नीति में बदलाव'], paragraphs: [
+        ['We may update this Privacy Policy when the website, its features or applicable legal requirements change.', 'वेबसाइट, उसकी सुविधाओं या लागू कानूनी आवश्यकताओं में बदलाव होने पर हम इस गोपनीयता नीति को अपडेट कर सकते हैं।'],
+        ['Any revised version will be published on this page with an updated “Last Updated” date.', 'संशोधित नीति इसी पेज पर नई “Last Updated” तारीख के साथ प्रकाशित की जाएगी।']
+      ]},
+      { heading: ['12. Contact Us', '12. हमसे संपर्क करें'], paragraphs: [
+        ['For privacy-related questions, concerns or requests, please contact:', 'गोपनीयता से जुड़े प्रश्नों, चिंताओं या अनुरोधों के लिए संपर्क करें:'],
+        ['Email: customercare.aurasports@gmail.com', 'ईमेल: customercare.aurasports@gmail.com']
+      ]}
     ]
   },
   '/terms': {
@@ -127,7 +182,13 @@ const legalPages = {
 function LegalPage({ path, locale }) {
   const page = legalPages[path];
   const index = locale === 'hi' ? 1 : 0;
-  return <main className="page-main"><PageHero eyebrow={page.eyebrow[index]} title={page.title[index]} description={page.description[index]} /><section className="container legal-content"><div className="draft-notice">{page.notice[index]}</div>{page.sections.map(([heading, body]) => <section className="legal-section" key={heading[0]}><h2>{heading[index]}</h2><p>{body[index]}</p></section>)}</section></main>;
+  return <main className="page-main"><PageHero eyebrow={page.eyebrow[index]} title={page.title[index]} description={page.description[index]} /><section className="container legal-content">{page.lastUpdated && <p className="legal-updated">{page.lastUpdated[index]}</p>}{page.notice && <div className="draft-notice">{page.notice[index]}</div>}{page.sections.map((section) => {
+    if (Array.isArray(section)) {
+      const [heading, body] = section;
+      return <section className="legal-section" key={heading[0]}><h2>{heading[index]}</h2><p>{body[index]}</p></section>;
+    }
+    return <section className="legal-section" key={section.heading[0]}><h2>{section.heading[index]}</h2>{section.paragraphs.map((paragraph, i) => <p key={i}>{paragraph[index]}</p>)}{section.bullets && <ul>{section.bullets[index === 0 ? 'en' : 'hi'].map((item) => <li key={item}>{item}</li>)}</ul>}{section.closing && <p>{section.closing[index]}</p>}</section>;
+  })}</section></main>;
 }
 
 function DownloadPage({ locale }) {
