@@ -4,8 +4,8 @@ import { localizeStory } from '../src/i18n/localized-content.js';
 
 const routes = {
   '/': {
-    en: ['AURA Sport — Cricket, with context', 'AURA Sport presents a thoughtful perspective on cricket, shaped by skill, strategy, research and patience.'],
-    hi: ['AURA Sport — क्रिकेट, सही संदर्भ के साथ', 'AURA Sport कौशल, रणनीति, शोध और धैर्य के साथ क्रिकेट को समझने का एक गहरा नज़रिया प्रस्तुत करता है।'],
+    en: ['AURA Sports — Beyond the Game', 'Discover AURA Sports: a deeper perspective on cricket, built on skill, strategy, research and patience.'],
+    hi: ['AURA Sports — खेल से कहीं आगे', 'AURA Sports को जानें: कौशल, रणनीति, शोध और धैर्य पर आधारित क्रिकेट को समझने का एक गहरा नज़रिया।'],
   },
   '/about': {
     en: ['About AURA Sport', 'Learn about AURA Sport and its cricket editorial approach.'],
