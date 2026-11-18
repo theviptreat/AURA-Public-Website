@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-      - feature/website-foundation
-      - feature/i18n-en-hi
       - feature/webapp-desktop-showcase
   pull_request:
     branches:
