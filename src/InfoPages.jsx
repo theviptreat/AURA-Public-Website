@@ -158,23 +158,128 @@ const legalPages = {
   },
   '/terms': {
     title: ['Terms & Conditions', 'नियम और शर्तें'],
-    eyebrow: ['Using AURA Sports', 'AURA Sports का उपयोग'],
-    description: ['The terms that will govern access to the AURA Sports public website and its content.', 'AURA Sports की सार्वजनिक वेबसाइट और उसकी सामग्री के उपयोग पर लागू होने वाली शर्तें।'],
-    notice: ['Draft page — not published terms.', 'मसौदा पृष्ठ — ये प्रकाशित नियम और शर्तें नहीं हैं।'],
+    eyebrow: ['Using AURA', 'AURA का उपयोग'],
+    description: ['The terms governing access to and use of the AURA website.', 'AURA वेबसाइट तक पहुँच और उसके उपयोग पर लागू होने वाली शर्तें।'],
+    lastUpdated: ['Last Updated: 18 November 2026', 'अंतिम अपडेट: 18 नवंबर 2026'],
+    intro: [
+      ['Welcome to AURA. These Terms & Conditions (“Terms”) govern your access to and use of the AURA website.', 'AURA में आपका स्वागत है। ये नियम और शर्तें (“शर्तें”) AURA वेबसाइट तक आपकी पहुँच और उसके उपयोग को नियंत्रित करती हैं।'],
+      ['By visiting or using this website, you acknowledge that you have read and understood these Terms. Your use of the website is subject to these Terms. If you do not agree with them, please discontinue using the website.', 'इस वेबसाइट पर आने या इसका उपयोग करने से, आप स्वीकार करते हैं कि आपने इन शर्तों को पढ़ और समझ लिया है। वेबसाइट का आपका उपयोग इन शर्तों के अधीन है। यदि आप इनसे सहमत नहीं हैं, तो कृपया वेबसाइट का उपयोग बंद कर दें।'],
+      ['AURA is currently an independently operated brand managed by its founder and is not a separately incorporated company.', 'AURA वर्तमान में इसके संस्थापक द्वारा प्रबंधित एक स्वतंत्र रूप से संचालित ब्रांड है और यह कोई अलग से पंजीकृत कंपनी (Incorporated company) नहीं है।']
+    ],
     sections: [
-      [['Before publication', 'प्रकाशन से पहले'], ['The final terms must be reviewed and approved by AURA Sports and should accurately describe permitted use, intellectual property, content availability, third-party links, limitations and applicable legal requirements.', 'अंतिम शर्तों की AURA Sports द्वारा समीक्षा और स्वीकृति आवश्यक है। इनमें अनुमत उपयोग, बौद्धिक संपदा, सामग्री की उपलब्धता, तृतीय-पक्ष लिंक, सीमाएँ और लागू कानूनी आवश्यकताएँ सही रूप में बताई जानी चाहिए।']],
-      [['Informational content', 'जानकारीपरक सामग्री'], ['AURA Sports editorial content is provided for general information and cricket discussion. Any final terms must clearly distinguish editorial material from app features and predictions.', 'AURA Sports की संपादकीय सामग्री सामान्य जानकारी और क्रिकेट चर्चा के लिए है। अंतिम शर्तों में संपादकीय सामग्री, ऐप की सुविधाओं और पूर्वानुमानों के बीच स्पष्ट अंतर होना चाहिए।']]
+      { heading: ['1. Purpose of the Website', '1. वेबसाइट का उद्देश्य'], paragraphs: [
+        ['The AURA website currently serves as an informational landing page.', 'AURA वेबसाइट वर्तमान में एक सूचनात्मक लैंडिंग पेज के रूप में कार्य करती है।'],
+        ['It provides general information about the AURA brand, its identity and its digital offerings.', 'यह AURA ब्रांड, उसकी पहचान और उसकी डिजिटल पेशकशों के बारे में सामान्य जानकारी प्रदान करती है।'],
+        ['The website does not currently provide:', 'वेबसाइट वर्तमान में निम्नलिखित प्रदान नहीं करती है:']
+      ], bullets: {
+        en: ['User registration or login accounts', 'Paid memberships or subscriptions', 'Online purchases or payment services', 'Betting, gambling or wagering services', 'News or article publishing services'],
+        hi: ['यूजर रजिस्ट्रेशन या लॉगिन अकाउंट', 'सशुल्क सदस्यता या सब्सक्रिप्शन', 'ऑनलाइन खरीदारी या भुगतान सेवाएं', 'सट्टेबाजी, जुआ या दांव लगाने की सेवाएं', 'समाचार या लेख प्रकाशन सेवाएं']
+      }, closing: ['Any future features or services introduced by AURA may be subject to additional terms or separate policies, where applicable.', 'AURA द्वारा शुरू की जाने वाली कोई भी भविष्य की विशेषताएं या सेवाएं, लागू होने पर, अतिरिक्त शर्तों या अलग नीतियों के अधीन हो सकती हैं।']},
+      { heading: ['2. Permitted Use', '2. अनुमत उपयोग'], paragraphs: [
+        ['You may access and use this website for lawful, personal and informational purposes.', 'आप वैध, व्यक्तिगत और सूचनात्मक उद्देश्यों के लिए इस वेबसाइट का उपयोग कर सकते हैं।'],
+        ['You agree not to:', 'आप इसके लिए सहमत हैं कि आप ऐसा नहीं करेंगे:']
+      ], bullets: {
+        en: ['Use the website for any unlawful or fraudulent activity', 'Attempt to disrupt, damage or interfere with the website or its normal operation', 'Attempt unauthorized access to any part of the website or its supporting infrastructure', 'Copy, reproduce or misuse AURA’s branding or materials without permission', 'Use the website in any manner that could harm AURA, its operations or other visitors'],
+        hi: ['किसी भी अवैध या धोखाधड़ी गतिविधि के लिए वेबसाइट का उपयोग करना', 'वेबसाइट या उसके सामान्य संचालन को बाधित करने, नुकसान पहुँचाने या उसमें हस्तक्षेप करने का प्रयास करना', 'वेबसाइट के किसी भी हिस्से या उसके बुनियादी ढांचे तक अनधिकृत पहुँच का प्रयास करना', 'बिना अनुमति के AURA की ब्रांडिंग या सामग्रियों की नकल करना, उन्हें पुनरुत्पादित करना या उनका दुरुपयोग करना', 'किसी भी ऐसे तरीके से वेबसाइट का उपयोग करना जिससे AURA, उसके संचालन या अन्य विजिटर्स को नुकसान पहुँच सके']
+      }},
+      { heading: ['3. Intellectual Property', '3. बौद्धिक संपदा (Intellectual Property)'], paragraphs: [
+        ['Unless otherwise stated, the AURA name, logo, brand identity, design elements, original text, website content and other original materials displayed on this website are owned by the AURA brand’s founder or are used with appropriate permission.', 'जब तक अन्यथा न कहा जाए, AURA का नाम, लोगो, ब्रांड पहचान, डिज़ाइन तत्व, मूल पाठ (original text), वेबसाइट सामग्री और इस वेबसाइट पर प्रदर्शित अन्य मूल सामग्रियां AURA ब्रांड के संस्थापक के स्वामित्व में हैं या उचित अनुमति के साथ उपयोग की जाती हैं।'],
+        ['These materials may not be reproduced, distributed, modified, commercially exploited or publicly used without prior written permission from the relevant rights holder, except where permitted by applicable law.', 'लागू कानून द्वारा अनुमति प्राप्त मामलों को छोड़कर, प्रासंगिक अधिकार धारक की पूर्व लिखित अनुमति के बिना इन सामग्रियों को पुनरुत्पादित, वितरित, संशोधित, व्यावसायिक रूप से शोषित या सार्वजनिक रूप से उपयोग नहीं किया जा सकता है।'],
+        ['Third-party names, logos, trademarks and other materials remain the property of their respective owners. Their appearance on this website does not imply ownership by or affiliation with AURA.', 'तृतीय-पक्ष (Third-party) के नाम, लोगो, ट्रेडमार्क और अन्य सामग्रियां उनके संबंधित स्वामियों की संपत्ति बनी रहती हैं। इस वेबसाइट पर उनकी उपस्थिति का अर्थ AURA द्वारा स्वामित्व या उससे संबद्धता नहीं है।']
+      ]},
+      { heading: ['4. Information and Accuracy', '4. जानकारी और सटीकता'], paragraphs: [
+        ['We aim to keep the information presented on the website clear and accurate.', 'हम वेबसाइट पर प्रस्तुत जानकारी को स्पष्ट और सटीक रखने का लक्ष्य रखते हैं।'],
+        ['However, information may change, become outdated or contain unintentional errors. AURA does not guarantee that all website information will always be complete, current or error-free.', 'हालांकि, जानकारी बदल सकती है, पुरानी हो सकती है या उसमें अनजाने में त्रुटियां हो सकती हैं। AURA इस बात की गारंटी नहीं देता है कि वेबसाइट की सभी जानकारियां हमेशा पूर्ण, वर्तमान या त्रुटि-मुक्त होंगी।'],
+        ['Any cricket-related information, analysis or predictions presented through AURA should be treated as informational only and must not be considered a guarantee of any particular result or outcome.', 'AURA के माध्यम से प्रस्तुत किसी भी क्रिकेट-संबंधी जानकारी, विश्लेषण या भविष्यवाणियों को केवल सूचनात्मक माना जाना चाहिए और इसे किसी विशेष परिणाम या नतीजे की गारंटी नहीं माना जाना चाहिए।']
+      ]},
+      { heading: ['5. No Betting or Gambling Services', '5. कोई सट्टेबाजी या जुआ सेवाएं नहीं'], paragraphs: [
+        ['AURA is an informational cricket brand.', 'AURA एक सूचनात्मक क्रिकेट ब्रांड है।'],
+        ['The website does not operate or provide betting, gambling, wagering or money-based gaming services.', 'वेबसाइट सट्टेबाजी, जुआ, दांव लगाने या पैसे से जुड़े गेमिंग की सेवाएं संचालित या प्रदान नहीं करती है।'],
+        ['Nothing on this website should be interpreted as an invitation, recommendation or encouragement to participate in betting or gambling activities.', 'इस वेबसाइट की किसी भी बात को सट्टेबाजी या जुए की गतिविधियों में भाग लेने के लिए निमंत्रण, सिफारिश या प्रोत्साहन के रूप में नहीं समझा जाना चाहिए।']
+      ]},
+      { heading: ['6. Third-Party Links', '6. थर्ड-पार्टी लिंक'], paragraphs: [
+        ['The website may contain links to third-party websites or services for convenience or additional information.', 'सुविधा या अतिरिक्त जानकारी के लिए वेबसाइट में तृतीय-पक्ष की वेबसाइटों या सेवाओं के लिंक हो सकते हैं।'],
+        ['AURA does not own or control those external websites and is not responsible for their content, availability, policies, security or practices.', 'AURA उन बाहरी वेबसाइटों का मालिक नहीं है या उन्हें नियंत्रित नहीं करता है और उनकी सामग्री, उपलब्धता, नीतियों, सुरक्षा या प्रथाओं के लिए ज़िम्मेदार नहीं है।'],
+        ['Accessing third-party websites or services is entirely at your own discretion and subject to their respective terms and policies.', 'तृतीय-पक्ष की वेबसाइटों या सेवाओं तक पहुँचना पूरी तरह से आपके अपने विवेक पर है और यह उनकी संबंधित शर्तों तथा नीतियों के अधीन है।']
+      ]},
+      { heading: ['7. Website Availability', '7. वेबसाइट की उपलब्धता'], paragraphs: [
+        ['We aim to keep the website accessible, but uninterrupted or error-free availability cannot be guaranteed.', 'हम वेबसाइट को सुलभ बनाए रखने का लक्ष्य रखते हैं, लेकिन निर्बाध या त्रुटि-मुक्त उपलब्धता की गारंटी नहीं दी जा सकती है।'],
+        ['We may update, modify, suspend or discontinue any part of the website when reasonably necessary, including for maintenance, security, technical or operational reasons.', 'हम रखरखाव, सुरक्षा, तकनीकी या परिचालन कारणों सहित जब उचित रूप से आवश्यक हो, वेबसाइट के किसी भी हिस्से को अपडेट, संशोधित, निलंबित या बंद कर सकते हैं।']
+      ]},
+      { heading: ['8. Limitation of Liability', '8. दायित्व की सीमा (Limitation of Liability)'], paragraphs: [
+        ['To the extent permitted by applicable law, AURA will not be responsible for losses arising from temporary website unavailability, technical interruptions, third-party websites or reliance on information that may be incomplete, inaccurate or outdated.', 'लागू कानून द्वारा जितनी अनुमति है, AURA अस्थायी वेबसाइट अनुपलब्धता, तकनीकी रुकावटों, तृतीय-पक्ष वेबसाइटों या ऐसी जानकारी पर भरोसा करने से होने वाले नुकसान के लिए ज़िम्मेदार नहीं होगा जो अधूरी, अशुद्ध या पुरानी हो सकती है।'],
+        ['Nothing in these Terms excludes or limits any liability, consumer rights or other legal protections that cannot legally be excluded or limited under applicable law.', 'इन शर्तों की कोई भी बात ऐसे किसी दायित्व, उपभोक्ता अधिकार या अन्य कानूनी संरक्षण को समाप्त या सीमित नहीं करती, जिसे लागू कानून के तहत कानूनी रूप से समाप्त या सीमित नहीं किया जा सकता।']
+      ]},
+      { heading: ['9. Changes to These Terms', '9. इन शर्तों में परिवर्तन'], paragraphs: [
+        ['AURA may update these Terms when the website, its features, services or applicable legal requirements change.', 'जब वेबसाइट, उसकी विशेषताएं, सेवाएं या लागू कानूनी आवश्यकताएं बदलती हैं, तो AURA इन शर्तों को अपडेट कर सकता है।'],
+        ['Any updated version will be published on this page with a revised “Last Updated” date.', 'संशोधित “अंतिम अपडेट” (Last Updated) तिथि के साथ कोई भी अपडेट किया गया संस्करण इस पृष्ठ पर प्रकाशित किया जाएगा।'],
+        ['Visitors are encouraged to review these Terms periodically. Continued use of the website after updated Terms are published will be subject to the revised Terms, to the extent permitted by applicable law.', 'विजिटर्स से अनुरोध है कि वे समय-समय पर इन शर्तों की समीक्षा करें। अपडेट की गई शर्तें प्रकाशित होने के बाद वेबसाइट का निरंतर उपयोग लागू कानून द्वारा अनुमति की सीमा तक संशोधित शर्तों के अधीन होगा।']
+      ]},
+      { heading: ['10. Governing Law', '10. लागू कानून (Governing Law)'], paragraphs: [
+        ['These Terms shall be governed by and interpreted in accordance with the laws of India.', 'ये शर्तें भारत के कानूनों के अनुसार शासित और व्याख्यायित की जाएंगी।'],
+        ['Any disputes arising in connection with these Terms or the use of this website shall be subject to the jurisdiction of competent courts in India, subject to applicable law.', 'इन शर्तों या इस वेबसाइट के उपयोग के संबंध में उत्पन्न होने वाले किसी भी विवाद को लागू कानून के अधीन, भारत में सक्षम न्यायालयों के अधिकार क्षेत्र के अधीन रखा जाएगा।']
+      ]},
+      { heading: ['11. Contact Us', '11. हमसे संपर्क करें'], paragraphs: [
+        ['For questions or concerns regarding these Terms, please contact:', 'इन शर्तों के संबंध में प्रश्नों या चिंताओं के लिए, कृपया संपर्क करें:'],
+        ['Email: customercare.aurasports@gmail.com', 'ईमेल: customercare.aurasports@gmail.com']
+      ], closing: ['These Terms apply to the AURA website in its current form and may be revised if new features, services or functionalities are introduced.', 'ये शर्तें अपने वर्तमान स्वरूप में AURA वेबसाइट पर लागू होती हैं और यदि नई विशेषताएं, सेवाएं या कार्यक्षमताएं शुरू की जाती हैं तो इन्हें संशोधित किया जा सकता है।']}
     ]
   },
   '/disclaimer': {
-    title: ['Disclaimer', 'अस्वीकरण'],
+    title: ['Disclaimer', 'अस्वीकरण (Disclaimer)'],
     eyebrow: ['Important information', 'महत्वपूर्ण जानकारी'],
-    description: ['How to understand the information and opinions published by AURA Sports.', 'AURA Sports द्वारा प्रकाशित जानकारी और विचारों को समझने के लिए आवश्यक विवरण।'],
-    notice: ['Draft page — final wording requires review.', 'मसौदा पृष्ठ — अंतिम भाषा की समीक्षा आवश्यक है।'],
+    description: ['Important information about the AURA website and its content.', 'AURA वेबसाइट और उसकी सामग्री के बारे में महत्वपूर्ण जानकारी।'],
+    lastUpdated: ['Last Updated: 18 November 2026', 'अंतिम अपडेट: 18 नवंबर 2026'],
+    intro: [
+      ['Welcome to AURA.', 'AURA में आपका स्वागत है।'],
+      ['This Disclaimer applies to your access to and use of the AURA website. By visiting or using this website, you acknowledge that you have read and understood this Disclaimer.', 'यह अस्वीकरण (Disclaimer) AURA वेबसाइट तक आपकी पहुँच और उसके उपयोग पर लागू होता है। इस वेबसाइट पर आने या इसका उपयोग करने से, आप स्वीकार करते हैं कि आपने इस अस्वीकरण को पढ़ और समझ लिया है।'],
+      ['AURA is currently an independently operated brand managed by its founder and is not a separately incorporated company.', 'AURA वर्तमान में इसके संस्थापक द्वारा प्रबंधित एक स्वतंत्र रूप से संचालित ब्रांड है और यह कोई अलग से पंजीकृत कंपनी नहीं है।']
+    ],
     sections: [
-      [['Editorial content', 'संपादकीय सामग्री'], ['Cricket news, previews, analysis and educational material are published for general information. Match conditions and information can change, and readers should verify time-sensitive details with appropriate official sources.', 'क्रिकेट समाचार, पूर्वावलोकन, विश्लेषण और शैक्षिक सामग्री सामान्य जानकारी के लिए प्रकाशित की जाती है। मैच की परिस्थितियाँ और जानकारी बदल सकती हैं। समय-संवेदनशील विवरणों की पुष्टि उचित आधिकारिक स्रोतों से करें।']],
-      [['Predictions', 'पूर्वानुमान'], ['AURA Sports predictions are team-researched opinions, not guarantees of an outcome. No claim of guaranteed accuracy or certainty is made.', 'AURA Sports के पूर्वानुमान टीम द्वारा शोध के आधार पर तैयार किए गए विचार हैं, किसी परिणाम की गारंटी नहीं। शत-प्रतिशत सटीकता या निश्चितता का कोई दावा नहीं किया जाता।']],
-      [['Not betting advice', 'सट्टेबाज़ी संबंधी सलाह नहीं'], ['AURA Sports is a cricket content and prediction platform, not a betting service. Content should not be treated as encouragement to gamble or as financial advice.', 'AURA Sports क्रिकेट सामग्री और पूर्वानुमान का मंच है, सट्टेबाज़ी सेवा नहीं। इसकी सामग्री को जुआ खेलने के प्रोत्साहन या वित्तीय सलाह के रूप में न लें।']]
+      { heading: ['1. General Information', '1. सामान्य जानकारी'], paragraphs: [
+        ['The AURA website currently serves as an informational landing page. It provides general information about the AURA brand, its identity and its digital offerings.', 'AURA वेबसाइट वर्तमान में एक सूचनात्मक लैंडिंग पेज के रूप में कार्य करती है। यह AURA ब्रांड, उसकी पहचान और उसकी डिजिटल पेशकशों के बारे में सामान्य जानकारी प्रदान करती है।'],
+        ['The information presented on this website is provided for general informational purposes only.', 'इस वेबसाइट पर प्रस्तुत जानकारी केवल सामान्य सूचनात्मक उद्देश्यों के लिए प्रदान की गई है।'],
+        ['Although we aim to keep the information clear and accurate, AURA does not guarantee that all content will always be complete, current, accurate or free from errors.', 'यद्यपि हमारा लक्ष्य जानकारी को स्पष्ट और सटीक रखना है, AURA इस बात की गारंटी नहीं देता है कि सारी सामग्री हमेशा पूर्ण, वर्तमान, सटीक या त्रुटि-मुक्त होगी।']
+      ]},
+      { heading: ['2. Cricket Information and Predictions', '2. क्रिकेट की जानकारी और भविष्यवाणियां'], paragraphs: [
+        ['Where AURA provides cricket-related information, analysis, insights or predictions through its offerings, such content is intended for informational and entertainment purposes only.', 'जहाँ AURA अपनी पेशकशों के माध्यम से क्रिकेट से जुड़ी जानकारी, विश्लेषण, अंतर्दृष्टि या भविष्यवाणियां प्रदान करता है, ऐसी सामग्री केवल सूचनात्मक और मनोरंजन के उद्देश्यों के लिए होती है।'],
+        ['Cricket is an unpredictable sport, and match outcomes may depend on various factors. Any analysis, insights or predictions should not be treated as guaranteed results, professional advice or assurances of success.', 'क्रिकेट एक अनिश्चित खेल है, और मैच के परिणाम विभिन्न कारकों पर निर्भर हो सकते हैं। किसी भी विश्लेषण, अंतर्दृष्टि या भविष्यवाणी को गारंटीकृत परिणाम, पेशेवर सलाह या सफलता का आश्वासन नहीं माना जाना चाहिए।'],
+        ['AURA makes no guarantee regarding the accuracy of any prediction or the outcome of any match.', 'AURA किसी भी भविष्यवाणी की सटीकता या किसी भी मैच के परिणाम के संबंध में कोई गारंटी नहीं देता है।'],
+        ['Visitors should use their own judgement when interpreting or relying on cricket-related information.', 'विजिटर्स को क्रिकेट से जुड़ी जानकारी की व्याख्या करते समय या उस पर भरोसा करते समय अपने स्वयं के विवेक का उपयोग करना चाहिए।']
+      ]},
+      { heading: ['3. No Betting or Gambling Services', '3. कोई सट्टेबाजी या जुआ सेवाएं नहीं'], paragraphs: [
+        ['AURA does not operate or provide betting, gambling, wagering or money-based gaming services.', 'AURA सट्टेबाजी, जुआ, दांव लगाने या पैसे आधारित गेमिंग सेवाएं संचालित या प्रदान नहीं करता है।'],
+        ['Nothing on this website or in any AURA content should be interpreted as an invitation, recommendation or encouragement to participate in betting, gambling or wagering activities.', 'इस वेबसाइट या किसी भी AURA सामग्री में मौजूद किसी भी बात को सट्टेबाजी, जुए या दांव लगाने की गतिविधियों में भाग लेने के लिए निमंत्रण, सिफारिश या प्रोत्साहन के रूप में नहीं समझा जाना चाहिए।'],
+        ['AURA does not guarantee or promote financial gains or winnings through any cricket-related information, analysis or predictions.', 'AURA क्रिकेट से जुड़ी किसी भी जानकारी, विश्लेषण या भविष्यवाणी के माध्यम से वित्तीय लाभ या जीत का वादा या प्रचार नहीं करता है।']
+      ]},
+      { heading: ['4. Personal Responsibility', '4. व्यक्तिगत ज़िम्मेदारी'], paragraphs: [
+        ['Visitors are responsible for how they use and interpret the information available on this website.', 'विजिटर्स इस बात के लिए ज़िम्मेदार हैं कि वे इस वेबसाइट पर उपलब्ध जानकारी का उपयोग और व्याख्या कैसे करते हैं।'],
+        ['Any decisions made based on information presented by AURA are taken at the visitor’s own discretion and responsibility.', 'AURA द्वारा प्रस्तुत जानकारी के आधार पर लिए गए कोई भी निर्णय विजिटर के अपने विवेक और ज़िम्मेदारी पर लिए जाते हैं।'],
+        ['AURA shall not be responsible for decisions made solely on the basis of general information, analysis or predictions provided through its website, to the extent permitted by applicable law.', 'लागू कानून द्वारा जितनी अनुमति है, AURA अपनी वेबसाइट के माध्यम से प्रदान की गई सामान्य जानकारी, विश्लेषण या भविष्यवाणियों के आधार पर अकेले लिए गए निर्णयों के लिए ज़िम्मेदार नहीं होगा।']
+      ]},
+      { heading: ['5. Third-Party Websites and Links', '5. थर्ड-पार्टी वेबसाइट्स और लिंक'], paragraphs: [
+        ['The AURA website may contain links to third-party websites or services for convenience or additional information.', 'सुविधा या अतिरिक्त जानकारी के लिए AURA वेबसाइट में तृतीय-पक्ष (third-party) वेबसाइटों या सेवाओं के लिंक हो सकते हैं।'],
+        ['AURA does not own or control these external websites and does not guarantee the accuracy, availability, security or reliability of their content or services.', 'AURA इन बाहरी वेबसाइटों का मालिक नहीं है या उन्हें नियंत्रित नहीं करता है और उनकी सामग्री, उपलब्धता, सुरक्षा या विश्वसनीयता की गारंटी नहीं देता है।'],
+        ['Visitors access third-party websites at their own discretion and should review the applicable terms and privacy policies of those websites.', 'विजिटर्स अपने विवेक से तृतीय-पक्ष की वेबसाइटों तक पहुँचते हैं और उन्हें उन वेबसाइटों की लागू शर्तों तथा गोपनीयता नीतियों की समीक्षा करनी चाहिए।']
+      ]},
+      { heading: ['6. Website Availability and Technical Issues', '6. वेबसाइट की उपलब्धता और तकनीकी समस्याएं'], paragraphs: [
+        ['AURA aims to keep its website accessible and functional. However, uninterrupted, secure or error-free availability cannot be guaranteed.', 'AURA अपनी वेबसाइट को सुलभ और कार्यात्मक बनाए रखने का लक्ष्य रखता है। हालांकि, निर्बाध, सुरक्षित या त्रुटि-मुक्त उपलब्धता की गारंटी नहीं दी जा सकती है।'],
+        ['Temporary interruptions, technical issues, maintenance or other operational circumstances may affect website access or functionality.', 'अस्थायी रुकावटें, तकनीकी समस्याएं, रखरखाव या अन्य परिचालन परिस्थितियां वेबसाइट की पहुँच या कार्यक्षमता को प्रभावित कर सकती हैं।'],
+        ['AURA shall not be responsible for losses arising from such interruptions or technical issues, to the extent permitted by applicable law.', 'लागू कानून द्वारा जितनी अनुमति है, AURA ऐसी रुकावटों या तकनीकी समस्याओं से होने वाले नुकसान के लिए ज़िम्मेदार नहीं होगा।']
+      ]},
+      { heading: ['7. Limitation of Liability', '7. दायित्व की सीमा (Limitation of Liability)'], paragraphs: [
+        ['To the extent permitted by applicable law, AURA shall not be responsible for any loss or damage arising from reliance on information presented on the website, the use or inability to use the website, technical interruptions or third-party websites and services.', 'लागू कानून द्वारा जितनी अनुमति है, AURA वेबसाइट पर प्रस्तुत जानकारी पर भरोसा करने, वेबसाइट का उपयोग करने या उपयोग करने में असमर्थता, तकनीकी रुकावटों या तृतीय-पक्ष वेबसाइटों और सेवाओं से उत्पन्न होने वाले किसी भी नुकसान या क्षति के लिए ज़िम्मेदार नहीं होगा।'],
+        ['Nothing in this Disclaimer excludes or limits any liability, consumer rights or other legal protections that cannot legally be excluded or limited under applicable law.', 'इस अस्वीकरण की कोई भी बात ऐसे किसी दायित्व, उपभोक्ता अधिकार या अन्य कानूनी संरक्षण को समाप्त या सीमित नहीं करती, जिसे लागू कानून के तहत कानूनी रूप से समाप्त या सीमित नहीं किया जा सकता।']
+      ]},
+      { heading: ['8. Changes to This Disclaimer', '8. इस अस्वीकरण में परिवर्तन'], paragraphs: [
+        ['AURA may update this Disclaimer when the website, its features, services or applicable legal requirements change.', 'जब वेबसाइट, उसकी विशेषताएं, सेवाएं या लागू कानूनी आवश्यकताएं बदलती हैं, तो AURA इस अस्वीकरण को अपडेट कर सकता है।'],
+        ['Any revised version will be published on this page with an updated “Last Updated” date.', 'संशोधित “अंतिम अपडेट” (Last Updated) तिथि के साथ कोई भी संशोधित संस्करण इस पृष्ठ पर प्रकाशित किया जाएगा।'],
+        ['Visitors are encouraged to review this page periodically.', 'विजिटर्स से अनुरोध है कि वे समय-समय पर इस पृष्ठ की समीक्षा करें।']
+      ]},
+      { heading: ['9. Contact Us', '9. हमसे संपर्क करें'], paragraphs: [
+        ['For questions or concerns regarding this Disclaimer, please contact:', 'इस अस्वीकरण के संबंध में प्रश्नों या चिंताओं के लिए, कृपया संपर्क करें:'],
+        ['Email: customercare.aurasports@gmail.com', 'ईमेल: customercare.aurasports@gmail.com']
+      ], closing: ['This Disclaimer applies to the AURA website in its current form and may be revised if new features, services or functionalities are introduced.', 'यह अस्वीकरण अपने वर्तमान स्वरूप में AURA वेबसाइट पर लागू होता है और यदि नई विशेषताएं, सेवाएं या कार्यक्षमताएं शुरू की जाती हैं तो इसे संशोधित किया जा सकता है।']}
     ]
   }
 };
@@ -182,7 +287,7 @@ const legalPages = {
 function LegalPage({ path, locale }) {
   const page = legalPages[path];
   const index = locale === 'hi' ? 1 : 0;
-  return <main className="page-main"><PageHero eyebrow={page.eyebrow[index]} title={page.title[index]} description={page.description[index]} /><section className="container legal-content">{page.lastUpdated && <p className="legal-updated">{page.lastUpdated[index]}</p>}{page.notice && <div className="draft-notice">{page.notice[index]}</div>}{page.sections.map((section) => {
+  return <main className="page-main"><PageHero eyebrow={page.eyebrow[index]} title={page.title[index]} description={page.description[index]} /><section className="container legal-content">{page.lastUpdated && <p className="legal-updated">{page.lastUpdated[index]}</p>}{page.intro && page.intro.map((paragraph, i) => <p key={i}>{paragraph[index]}</p>)}{page.notice && <div className="draft-notice">{page.notice[index]}</div>}{page.sections.map((section) => {
     if (Array.isArray(section)) {
       const [heading, body] = section;
       return <section className="legal-section" key={heading[0]}><h2>{heading[index]}</h2><p>{body[index]}</p></section>;
