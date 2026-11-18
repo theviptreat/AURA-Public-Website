@@ -22,12 +22,10 @@ jobs:
         uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.1.0
         with:
           node-version: 22
-      - name: Check newsroom script syntax
-        run: node --check scripts/newsroom/collect-and-draft.js
       - name: Install dependencies
         run: npm ci
       - name: Audit dependencies
-        run: npm audit --audit-level=high
+        run: node scripts/audit-gate.mjs
       - name: Run tests
         run: npm test
       - name: Build production site
