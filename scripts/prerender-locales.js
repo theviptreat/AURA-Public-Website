@@ -1,28 +1,11 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { loadArticles } from './load-articles.js';
 import { localizeStory } from '../src/i18n/localized-content.js';
 
 const routes = {
   '/': {
-    en: ['AURA Sport — Cricket, with context', 'AURA Sport brings you considered cricket news, match previews, analysis and knowledge.'],
-    hi: ['AURA Sport — क्रिकेट, सही संदर्भ के साथ', 'AURA Sport पर पढ़ें क्रिकेट की खबरें, मैच पूर्वावलोकन, विश्लेषण और उपयोगी जानकारी।'],
-  },
-  '/news': {
-    en: ['Cricket News | AURA Sport', 'Read the latest cricket news and updates from AURA Sport.'],
-    hi: ['क्रिकेट समाचार | AURA Sport', 'AURA Sport पर पढ़ें क्रिकेट जगत की ताज़ा खबरें और अपडेट।'],
-  },
-  '/match-preview': {
-    en: ['Cricket Match Previews | AURA Sport', 'Explore cricket match previews from AURA Sport.'],
-    hi: ['क्रिकेट मैच पूर्वावलोकन | AURA Sport', 'AURA Sport पर देखें आने वाले क्रिकेट मैचों का पूर्वावलोकन।'],
-  },
-  '/analysis': {
-    en: ['Cricket Analysis | AURA Sport', 'Read thoughtful cricket analysis and perspectives from AURA Sport.'],
-    hi: ['क्रिकेट विश्लेषण | AURA Sport', 'AURA Sport पर पढ़ें क्रिकेट का विश्लेषण और विशेषज्ञ विचार।'],
-  },
-  '/knowledge': {
-    en: ['Cricket Knowledge | AURA Sport', 'Understand cricket rules, formats and tactics with AURA Sport.'],
-    hi: ['क्रिकेट ज्ञान | AURA Sport', 'AURA Sport के साथ क्रिकेट के नियम, प्रारूप और रणनीतियाँ समझें।'],
+    en: ['AURA Sport — Cricket, with context', 'AURA Sport presents a thoughtful perspective on cricket, shaped by skill, strategy, research and patience.'],
+    hi: ['AURA Sport — क्रिकेट, सही संदर्भ के साथ', 'AURA Sport कौशल, रणनीति, शोध और धैर्य के साथ क्रिकेट को समझने का एक गहरा नज़रिया प्रस्तुत करता है।'],
   },
   '/about': {
     en: ['About AURA Sport', 'Learn about AURA Sport and its cricket editorial approach.'],
@@ -140,8 +123,6 @@ export async function prerenderLocalizedRoutes() {
       await writeFile(path.join(outputDir, 'index.html'), buildLocalizedDocument(template, route, locale));
     }
   }
-  const contentArticles = await loadArticles();
-  await prerenderPublishedArticles(template, 'dist', contentArticles);
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve('scripts/prerender-locales.js')) {
