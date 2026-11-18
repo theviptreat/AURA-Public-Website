@@ -1,0 +1,8 @@
+node_modules/
+dist/
+src/content/generated-articles.json
+
+# Environment variables and local secrets
+.env
+.env.*
+!.env.example
