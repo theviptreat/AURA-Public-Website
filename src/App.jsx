@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AdditionalPage } from './InfoPages';
 import { getLocaleSwitchPath, localizePath, resolveLocalizedPath } from './i18n/locale';
-import { getPublishedArticles } from './content/articles.js';
 import { localizeStory } from './i18n/localized-content';
 import { getNewsCategories } from './content/news-categories.js';
-import { getArticleSeoMetadata, getLocalizedSeoUrls, getOpenGraphLocale } from './i18n/seo';
+import { getLocalizedSeoUrls, getOpenGraphLocale } from './i18n/seo';
 import { sponsor, socialLinks } from './content/site-config.js';
 
 const tr = (locale, en, hi) => locale === 'hi' ? hi : en;
-const articles = getPublishedArticles();
+const articles = [];
 
 function Brand({ locale = 'en' }) {
   return <a className="brand" href={localizePath('/', locale)} aria-label={tr(locale, 'AURA home', 'AURA होमपेज')}><span className="brand-name">AURA Sports</span></a>;
@@ -460,16 +459,8 @@ export default function App() {
   const resolvedRoute = resolveLocalizedPath(window.location.pathname);
   const locale = resolvedRoute.locale;
   const path = resolvedRoute.pathname;
-  const articleMatch = path.match(/^\/news\/([^/]+)$/);
-  let articleSlug = null;
-  if (articleMatch) {
-    try { articleSlug = decodeURIComponent(articleMatch[1]); } catch { articleSlug = '__invalid_url__'; }
-  }
-  const sourceArticle = articles.find((article) => article.slug === articleSlug) || null;
-  const localizedArticle = localizeStory(sourceArticle, locale);
   const metadata = {
     '/': [['AURA Sports — Beyond the Game', 'Discover AURA Sports: a deeper perspective on cricket, built on skill, strategy, research and patience.'], ['AURA Sports — खेल से कहीं आगे', 'AURA Sports को जानें: कौशल, रणनीति, शोध और धैर्य पर आधारित क्रिकेट को समझने का एक गहरा नज़रिया।']],
-    '/news': [['Cricket News | AURA Sports', 'Read the latest cricket news and updates from AURA Sports.'], ['क्रिकेट समाचार | AURA Sports', 'AURA Sports पर पढ़ें क्रिकेट जगत की ताज़ा खबरें और अपडेट।']],
     '/match-preview': [['Cricket Match Previews | AURA Sports', 'Explore cricket match previews from AURA Sports.'], ['क्रिकेट मैच पूर्वावलोकन | AURA Sports', 'AURA Sports पर देखें आने वाले क्रिकेट मैचों का पूर्वावलोकन।']],
     '/analysis': [['Cricket Analysis | AURA Sports', 'Read thoughtful cricket analysis and perspectives from AURA Sports.'], ['क्रिकेट विश्लेषण | AURA Sports', 'AURA Sports पर पढ़ें क्रिकेट का विश्लेषण और विशेषज्ञ विचार।']],
     '/knowledge': [['Cricket Knowledge | AURA Sports', 'Understand cricket rules, formats and tactics with AURA Sports.'], ['क्रिकेट ज्ञान | AURA Sports', 'AURA Sports के साथ क्रिकेट के नियम, प्रारूप और रणनीतियाँ समझें।']],
@@ -481,11 +472,7 @@ export default function App() {
     '/download': [['Get the AURA Sports App', 'Find official information about downloading the AURA Sports app.'], ['AURA Sports ऐप डाउनलोड करें', 'AURA Sports ऐप डाउनलोड करने की आधिकारिक जानकारी।']]
   };
   const pageMeta = (metadata[path] || [['Page Not Found | AURA Sports', 'The requested page could not be found on AURA Sports.'], ['पेज नहीं मिला | AURA Sports', 'आपका खोजा गया पेज AURA Sports पर उपलब्ध नहीं है।']])[locale === 'hi' ? 1 : 0];
-  const fallbackArticleMeta = [tr(locale, 'Cricket Story | AURA Sports', 'क्रिकेट खबर | AURA Sports'), tr(locale, 'Read cricket news and perspectives from AURA Sports.', 'AURA Sports पर पढ़ें क्रिकेट की खबरें और विचार।')];
-  const articleSeo = localizedArticle ? getArticleSeoMetadata(localizedArticle, locale) : null;
-  const pageMetadata = articleSeo
-    ? { title: articleSeo.title, description: articleSeo.description, image: articleSeo.image }
-    : { title: articleMatch ? fallbackArticleMeta[0] : pageMeta[0], description: articleMatch ? fallbackArticleMeta[1] : pageMeta[1], image: '' };
+  const pageMetadata = { title: pageMeta[0], description: pageMeta[1], image: '' };
   useEffect(() => {
     document.documentElement.lang = locale === 'hi' ? 'hi-IN' : 'en';
     document.title = pageMetadata.title;
@@ -521,7 +508,7 @@ export default function App() {
 
     setMeta('meta[property="og:title"]', 'property', 'og:title', pageMetadata.title);
     setMeta('meta[property="og:description"]', 'property', 'og:description', pageMetadata.description);
-    setMeta('meta[property="og:type"]', 'property', 'og:type', articleMatch ? 'article' : 'website');
+    setMeta('meta[property="og:type"]', 'property', 'og:type', 'website');
     setMeta('meta[property="og:image"]', 'property', 'og:image', pageMetadata.image);
     setMeta('meta[name="twitter:image"]', 'name', 'twitter:image', pageMetadata.image);
     setMeta('meta[property="og:url"]', 'property', 'og:url', seoUrls.canonical);
@@ -531,14 +518,11 @@ export default function App() {
     setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', pageMetadata.image ? 'summary_large_image' : 'summary');
     setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', pageMetadata.title);
     setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', pageMetadata.description);
-  }, [pageMetadata.title, pageMetadata.description, pageMetadata.image, locale, path, articleSlug]);
+  }, [pageMetadata.title, pageMetadata.description, pageMetadata.image, locale, path]);
 
   let page;
   if (path === '/') page = <HomePage locale={locale} />;
-  else if (path === '/news') page = <NewsListingPage locale={locale} />;
-  else if (articleMatch) {
-    page = <ArticleDetailPage slug={articleSlug || '__invalid_url__'} locale={locale} />;
-  } else page = <AdditionalPage path={path} locale={locale} />;
+  else page = <AdditionalPage path={path} locale={locale} />;
 
   return <><Header locale={locale} currentPath={path} currentSearch={window.location.search} currentHash={window.location.hash} />{page}{path !== '/' && <PageNavigation locale={locale} />}<Footer locale={locale} /></>;
 }
