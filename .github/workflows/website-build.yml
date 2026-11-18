@@ -3,6 +3,7 @@ name: Website build and security check
 on:
   push:
     branches:
+      - main
       - feature/website-foundation
       - feature/i18n-en-hi
       - feature/webapp-desktop-showcase
