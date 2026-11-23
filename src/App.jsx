@@ -373,7 +373,7 @@ function ArticleDetailPage({ slug, locale }) {
   );
 }
 
-function Footer({ locale = 'en' }) {
+function Footer({ locale = 'en', showFooterAd = false }) {
   const [openGroup, setOpenGroup] = useState(null);
   const groups = [
     {
@@ -412,7 +412,7 @@ function Footer({ locale = 'en' }) {
   ];
 
   return <footer className="site-footer cinematic-footer">
-    <AdBanner ad={footerAd} placement="footer" />
+    {showFooterAd && <AdBanner ad={footerAd} placement="footer" />}
     <div className="container footer-main">
       <div className="footer-brand"><Brand locale={locale}/><p>{tr(locale,'Beyond the Game','खेल से कहीं आगे।')}</p></div>
       <div className="footer-accordion" aria-label={tr(locale, 'Footer navigation', 'फुटर नेविगेशन')}>
@@ -536,5 +536,5 @@ export default function App() {
   if (path === '/') page = <HomePage locale={locale} />;
   else page = <AdditionalPage path={path} locale={locale} />;
 
-  return <><Header locale={locale} currentPath={path} currentSearch={window.location.search} currentHash={window.location.hash} />{page}{path !== '/' && <PageNavigation locale={locale} />}<Footer locale={locale} /></>;
+  return <><Header locale={locale} currentPath={path} currentSearch={window.location.search} currentHash={window.location.hash} />{page}{path !== '/' && <PageNavigation locale={locale} />}<Footer locale={locale} showFooterAd={path === '/'} /></>;
 }
