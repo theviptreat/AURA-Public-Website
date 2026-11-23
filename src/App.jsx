@@ -4,7 +4,7 @@ import { getLocaleSwitchPath, localizePath, resolveLocalizedPath } from './i18n/
 import { localizeStory } from './i18n/localized-content';
 import { getNewsCategories } from './content/news-categories.js';
 import { getLocalizedSeoUrls, getOpenGraphLocale } from './i18n/seo';
-import { sponsor, socialLinks } from './content/site-config.js';
+import { homepageAd, footerAd } from './content/site-config.js';
 
 const tr = (locale, en, hi) => locale === 'hi' ? hi : en;
 const articles = [];
@@ -25,6 +25,23 @@ function Header({ locale = 'en', currentPath = '/', currentSearch = '', currentH
     </nav>
     <button className="menu-toggle" type="button" aria-label={menuOpen?tr(locale,'Close navigation menu','नेविगेशन मेनू बंद करें'):tr(locale,'Open navigation menu','नेविगेशन मेनू खोलें')} aria-expanded={menuOpen} aria-controls="primary-navigation" onClick={() => setMenuOpen(!menuOpen)}><span/><span/></button>
   </div></header>;
+}
+
+function AdBanner({ ad, placement }) {
+  if (!ad?.enabled || (!ad.image && !ad.title)) return null;
+  const content = ad.image
+    ? <img src={ad.image} alt={ad.alt || ad.title || 'Advertisement'} loading="lazy" />
+    : <strong>{ad.title}</strong>;
+
+  return <aside className={`ad-banner ad-banner--${placement}`} aria-label="Advertisement">
+    <div className="container ad-banner-inner">
+      <span className="ad-banner-label">ADVERTISEMENT</span>
+      {ad.href
+        ? <a className="ad-banner-link" href={ad.href} target="_blank" rel="noopener noreferrer">{content}</a>
+        : <div className="ad-banner-content">{content}</div>}
+      {ad.image && ad.title && <p className="ad-banner-title">{ad.title}</p>}
+    </div>
+  </aside>;
 }
 
 function SectionHeading({ eyebrow, title, href, linkLabel = 'View all' }) {
@@ -231,6 +248,7 @@ function HomePage({ locale }) {
    <div className="webapp-heading"><div><span className="eyebrow">{tr(locale,'A NEW CRICKET EXPERIENCE','क्रिकेट का एक नया अनुभव')}</span><h2>{tr(locale,'AURA WEB APP','AURA वेब ऐप')}</h2></div><p>{tr(locale,'A closer look at the tools and insights inside AURA.','AURA के अंदर मौजूद टूल्स और इनसाइट्स की एक झलक।')}</p></div>
    <WebAppShowcase locale={locale}/>
   </div></section>
+  <AdBanner ad={homepageAd} placement="homepage" />
   <section className="play-zone-section landing-section" id="play-zone">
    <div className="container play-zone-inner">
     <div className="play-zone-heading">
@@ -290,14 +308,7 @@ function HomePage({ locale }) {
     </div>
    </div>
   </section>
-  {sponsor?.name && sponsor?.href && <section className="sponsor-section landing-section" aria-label={tr(locale,'AURA sponsor','AURA प्रायोजक')}>
-   <div className="container sponsor-inner"><span className="eyebrow">{tr(locale,'IN PARTNERSHIP WITH','के सहयोग से')}</span>
-    <a className="sponsor-link" href={sponsor.href} target="_blank" rel="noopener noreferrer">
-     {sponsor.logo ? <img src={sponsor.logo} alt={sponsor.name} loading="lazy" /> : <strong>{sponsor.name}</strong>}
-    </a>
-    {sponsor.message && <p>{sponsor.message}</p>}
-   </div>
-  </section>}
+
  </main>;
 }
 
@@ -401,6 +412,7 @@ function Footer({ locale = 'en' }) {
   ];
 
   return <footer className="site-footer cinematic-footer">
+    <AdBanner ad={footerAd} placement="footer" />
     <div className="container footer-main">
       <div className="footer-brand"><Brand locale={locale}/><p>{tr(locale,'Beyond the Game','खेल से कहीं आगे।')}</p></div>
       <div className="footer-accordion" aria-label={tr(locale, 'Footer navigation', 'फुटर नेविगेशन')}>
