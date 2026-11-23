@@ -37,7 +37,7 @@ function AdBanner({ ad, placement }) {
     <div className="container ad-banner-inner">
       <span className="ad-banner-label">ADVERTISEMENT</span>
       {ad.href
-        ? <a className="ad-banner-link" href={ad.href} target="_blank" rel="noopener noreferrer">{content}</a>
+        ? <a className={`ad-banner-link${ad.image ? ' ad-banner-link--image' : ''}`} href={ad.href} target="_blank" rel="noopener noreferrer">{content}</a>
         : <div className="ad-banner-content">{content}</div>}
       {ad.image && ad.title && <p className="ad-banner-title">{ad.title}</p>}
     </div>
