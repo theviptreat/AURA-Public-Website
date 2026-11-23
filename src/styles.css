@@ -1217,7 +1217,7 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
 
 
 /* Responsive advertisement placements (homepage and footer only). */
-/* One standard 3:1 creative ratio is used at every viewport width. */
+/* One 1.91:1 landscape creative ratio is used at every viewport width. */
 .ad-banner {
   width: 100%;
   padding-block: 18px;
@@ -1253,7 +1253,7 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
 }
 .ad-banner-link--image,
 .ad-banner-content--image {
-  aspect-ratio: 3 / 1;
+  aspect-ratio: 1.91 / 1;
 }
 .ad-banner-link--image img,
 .ad-banner-content--image img {
