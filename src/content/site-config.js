@@ -1,7 +1,7 @@
 // Public website advertisement placements.
 // Keep both placements disabled until an approved creative and destination are ready.
-// Recommended creative sizes: homepage 970x90 (desktop), 320x100 (mobile);
-// footer 728x90 (desktop), 320x100 (mobile). Images remain responsive.
+// Both placements use one consistent 3:1 creative aspect ratio on desktop and mobile.
+// Example source artwork: 1200x400. The rendered width is fluid; height follows the ratio.
 export const homepageAd = {
   enabled: false,
   title: '',
