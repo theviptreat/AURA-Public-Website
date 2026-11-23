@@ -1214,3 +1214,72 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
     font-size: 11px;
   }
 }
+
+
+/* Responsive advertisement placements (homepage and footer only). */
+/* One 1.91:1 landscape creative ratio is used at every viewport width. */
+.ad-banner {
+  width: 100%;
+  padding-block: 18px;
+  text-align: center;
+}
+.ad-banner--homepage {
+  background: #f1f1e9;
+}
+.ad-banner--footer {
+  background: #09231c;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+.ad-banner-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.ad-banner-label {
+  color: #89918b;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .16em;
+}
+.ad-banner--footer .ad-banner-label {
+  color: rgba(255,255,255,.45);
+}
+.ad-banner-link,
+.ad-banner-content {
+  display: block;
+  width: 100%;
+  max-width: 1200px;
+}
+.ad-banner-link--image,
+.ad-banner-content--image {
+  aspect-ratio: 1.91 / 1;
+}
+.ad-banner-link--image img,
+.ad-banner-content--image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.ad-banner-title {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+.ad-banner--footer .ad-banner-title {
+  color: rgba(255,255,255,.65);
+}
+.ad-banner-content strong,
+.ad-banner-link strong {
+  color: var(--green);
+}
+.ad-banner--footer .ad-banner-content strong,
+.ad-banner--footer .ad-banner-link strong {
+  color: #fff;
+}
+@media (max-width: 600px) {
+  .ad-banner {
+    padding-block: 12px;
+  }
+}
