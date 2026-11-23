@@ -1217,16 +1217,16 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
 
 
 /* Responsive advertisement placements (homepage and footer only). */
+/* One standard 3:1 creative ratio is used at every viewport width. */
 .ad-banner {
   width: 100%;
-  padding-block: 30px;
+  padding-block: 18px;
   text-align: center;
 }
 .ad-banner--homepage {
   background: #f1f1e9;
 }
 .ad-banner--footer {
-  padding-block: 26px;
   background: #09231c;
   border-bottom: 1px solid rgba(255,255,255,.12);
 }
@@ -1234,7 +1234,7 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 .ad-banner-label {
   color: #89918b;
@@ -1249,14 +1249,21 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
 .ad-banner-content {
   display: block;
   width: 100%;
-  max-width: 970px;
+  max-width: 1200px;
 }
-.ad-banner-link img,
+.ad-banner-link--image {
+  aspect-ratio: 3 / 1;
+}
+.ad-banner-link--image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
 .ad-banner-content img {
   display: block;
   width: 100%;
-  max-height: 150px;
-  margin-inline: auto;
+  height: auto;
   object-fit: contain;
 }
 .ad-banner-title {
@@ -1277,17 +1284,6 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
 }
 @media (max-width: 600px) {
   .ad-banner {
-    padding-block: 22px;
-  }
-  .ad-banner--footer {
-    padding-block: 20px;
-  }
-  .ad-banner-link,
-  .ad-banner-content {
-    max-width: 360px;
-  }
-  .ad-banner-link img,
-  .ad-banner-content img {
-    max-height: 100px;
+    padding-block: 12px;
   }
 }
