@@ -1214,3 +1214,80 @@ html{scroll-padding-top:86px}body{background:var(--aura-black);color:var(--aura-
     font-size: 11px;
   }
 }
+
+
+/* Responsive advertisement placements (homepage and footer only). */
+.ad-banner {
+  width: 100%;
+  padding-block: 30px;
+  text-align: center;
+}
+.ad-banner--homepage {
+  background: #f1f1e9;
+}
+.ad-banner--footer {
+  padding-block: 26px;
+  background: #09231c;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+.ad-banner-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.ad-banner-label {
+  color: #89918b;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .16em;
+}
+.ad-banner--footer .ad-banner-label {
+  color: rgba(255,255,255,.45);
+}
+.ad-banner-link,
+.ad-banner-content {
+  display: block;
+  width: 100%;
+  max-width: 970px;
+}
+.ad-banner-link img,
+.ad-banner-content img {
+  display: block;
+  width: 100%;
+  max-height: 150px;
+  margin-inline: auto;
+  object-fit: contain;
+}
+.ad-banner-title {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+.ad-banner--footer .ad-banner-title {
+  color: rgba(255,255,255,.65);
+}
+.ad-banner-content strong,
+.ad-banner-link strong {
+  color: var(--green);
+}
+.ad-banner--footer .ad-banner-content strong,
+.ad-banner--footer .ad-banner-link strong {
+  color: #fff;
+}
+@media (max-width: 600px) {
+  .ad-banner {
+    padding-block: 22px;
+  }
+  .ad-banner--footer {
+    padding-block: 20px;
+  }
+  .ad-banner-link,
+  .ad-banner-content {
+    max-width: 360px;
+  }
+  .ad-banner-link img,
+  .ad-banner-content img {
+    max-height: 100px;
+  }
+}
